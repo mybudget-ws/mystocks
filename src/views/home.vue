@@ -5,9 +5,8 @@
       <div class='row'>
         <div class='col'>
           <h1 class='white-text'>Моя Биржа</h1>
-          <h5 class='grey-text text-lighten-3'>
-            В разработке
-          </h5>
+          <h5 class='grey-text text-lighten-3'>Акции, индексы, новости</h5>
+          <h6 class='grey-text text-lighten-1'>Нью-Йоркская фондовая биржа</h6>
 
           <!--div class='getstarted'>
             <Button
@@ -20,7 +19,7 @@
       </div>
     </div>
 
-    <div class='container'>
+    <!--div class='container'>
       <div class='row'>
         <div class='col'>
           <div class='feature'>
@@ -47,7 +46,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div-->
 
     <Footer />
   </div>

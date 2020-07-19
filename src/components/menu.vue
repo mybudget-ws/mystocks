@@ -52,7 +52,7 @@
         </ul>
       </div>
     </nav>
-    <ul
+    <!--ul
       v-if='!isShortMenu'
       id='mobile-demo'
       ref='sidenav'
@@ -77,7 +77,7 @@
       <li>
         <a @click='exit'>Выход</a>
       </li>
-    </ul>
+    </ul-->
   </div>
 </template>
 
