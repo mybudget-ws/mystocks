@@ -49,7 +49,7 @@ export default {
 
 <style scoped lang='sass'>
 .page-footer
-  margin-top: 200px
+  margin-top: 260px
 
   .footer-copyright
     .container

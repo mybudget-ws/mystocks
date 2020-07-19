@@ -48,6 +48,26 @@
       </div>
     </div-->
 
+    <div class='container container-wide'>
+      <div class='row'>
+        <div class='col s12'>
+          <Loader v-if='isLoading' />
+          <table v-else>
+            <thead>
+              <tr>
+                <th class='date'>Название</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for='item in items' :key='item.id'>
+                <td>{{ item.name }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
     <Footer />
   </div>
 </template>
@@ -55,6 +75,7 @@
 <script>
 // import Button from '@/components/button';
 import Footer from '@/components/footer';
+import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import { get } from 'vuex-pathify';
 
@@ -66,11 +87,17 @@ export default {
   components: {
     // Button,
     Footer,
+    Loader,
     Menu
   },
   props: {},
   data: () => ({
-    isPhone: md.phone() != null
+    isPhone: md.phone() != null,
+    isLoading: false,
+    items: [
+      { id: 1, name: 'Apple' },
+      { id: 2, name: 'Google' }
+    ]
   }),
   computed: {
     isSignedIn: get('user/isSignedIn'),
@@ -95,7 +122,7 @@ h1
   padding: 20px
 
 .container.main
-  padding-bottom: 60px
+  padding-bottom: 40px
 
 .feature
   background: #fff
@@ -115,4 +142,9 @@ h1
     content: ''
     background-size: cover
     z-index: -1
+
+.container.container-wide
+  .row
+    background-color: #fff
+    border-radius: 6px
 </style>
