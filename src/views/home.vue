@@ -7,14 +7,6 @@
           <h1 class='white-text'>Моя Биржа</h1>
           <h5 class='grey-text text-lighten-3'>Акции, индексы, новости</h5>
           <h6 class='grey-text text-lighten-1'>Нью-Йоркская фондовая биржа</h6>
-
-          <!--div class='getstarted'>
-            <Button
-              :is-mobile='false'
-              text='Начать сейчас'
-              to='/sign_up'
-            />
-          </div-->
         </div>
       </div>
     </div>
@@ -73,7 +65,6 @@
 </template>
 
 <script>
-// import Button from '@/components/button';
 import Footer from '@/components/footer';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
