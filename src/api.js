@@ -30,26 +30,6 @@ export default {
     return data;
   },
 
-  async registration(token, { email, password }) {
-    const query = `
-      mutation($email:String!, $password:String!) {
-        action:signUp(input: { email: $email, password: $password }) {
-          user {
-            email
-            token
-            defaultCurrency { name }
-          }
-          error
-        }
-      }
-    `;
-    const vars = { email, password };
-    const { action } = await this.client(token).request(query, vars);
-    this.log('registration', action);
-
-    return action;
-  },
-
   async autoSignUp() {
     const query = `
       query {
@@ -78,54 +58,17 @@ export default {
     return data.user;
   },
 
-  async updateProfile(token, { currency }) {
-    const query = `
-      mutation($currency:String!) {
-        action:updateUserProfile(
-          currency: $currency
-        ) { email token defaultCurrency { id name } }
-      }
-    `;
-    const vars = { currency };
-    const data = await this.client(token).request(query, vars);
-    this.log('updateProfile', data);
+  // ---------------------------------
+  // S::Companies
+  // ---------------------------------
+  async companies() {
+    const query = `{
+      items:companies { id name logoUrl }
+    }`;
+    const data = await this.client().request(query);
+    this.log(query, data);
 
-    return data.action;
-  },
-
-  async updateEmail(token, { password, newEmail }) {
-    const query = `
-      mutation($password:String!, $newEmail:String!) {
-        action:updateUserEmail(input: {
-          password: $password,
-          newEmail: $newEmail
-        }) {
-          user { email token }
-          error
-        }
-      }
-    `;
-    const vars = { password, newEmail };
-    const { action } = await this.client(token).request(query, vars);
-    this.log('updateEmail', action);
-
-    return action;
-  },
-
-  async updatePassword(token, { password, newPassword }) {
-    const query = `
-      mutation($oldPassword:String!, $newPassword:String!) {
-        action:updateUserPassword(
-          oldPassword: $oldPassword,
-          newPassword: $newPassword
-        ) { email token }
-      }
-    `;
-    const vars = { oldPassword: password, newPassword };
-    const data = await this.client(token).request(query, vars);
-    this.log('updatePassword', data);
-
-    return data.action;
+    return data.items;
   },
 
   // ---------------------------------

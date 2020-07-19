@@ -68,7 +68,7 @@
 import Footer from '@/components/footer';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
-import { get } from 'vuex-pathify';
+import { get, call } from 'vuex-pathify';
 
 import MobileDetect from 'mobile-detect';
 const md = new MobileDetect(window.navigator.userAgent);
@@ -83,19 +83,21 @@ export default {
   },
   props: {},
   data: () => ({
-    isPhone: md.phone() != null,
-    isLoading: false,
-    items: [
-      { id: 1, name: 'Apple' },
-      { id: 2, name: 'Google' }
-    ]
+    isPhone: md.phone() != null
   }),
   computed: {
     isSignedIn: get('user/isSignedIn'),
     isGuest: get('user/isGuest'),
-    email: get('user/email')
+    email: get('user/email'),
+    ...get('companies/*')
+  },
+  async created() {
+    await this.fetch();
   },
   methods: {
+    ...call([
+      'companies/fetch'
+    ])
   }
 };
 </script>

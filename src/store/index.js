@@ -2,11 +2,11 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import pathify from 'vuex-pathify';
 
-import accounts from './modules/accounts';
-import colors from './modules/colors';
-import currencies from './modules/currencies';
-import transactions from './modules/transactions';
+import companies from './modules/companies';
 import user from './modules/user';
+// import colors from './modules/colors';
+// import currencies from './modules/currencies';
+// import transactions from './modules/transactions';
 
 Vue.use(Vuex);
 
@@ -37,10 +37,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   modules: {
-    accounts,
-    colors,
-    currencies,
-    transactions,
+    companies,
     user
   },
   plugins: [pathify.plugin]
