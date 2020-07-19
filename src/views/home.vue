@@ -40,18 +40,22 @@
       </div>
     </div-->
 
-    <div class='container container-wide'>
+    <div class='container companies'>
       <div class='row'>
         <div class='col s12'>
-          <Loader v-if='isLoading' />
+          <Loader v-if='isLoading' class='loading' />
           <table v-else>
             <thead>
               <tr>
+                <th class='logoUrl' />
                 <th class='date'>Название</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for='item in items' :key='item.id'>
+                <td class='logoUrl'>
+                  <img :src='item.logoUrl'>
+                </td>
                 <td>{{ item.name }}</td>
               </tr>
             </tbody>
@@ -76,7 +80,6 @@ const md = new MobileDetect(window.navigator.userAgent);
 export default {
   name: 'Home',
   components: {
-    // Button,
     Footer,
     Loader,
     Menu
@@ -136,8 +139,24 @@ h1
     background-size: cover
     z-index: -1
 
-.container.container-wide
+.container.companies
   .row
     background-color: #fff
     border-radius: 6px
+
+  .loading
+    padding-bottom: 40px
+
+th.logoUrl
+  width: 40px
+
+td
+  &.logoUrl
+    text-align: center
+
+    img
+      border-radius: 4px
+      margin-bottom: -4px
+      height: 24px
+      width: 24px
 </style>
