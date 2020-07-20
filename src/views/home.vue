@@ -145,7 +145,7 @@ h1
     border-radius: 6px
 
   .loading
-    padding-bottom: 40px
+    padding-bottom: 600px
 
 th.logoUrl
   width: 40px
