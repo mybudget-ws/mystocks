@@ -7,13 +7,13 @@ import store from '@/store/index';
 Vue.use(VueHead);
 Vue.use(Router);
 
-// function requireAuth(to, from, next) {
-//   if (!store.getters['user/isSignedIn']) {
-//     next({ path: '/sign_in', query: { redirect: to.fullPath } });
-//   } else {
-//     next();
-//   }
-// }
+function requireAuth(to, from, next) {
+  if (!store.getters['user/isSignedIn']) {
+    next({ path: '/sign_in', query: { redirect: to.fullPath } });
+  } else {
+    next();
+  }
+}
 
 export default new Router({
   // mode: 'history',
@@ -39,6 +39,11 @@ export default new Router({
       path: '/companies/:id',
       name: 'company',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/companies/show')
+    }, {
+      path: '/settings/:tab',
+      name: 'settings',
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/settings/index'),
+      beforeEnter: requireAuth
     }
     // {
     //   path: '/transactions/:id/edit',
