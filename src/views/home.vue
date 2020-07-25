@@ -6,7 +6,7 @@
         <div class='col'>
           <h1 class='white-text'>Моя Биржа</h1>
           <h5 class='grey-text text-lighten-3'>Акции, индексы, новости</h5>
-          <h6 class='grey-text text-lighten-1'>Нью-Йоркская фондовая биржа</h6>
+          <h6 class='grey-text text-lighten-2'>Нью-Йоркская фондовая биржа</h6>
         </div>
       </div>
     </div>
@@ -49,6 +49,7 @@
               <tr>
                 <th class='logoUrl' />
                 <th class='date'>Название</th>
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -57,9 +58,16 @@
                   <img :src='item.logoUrl'>
                 </td>
                 <td>{{ item.name }}</td>
+                <td class='price'>
+                  <span v-if='item.lastPrice'>$ {{ item.lastPrice }}</span>
+                </td>
               </tr>
             </tbody>
           </table>
+          <br>
+          <router-link v-if='!isLoading' to='/companies' class='btn btn-flat'>
+            Все компании
+          </router-link>
         </div>
       </div>
     </div>
@@ -159,4 +167,7 @@ td
       margin-bottom: -4px
       height: 24px
       width: 24px
+
+  &.price
+    text-align: right
 </style>

@@ -63,7 +63,7 @@ export default {
   // ---------------------------------
   async companies() {
     const query = `{
-      items:companies { id name logoUrl }
+      items:companies { id name logoUrl lastPrice }
     }`;
     const data = await this.client().request(query);
     this.log(query, data);
@@ -608,22 +608,9 @@ export default {
   // Reports
   // ---------------------------------
 
-  async balances(token, params) {
-    const url = DOMAIN + '/charts/balances?' + params;
-    const response = await fetch(url, {
-      headers: this.headers(token)
-    });
-    const data = await response.json();
-    this.log(url, data);
-
-    return data;
-  },
-
-  async columns(token, params) {
-    const url = DOMAIN + '/charts/columns?' + params;
-    const response = await fetch(url, {
-      headers: this.headers(token)
-    });
+  async pricesChart(token, company_id) {
+    const url = `${DOMAIN}/charts/s/prices?company_id=${company_id}`;
+    const response = await fetch(url, { headers: this.headers(token) });
     const data = await response.json();
     this.log(url, data);
 

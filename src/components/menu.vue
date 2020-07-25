@@ -12,13 +12,13 @@
           <!--router-link to='/currencies' :class='btnClasses'>
             Курсы валют
           </router-link-->
-          <a href='//2.mybudget.ws/#/sign_in' :class='btnClasses' class='sign-in'>
+          <a href='//2.mybudget.ws/' :class='btnClasses' class='sign-in'>
             Назад в Мой Бюджет
           </a>
         </div>
       </div>
     </nav>
-    <nav v-else class='blue-grey darken-4 z-depth-0'>
+    <nav v-else class='deep-purple darken-4 z-depth-0'>
       <div class='nav-wrapper container container-wide'>
         <a href="#" data-target='mobile-demo' class='sidenav-trigger'>
           <i class='material-icons'>menu</i>
@@ -29,12 +29,15 @@
               {{ item.name }}
             </router-link>
           </li>
-          <li class='right' title='Выход'>
-            <a :class='btnClasses' @click='exit'>
-              <i class='material-icons'>exit_to_app</i>
+          <li class='right' title='Назад в Мой Бюджет'>
+            <a href='//2.mybudget.ws/#/transactions' :class='btnClasses' class='btn-flat waves-effect waves-purple mybudget-link'>
+              Назад в Мой Бюджет
             </a>
+            <!--a :class='btnClasses' @click='exit'>
+              <i class='material-icons'>exit_to_app</i>
+            </a-->
           </li>
-          <li class='right' title='Настройки'>
+          <!--li class='right' title='Настройки'>
             <router-link to='/settings/profile' :class='btnClasses'>
               <i class='material-icons'>settings</i>
             </router-link>
@@ -48,11 +51,11 @@
             <router-link to='/finish-sign-up' class='amber-text text-darken-2'>
               Завершить Регистрацию
             </router-link>
-          </li>
+          </li-->
         </ul>
       </div>
     </nav>
-    <!--ul
+    <ul
       v-if='!isShortMenu'
       id='mobile-demo'
       ref='sidenav'
@@ -61,23 +64,23 @@
       <li v-for='item in items' :key='item.path'>
         <a href='#' @click='goto(item.path)'>{{ item.name }}</a>
       </li>
-      <li class='divider' />
+      <!--li class='divider' />
       <li v-if='isGuest'>
         <a href='#' class='amber-text text-darken-2' @click='goto("/finish-sign-up")'>
           Завершить Регистрацию
         </a>
-      </li>
-      <li>
+      </li-->
+      <!--li>
         <a href='#' @click='goto("currencies")'>Курсы валют</a>
       </li>
       <li>
         <a href='#' @click='goto("settings/profile")'>Настройки</a>
-      </li>
+      </li-->
       <li class='divider' />
       <li>
         <a @click='exit'>Выход</a>
       </li>
-    </ul-->
+    </ul>
   </div>
 </template>
 
@@ -88,13 +91,13 @@ export default {
   name: 'Menu',
   data: () => ({
     items: [
-      { path: '/transactions', name: 'Операции' },
-      { path: '/accounts', name: 'Счета' },
-      { path: '/reports', name: 'Отчеты' },
-      { path: '/categories', name: 'Категории' },
+      { path: '/companies', name: 'Компании' }
+      // { path: '/accounts', name: 'Счета' },
+      // { path: '/reports', name: 'Отчеты' },
+      // { path: '/categories', name: 'Категории' },
       // { path: '/budgets', name: 'Бюджеты' },
-      { path: '/goals', name: 'Цели' },
-      { path: '/projects', name: 'Проекты' }
+      // { path: '/goals', name: 'Цели' },
+      // { path: '/projects', name: 'Проекты' }
     ]
   }),
   computed: {
@@ -161,4 +164,9 @@ export default {
 nav
  i.material-icons
   font-size: 20px
+
+.mybudget-link
+  font-size: 12px !important
+  border-radius: 4px
+  border: 1px solid #d1c4e9
 </style>
