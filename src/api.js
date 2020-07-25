@@ -71,6 +71,17 @@ export default {
     return data.items;
   },
 
+  async company(token, { id }) {
+    const query = `query($id:ID!) {
+      item:company(id:$id) { id name logoUrl website ceo description lastPrice }
+    }`;
+    const vars = { id };
+    const data = await this.client(token).request(query, vars);
+    this.log(query, data);
+
+    return data.item;
+  },
+
   // ---------------------------------
   // Account
   // ---------------------------------

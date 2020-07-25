@@ -2,10 +2,38 @@
   <div>
     <Menu />
     <div class='container container-wide'>
-      <PageHeader name='Компания N' />
-      <div class='row'>
+      <PageHeader :name='name'>
+        <img v-if='!isLoading' class='logo' :src='logoUrl'>
+      </PageHeader>
+
+      <Loader v-if='isLoading' />
+      <div v-else class='row'>
         <div class='col s12'>
           <div class='chart' />
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Текущая цена</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                $ {{ lastPrice }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class='col s12'>
+          <h5>Description</h5>
+          <p>{{ description }}</p>
+          <p>
+            CEO - {{ ceo }}
+            <a :href='website' target='_blank' class='website'>{{ website }}</a>
+          </p>
         </div>
       </div>
     </div>
@@ -13,7 +41,7 @@
 </template>
 
 <script>
-// import Loader from '@/components/loader';
+import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
 import api from '../../api';
@@ -26,36 +54,49 @@ const md = new MobileDetect(window.navigator.userAgent);
 export default {
   name: 'Companies',
   components: {
-    // Loader,
+    Loader,
     Menu,
     PageHeader
   },
   props: {},
   data: () => ({
+    name: '',
+    logoUrl: '',
+    website: '',
+    ceo: '',
+    description: '',
+    lastPrice: 0,
+
+    isLoading: true,
     isPhone: md.phone() != null
   }),
   computed: {
-    token: get('user/token')
-    // ...get('companies/*')
+    token: get('user/token'),
+    id() { return this.$route.params.id; }
   },
   async created() {
-    // await this.fetch();
+    const company = await api.company(this.token, { id: this.id });
+    this.name = company.name;
+    this.lastPrice = company.lastPrice;
+    this.logoUrl = company.logoUrl;
+    this.description = company.description;
+    this.website = company.website;
+    this.ceo = company.ceo;
+    this.isLoading = false;
     await this.loadChart();
   },
   methods: {
-    // ...call([
-    //   'companies/fetch'
-    // ]),
     change() {
       this.loadChart();
     },
     async loadChart() {
-      const columns = await api.pricesChart(this.token, this.$route.params.id);
+      const columns = await api.pricesChart(this.token, this.id);
       this.chart = c3.generate({
         bindto: '.chart',
         data: {
           x: 'x',
           xFormat: '%Y-%m-%d %H:%M',
+          // type: 'spline',
           columns: columns
         },
         axis: {
@@ -85,5 +126,15 @@ export default {
 <style scoped lang='sass'>
 .chart
   height: 400px
-  margin-left: -20px
+  margin-left: -12px
+
+.logo
+  height: 48px
+  width: 48px
+  vertical-align: top
+  border-radius: 40px
+  float: right
+
+.website
+  display: block
 </style>
