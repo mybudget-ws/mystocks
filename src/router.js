@@ -34,13 +34,11 @@ export default new Router({
     }, {
       path: '/companies',
       name: 'companies',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/companies/index'),
-      beforeEnter: requireAuth
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/companies/index')
     }, {
       path: '/companies/:id',
       name: 'company',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/companies/show'),
-      beforeEnter: requireAuth
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/companies/show')
     }
     // {
     //   path: '/transactions/:id/edit',
