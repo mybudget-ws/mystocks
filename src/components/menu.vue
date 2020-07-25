@@ -103,9 +103,7 @@ export default {
   computed: {
     isSignedIn: get('user/isSignedIn'),
     isGuest: get('user/isGuest'),
-    isShortMenu() {
-      return this.$router.currentRoute.name === 'home' || !this.isSignedIn;
-    },
+    isShortMenu() { return this.$router.currentRoute.name === 'home'; },
     btnClasses() {
       return this.isShortMenu ?
         'waves-effect waves-light btn-flat grey-text text-lighten-5 z-depth-0' :
