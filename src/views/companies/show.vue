@@ -91,20 +91,25 @@ export default {
     },
     async loadChart() {
       const columns = await api.pricesChart(this.token, this.id);
+      const categories = columns[0].slice(1);
       this.chart = c3.generate({
         bindto: '.chart',
         data: {
           x: 'x',
-          xFormat: '%Y-%m-%d %H:%M',
-          // type: 'spline',
+          // xFormat: '%Y-%m-%d %H:%M',
+          type: 'spline',
           columns: columns
         },
         axis: {
           x: {
-            type: 'timeseries',
+            type: 'category',
+            categories: categories,
             tick: {
-              format: '%d.%m.%Y %H:%M',
-              count: 10
+              multiline: false,
+              centered: true,
+              culling: { max: 6 }
+              // format: '%d.%m.%Y %H:%M',
+              // count: 10
             },
             padding: { left: 0, right: 0 }
           },

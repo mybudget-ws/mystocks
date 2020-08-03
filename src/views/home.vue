@@ -53,7 +53,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for='item in items' :key='item.id'>
+              <tr v-for='item in items' :key='item.id' @click='gotoCompany(item.id)'>
                 <td class='logoUrl'>
                   <img :src='item.logoUrl'>
                 </td>
@@ -108,7 +108,10 @@ export default {
   methods: {
     ...call([
       'companies/fetch'
-    ])
+    ]),
+    gotoCompany(id) {
+      this.$router.push(`/companies/${id}`);
+    }
   }
 };
 </script>
@@ -170,4 +173,10 @@ td
 
   &.price
     text-align: right
+
+tbody
+  tr
+    &:hover
+      background-color: #fafafa
+      cursor: pointer
 </style>
