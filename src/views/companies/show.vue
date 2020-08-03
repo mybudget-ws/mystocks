@@ -67,6 +67,8 @@ export default {
     description: '',
     lastPrice: 0,
 
+    chart: undefined,
+    timer: undefined,
     isLoading: true,
     isPhone: md.phone() != null
   }),
@@ -84,7 +86,9 @@ export default {
     this.ceo = company.ceo;
     this.isLoading = false;
     await this.loadChart();
+    this.timer = setInterval(this.loadChart, 10000);
   },
+  beforeDestroy() { clearInterval(this.timer); },
   methods: {
     change() {
       this.loadChart();
@@ -92,37 +96,41 @@ export default {
     async loadChart() {
       const columns = await api.pricesChart(this.token, this.id);
       const categories = columns[0].slice(1);
-      this.chart = c3.generate({
-        bindto: '.chart',
-        data: {
-          x: 'x',
-          // xFormat: '%Y-%m-%d %H:%M',
-          type: 'spline',
-          columns: columns
-        },
-        axis: {
-          x: {
-            type: 'category',
-            categories: categories,
-            tick: {
-              multiline: false,
-              centered: true,
-              culling: { max: 6 }
-              // format: '%d.%m.%Y %H:%M',
-              // count: 10
-            },
-            padding: { left: 0, right: 0 }
+      if (this.chart == null) {
+        this.chart = c3.generate({
+          bindto: '.chart',
+          data: {
+            x: 'x',
+            // xFormat: '%Y-%m-%d %H:%M',
+            type: 'spline',
+            columns: columns
           },
-          y: {
-            padding: { top: 20 }
+          axis: {
+            x: {
+              type: 'category',
+              categories: categories,
+              tick: {
+                multiline: false,
+                centered: true,
+                culling: { max: 6 }
+                // format: '%d.%m.%Y %H:%M',
+                // count: 10
+              },
+              padding: { left: 0, right: 0 }
+            },
+            y: {
+              padding: { top: 20 }
+            }
+          },
+          point: { show: false },
+          grid: {
+            x: { show: false },
+            y: { show: true }
           }
-        },
-        point: { show: false },
-        grid: {
-          x: { show: false },
-          y: { show: true }
-        }
-      });
+        });
+      } else {
+        this.chart.load({ columns, categories });
+      }
     }
   }
 };
