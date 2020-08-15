@@ -45,13 +45,12 @@ export default {
     FINISH_SUBMITTING(state) {
       state.isSubmitting = false;
       state.isLoadedFilter = false;
-    },
-    TOGGLE_IS_FAVOURITE(state, { item, isFavourite }) {
-      const account = state.items.find(v => v.id === item.id);
-      if (account == null) { return; }
-      account.isFavourite = isFavourite;
     }
-
+    // TOGGLE_IS_FAVOURITE(state, { item, isFavourite }) {
+    //   const account = state.items.find(v => v.id === item.id);
+    //   if (account == null) { return; }
+    //   account.isFavourite = isFavourite;
+    // },
     // START_LOADING_FILTER(state) {
     //   state.isLoadingFilter = true;
     // },

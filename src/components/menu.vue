@@ -91,6 +91,7 @@ export default {
   name: 'Menu',
   data: () => ({
     items: [
+      { path: '/stocks', name: 'Акции' },
       { path: '/companies', name: 'Компании' }
       // { path: '/accounts', name: 'Счета' },
       // { path: '/reports', name: 'Отчеты' },

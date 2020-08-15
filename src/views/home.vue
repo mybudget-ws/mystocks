@@ -48,16 +48,19 @@
             <thead>
               <tr>
                 <th class='logoUrl' />
-                <th class='date'>Название</th>
+                <th class='date'>Акции</th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              <tr v-for='item in items' :key='item.id' @click='gotoCompany(item.id)'>
+              <tr v-for='item in items' :key='item.id' @click='gotoSymbol(item)'>
                 <td class='logoUrl'>
-                  <img :src='item.logoUrl'>
+                  <img :src='logoUrl(item)'>
                 </td>
-                <td>{{ item.name }}</td>
+                <td>
+                  <span>{{ item.company.name }}</span>
+                  <span class='symbol'>{{ item.name }}</span>
+                </td>
                 <td class='price'>
                   <span v-if='item.lastPrice'>$ {{ item.lastPrice }}</span>
                 </td>
@@ -65,8 +68,8 @@
             </tbody>
           </table>
           <br>
-          <router-link v-if='!isLoading' to='/companies' class='btn btn-flat'>
-            Все компании
+          <router-link v-if='!isLoading' to='/stocks' class='btn btn-flat'>
+            Все акции
           </router-link>
         </div>
       </div>
@@ -100,17 +103,20 @@ export default {
     isSignedIn: get('user/isSignedIn'),
     isGuest: get('user/isGuest'),
     email: get('user/email'),
-    ...get('companies/*')
+    ...get('stocks/*')
   },
   async created() {
     await this.fetch();
   },
   methods: {
     ...call([
-      'companies/fetch'
+      'stocks/fetch'
     ]),
-    gotoCompany(id) {
-      this.$router.push(`/companies/${id}`);
+    gotoSymbol(symbol) {
+      this.$router.push(`/companies/${symbol.company.id}`);
+    },
+    logoUrl(symbol) {
+      return symbol?.company?.logoUrl || symbol.logoUrl;
     }
   }
 };
@@ -179,4 +185,8 @@ tbody
     &:hover
       background-color: #fafafa
       cursor: pointer
+
+.symbol
+  margin-left: 10px
+  color: #90a4ae
 </style>

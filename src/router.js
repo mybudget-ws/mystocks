@@ -32,6 +32,10 @@ export default new Router({
       name: 'sign_up',
       component: () => import(/* webpackChunkName: "landing" */ '@/views/sign_up')
     }, {
+      path: '/stocks',
+      name: 'stocks',
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/stocks/index')
+    }, {
       path: '/companies',
       name: 'companies',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/companies/index')

@@ -83,6 +83,36 @@ export default {
   },
 
   // ---------------------------------
+  // S::Symbols
+  // ---------------------------------
+  async symbols() {
+    const query = `{
+      items:symbols {
+        id name lastPrice logoUrl
+        company { id name logoUrl }
+      }
+    }`;
+    const data = await this.client().request(query);
+    this.log(query, data);
+
+    return data.items;
+  },
+
+  async symbol(token, { id }) {
+    const query = `query($id:ID!) {
+      item:symbol(id:$id) {
+        id name logoUrl lastPrice
+        company { id name logoUrl website ceo description }
+      }
+    }`;
+    const vars = { id };
+    const data = await this.client(token).request(query, vars);
+    this.log(query, data);
+
+    return data.item;
+  },
+
+  // ---------------------------------
   // Account
   // ---------------------------------
 
@@ -158,244 +188,6 @@ export default {
     `;
     const data = await this.client(token).request(query, { id });
     this.log('destroyAccount', data);
-
-    return data.action;
-  },
-
-  // ---------------------------------
-  // Category
-  // ---------------------------------
-
-  async categories(token) {
-    const query = '{ items:categories { id name color isFavourite isHidden } }';
-    const data = await this.client(token).request(query);
-    this.log(query, data);
-
-    return data.items;
-  },
-
-  async category(token, { id }) {
-    const query = 'query($id:ID!) { item:category(id:$id) { id name color } }';
-    const vars = { id };
-    const data = await this.client(token).request(query, vars);
-    this.log(query, data);
-
-    return data.item;
-  },
-
-  async createCategory(token, { name, color }) {
-    const query = `
-      mutation($name:String!, $color:String!) {
-        action:createCategory(
-          name: $name,
-          color: $color
-        ) { id name color }
-      }
-    `;
-    const vars = { name, color };
-    const data = await this.client(token).request(query, vars);
-    this.log('createCategory', data);
-
-    return data.action;
-  },
-
-  async updateCategory(token, { id, name, color }) {
-    const query = `
-      mutation($id:ID!, $name:String!, $color:String!) {
-        action:updateCategory(
-          id: $id,
-          name: $name,
-          color: $color
-        ) { id name color }
-      }
-    `;
-    const vars = { id, name, color };
-    const data = await this.client(token).request(query, vars);
-    this.log('updateCategory', data);
-
-    return data.action;
-  },
-
-  async destroyCategory(token, id) {
-    const query = 'mutation($id:ID!) { action:destroyCategory(id: $id) { id } }';
-    const data = await this.client(token).request(query, { id });
-    this.log('destroyCategory', data);
-
-    return data.action;
-  },
-
-  // ---------------------------------
-  // Goal
-  // ---------------------------------
-
-  async goals(token) {
-    const query = `
-      {
-        items:goals {
-          id
-          name
-          accounts { id name color }
-          amount
-          currency { name }
-          dueDateOn
-          percentage
-          balance
-        }
-      }
-    `;
-    const data = await this.client(token).request(query);
-    this.log(query, data);
-
-    return data.items;
-  },
-
-  async goal(token, { id }) {
-    const query = `
-      query($id:ID!) {
-        item:goal(id:$id) {
-          id
-          name
-          amount
-          dueDateOn
-          accounts { id name color }
-        }
-      }
-    `;
-    const vars = { id };
-    const data = await this.client(token).request(query, vars);
-    this.log(query, data);
-
-    return data.item;
-  },
-
-  async createGoal(token, { name, amount, dueDateOn, accountIds }) {
-    const query = `
-      mutation($name:String!, $amount:String!, $dueDateOn:String!, $accountIds:[Int!]!) {
-        action:createGoal(
-          name: $name,
-          amount: $amount,
-          dueDateOn: $dueDateOn,
-          accountIds: $accountIds
-        ) { id name dueDateOn }
-      }
-    `;
-    const vars = { name, amount, dueDateOn, accountIds };
-    const data = await this.client(token).request(query, vars);
-    this.log('createGoal', data);
-
-    return data.action;
-  },
-
-  async updateGoal(token, { id, name, amount, dueDateOn, accountIds }) {
-    const query = `
-      mutation($id:ID!, $name:String!, $amount:String!, $dueDateOn:String!, $accountIds:[Int!]!) {
-        action:updateGoal(
-          id: $id,
-          name: $name,
-          amount: $amount,
-          dueDateOn: $dueDateOn,
-          accountIds: $accountIds
-        ) { id name }
-      }
-    `;
-    const vars = { id, name, amount, dueDateOn, accountIds };
-    const data = await this.client(token).request(query, vars);
-    this.log('updateGoal', data);
-
-    return data.action;
-  },
-
-  async destroyGoal(token, id) {
-    const query = 'mutation($id:ID!) { action:destroyGoal(id: $id) { id } }';
-    const data = await this.client(token).request(query, { id });
-    this.log('destroyGoal', data);
-
-    return data.action;
-  },
-
-  // ---------------------------------
-  // Project
-  // ---------------------------------
-
-  async projectsFilter(token) {
-    const query = '{ items:projects { id name isHidden } }';
-    const data = await this.client(token).request(query);
-    this.log(query, data);
-
-    return data.items;
-  },
-
-  async projects(token) {
-    const query = `
-      {
-        items:projects {
-          id
-          name
-          isHidden
-          color
-          balances {
-            amount
-            amountBase
-            currency { name }
-            currencyBase { name }
-          }
-        }
-      }
-    `;
-    const data = await this.client(token).request(query);
-    this.log(query, data);
-
-    return data.items;
-  },
-
-  async project(token, { id }) {
-    const query = 'query($id:ID!) { item:project(id:$id) { id name color } }';
-    const vars = { id };
-    const data = await this.client(token).request(query, vars);
-    this.log(query, data);
-
-    return data.item;
-  },
-
-  async createProject(token, { name, color }) {
-    const query = `
-      mutation($name:String!, $color:String!) {
-        action:createProject(
-          name: $name,
-          color: $color
-        ) { id name color balances { amount amountBase currency { name } currencyBase { name } } }
-      }
-    `;
-    const vars = { name, color };
-    const data = await this.client(token).request(query, vars);
-    this.log('createProject', data);
-
-    return data.action;
-  },
-
-  async updateProject(token, { id, name, color }) {
-    const query = `
-      mutation($id:ID!, $name:String!, $color:String!) {
-        action:updateProject(
-          id: $id,
-          name: $name,
-          color: $color
-        ) { id name color }
-      }
-    `;
-    const vars = { id, name, color };
-    const data = await this.client(token).request(query, vars);
-    this.log('updateProject', data);
-
-    return data.action;
-  },
-
-  async destroyProject(token, id) {
-    const query = `
-      mutation($id:ID!) { action:destroyProject(id: $id) { id } }
-    `;
-    const data = await this.client(token).request(query, { id });
-    this.log('destroyProject', data);
 
     return data.action;
   },
