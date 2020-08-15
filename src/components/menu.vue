@@ -91,14 +91,9 @@ export default {
   name: 'Menu',
   data: () => ({
     items: [
-      { path: '/stocks', name: 'Акции' },
-      { path: '/companies', name: 'Компании' }
-      // { path: '/accounts', name: 'Счета' },
+      { path: '/stocks', name: 'Акции' }
+      // { path: '/companies', name: 'Компании' }
       // { path: '/reports', name: 'Отчеты' },
-      // { path: '/categories', name: 'Категории' },
-      // { path: '/budgets', name: 'Бюджеты' },
-      // { path: '/goals', name: 'Цели' },
-      // { path: '/projects', name: 'Проекты' }
     ]
   }),
   computed: {

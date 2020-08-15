@@ -53,7 +53,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for='item in items' :key='item.id' @click='gotoSymbol(item)'>
+              <tr v-for='item in items' :key='item.id' @click='gotoStock(item)'>
                 <td class='logoUrl'>
                   <img :src='logoUrl(item)'>
                 </td>
@@ -112,8 +112,8 @@ export default {
     ...call([
       'stocks/fetch'
     ]),
-    gotoSymbol(symbol) {
-      this.$router.push(`/companies/${symbol.company.id}`);
+    gotoStock(symbol) {
+      this.$router.push(`/stocks/${symbol.id}`);
     },
     logoUrl(symbol) {
       return symbol?.company?.logoUrl || symbol.logoUrl;

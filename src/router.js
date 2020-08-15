@@ -36,6 +36,10 @@ export default new Router({
       name: 'stocks',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/stocks/index')
     }, {
+      path: '/stocks/:id',
+      name: 'stock',
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/stocks/show')
+    }, {
       path: '/companies',
       name: 'companies',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/companies/index')

@@ -411,8 +411,8 @@ export default {
   // Reports
   // ---------------------------------
 
-  async pricesChart(token, company_id) {
-    const url = `${DOMAIN}/charts/s/prices?company_id=${company_id}`;
+  async pricesChart(token, id) {
+    const url = `${DOMAIN}/charts/s/prices?id=${id}`;
     const response = await fetch(url, { headers: this.headers(token) });
     const data = await response.json();
     this.log(url, data);
