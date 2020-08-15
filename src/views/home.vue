@@ -40,20 +40,19 @@
       </div>
     </div-->
 
-    <div class='container companies'>
+    <div class='container symbols'>
       <div class='row'>
         <div class='col s12'>
-          <Loader v-if='isLoading' class='loading' />
+          <Loader v-if='isLoadingStocks' class='loading' />
           <table v-else>
             <thead>
               <tr>
-                <th class='logoUrl' />
-                <th class='date'>Акции</th>
+                <th colspan='2'>Акции</th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              <tr v-for='item in items' :key='item.id' @click='gotoStock(item)'>
+              <tr v-for='item in itemsStocks' :key='item.id' @click='gotoStock(item)'>
                 <td class='logoUrl'>
                   <img :src='logoUrl(item)'>
                 </td>
@@ -70,6 +69,39 @@
           <br>
           <router-link v-if='!isLoading' to='/stocks' class='btn btn-flat'>
             Все акции
+          </router-link>
+        </div>
+      </div>
+    </div>
+
+    <div class='container symbols'>
+      <div class='row'>
+        <div class='col s12'>
+          <Loader v-if='isLoadingIndexes' class='loading' />
+          <table v-else>
+            <thead>
+              <tr>
+                <th colspan='2'>Индексы</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for='item in itemsIndexes' :key='item.id' @click='gotoIndex(item)'>
+                <td class='logoUrl'>
+                  <img :src='logoUrl(item)'>
+                </td>
+                <td>
+                  <span>{{ item.name }}</span>
+                </td>
+                <td class='price'>
+                  <span v-if='item.lastPrice'>$ {{ item.lastPrice }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <br>
+          <router-link v-if='!isLoading' to='/indexes' class='btn btn-flat'>
+            Все индексы
           </router-link>
         </div>
       </div>
@@ -103,17 +135,24 @@ export default {
     isSignedIn: get('user/isSignedIn'),
     isGuest: get('user/isGuest'),
     email: get('user/email'),
-    ...get('stocks/*')
+
+    isLoadingStocks: get('stocks/isLoading'),
+    isLoadingIndexes: get('indexes/isLoading'),
+    itemsStocks: get('stocks/items'),
+    itemsIndexes: get('indexes/items')
   },
   async created() {
-    await this.fetch();
+    await this.fetchStocks();
+    await this.fetchIndexes();
   },
   methods: {
-    ...call([
-      'stocks/fetch'
-    ]),
+    fetchStocks: call('stocks/fetch'),
+    fetchIndexes: call('indexes/fetch'),
     gotoStock(symbol) {
       this.$router.push(`/stocks/${symbol.id}`);
+    },
+    gotoIndex(symbol) {
+      this.$router.push(`/indexes/${symbol.id}`);
     },
     logoUrl(symbol) {
       return symbol?.company?.logoUrl || symbol.logoUrl;
@@ -156,7 +195,7 @@ h1
     background-size: cover
     z-index: -1
 
-.container.companies
+.container.symbols
   .row
     background-color: #fff
     border-radius: 6px
@@ -164,11 +203,9 @@ h1
   .loading
     padding-bottom: 600px
 
-th.logoUrl
-  width: 40px
-
 td
   &.logoUrl
+    width: 40px
     text-align: center
 
     img
@@ -179,6 +216,10 @@ td
 
   &.price
     text-align: right
+
+thead
+  tr
+    border-bottom: 1px solid #e0e0e0
 
 tbody
   tr

@@ -12,7 +12,7 @@ export default {
   actions: {
     async fetch({ commit }) {
       commit('START_LOADING');
-      const items = await api.symbols({ kind: 'stock' });
+      const items = await api.symbols({ kind: 'index' });
       commit('FINISH_LOADING', items);
     }
   },

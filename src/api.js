@@ -85,14 +85,22 @@ export default {
   // ---------------------------------
   // S::Symbols
   // ---------------------------------
-  async symbols() {
-    const query = `{
-      items:symbols {
+  async symbols({ kind }) {
+    const query = `query($kind:String) {
+      items:symbols(kind:$kind) {
         id name lastPrice logoUrl
         company { id name logoUrl }
       }
     }`;
-    const data = await this.client().request(query);
+    const vars = { kind };
+    const data = await this.client().request(query, vars);
+    // const query = `query {
+    //   items:symbols {
+    //     id name lastPrice logoUrl
+    //     company { id name logoUrl }
+    //   }
+    // }`;
+    // const data = await this.client().request(query);
     this.log(query, data);
 
     return data.items;
