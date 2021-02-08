@@ -163,9 +163,11 @@ export default {
       series.dataFields.openValueY = 'open';
       series.dataFields.lowValueY = 'low';
       series.dataFields.highValueY = 'high';
+      series.dataFields.diff = 'diff';
       series.simplifiedProcessing = true;
-      series.tooltipText = 'Open:${openValueY.value}\nLow:${lowValueY.value}\n' +
-        'High:${highValueY.value}\nClose:${valueY.value}';
+      series.tooltipText = '%: {diff}\n' +
+        'Open: ${openValueY.value}\nLow: ${lowValueY.value}\n' +
+        'High: ${highValueY.value}\nClose: ${valueY.value}';
 
       chart.cursor = new am4charts.XYCursor();
 
