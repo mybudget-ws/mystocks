@@ -151,13 +151,13 @@ export default {
 
       chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd hh:mm';
 
-      let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+      const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
       dateAxis.renderer.grid.template.location = 0;
 
-      let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.tooltip.disabled = true;
 
-      let series = chart.series.push(new am4charts.CandlestickSeries());
+      const series = chart.series.push(new am4charts.CandlestickSeries());
       series.dataFields.dateX = 'date';
       series.dataFields.valueY = 'close';
       series.dataFields.openValueY = 'open';
@@ -172,7 +172,7 @@ export default {
       chart.cursor = new am4charts.XYCursor();
 
       // a separate series for scrollbar
-      let lineSeries = chart.series.push(new am4charts.LineSeries());
+      const lineSeries = chart.series.push(new am4charts.LineSeries());
       lineSeries.dataFields.dateX = 'date';
       lineSeries.dataFields.valueY = 'close';
       // need to set on default state, as initially series is "show"
@@ -180,10 +180,10 @@ export default {
 
       // hide from legend too (in case there is one)
       lineSeries.hiddenInLegend = true;
-      lineSeries.fillOpacity = 0.5;
-      lineSeries.strokeOpacity = 0.5;
+      lineSeries.fillOpacity = 0.2;
+      lineSeries.strokeOpacity = 0.4;
 
-      let scrollbarX = new am4charts.XYChartScrollbar();
+      const scrollbarX = new am4charts.XYChartScrollbar();
       scrollbarX.series.push(lineSeries);
       chart.scrollbarX = scrollbarX;
 
