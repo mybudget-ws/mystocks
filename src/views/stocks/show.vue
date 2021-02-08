@@ -9,7 +9,8 @@
       <Loader v-if='isLoading' />
       <div v-else class='row'>
         <div class='col s12'>
-          <div class='chart' />
+          <div class='chart-new' />
+          <!--div class='chart' /-->
         </div>
 
         <table>
@@ -51,6 +52,12 @@ import { get } from 'vuex-pathify';
 import MobileDetect from 'mobile-detect';
 const md = new MobileDetect(window.navigator.userAgent);
 
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4charts from '@amcharts/amcharts4/charts';
+import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+
+am4core.useTheme(am4themes_animated);
+
 export default {
   name: 'Companies',
   components: {
@@ -86,10 +93,15 @@ export default {
     this.website = symbol?.company?.website;
     this.ceo = symbol?.company?.ceo;
     this.isLoading = false;
-    await this.loadChart();
-    this.timer = setInterval(this.loadChart, 10000);
+
+    // Old chart
+    // await this.loadChart();
+    // this.timer = setInterval(this.loadChart, 10000);
+
+    const data = await api.pricesChartOHLC(this);
+    this.loadNewChart(data);
   },
-  beforeDestroy() { clearInterval(this.timer); },
+  // beforeDestroy() { clearInterval(this.timer); },
   methods: {
     change() {
       this.loadChart();
@@ -132,6 +144,48 @@ export default {
       } else {
         this.chart.load({ columns, categories });
       }
+    },
+    loadNewChart(data) {
+      const chart = am4core.create('chart-new', am4charts.XYChart);
+      chart.paddingRight = 20;
+
+      chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd hh:mm';
+
+      let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+      dateAxis.renderer.grid.template.location = 0;
+
+      let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.tooltip.disabled = true;
+
+      let series = chart.series.push(new am4charts.CandlestickSeries());
+      series.dataFields.dateX = 'date';
+      series.dataFields.valueY = 'close';
+      series.dataFields.openValueY = 'open';
+      series.dataFields.lowValueY = 'low';
+      series.dataFields.highValueY = 'high';
+      series.simplifiedProcessing = true;
+      series.tooltipText = 'Open:${openValueY.value}\nLow:${lowValueY.value}\n' +
+        'High:${highValueY.value}\nClose:${valueY.value}';
+
+      chart.cursor = new am4charts.XYCursor();
+
+      // a separate series for scrollbar
+      let lineSeries = chart.series.push(new am4charts.LineSeries());
+      lineSeries.dataFields.dateX = 'date';
+      lineSeries.dataFields.valueY = 'close';
+      // need to set on default state, as initially series is "show"
+      lineSeries.defaultState.properties.visible = false;
+
+      // hide from legend too (in case there is one)
+      lineSeries.hiddenInLegend = true;
+      lineSeries.fillOpacity = 0.5;
+      lineSeries.strokeOpacity = 0.5;
+
+      let scrollbarX = new am4charts.XYChartScrollbar();
+      scrollbarX.series.push(lineSeries);
+      chart.scrollbarX = scrollbarX;
+
+      chart.data = data;
     }
   }
 };
@@ -151,4 +205,9 @@ export default {
 
 .website
   display: block
+
+.chart-new
+  height: 600px
+  margin-left: -30px
+  margin-right: -30px
 </style>
