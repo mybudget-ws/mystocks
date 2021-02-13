@@ -13,6 +13,23 @@
           <!--div class='chart' /-->
         </div>
 
+        <div class='col s12'>
+          <div class='row'>
+            <div class='col s12 m6 offset-m6 l2 offset-l10'>
+              <select
+                ref='selectIntervals'
+                v-model='interval'
+                :class="{ 'browser-default': true }"
+                @change='onChangeInterval'
+              >
+                <option v-for='v in intervals' :key='v.interval' :value='v.interval'>
+                  {{ v.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
         <table>
           <thead>
             <tr>
@@ -74,6 +91,11 @@ export default {
     description: undefined,
     lastPrice: 0,
 
+    interval: 'w1',
+    intervals: [
+      { name: 'Минута', interval: 'minute1' },
+      { name: 'Неделя', interval: 'w1' }
+    ],
     chart: undefined,
     timer: undefined,
     isLoading: true,
@@ -83,6 +105,7 @@ export default {
     token: get('user/token'),
     id() { return this.$route.params.id; }
   },
+
   async created() {
     const symbol = await api.symbol(this.token, { id: this.id });
     this.name = symbol?.company?.name || symbol.name;
@@ -101,8 +124,80 @@ export default {
     const data = await api.pricesChartOHLC(this);
     this.loadNewChart(data);
   },
+
+  async mounted() {
+    this.$nextTick(() => {
+      /* eslint-disable */
+      M.FormSelect.init(this.$refs.selectIntervals, {});
+      M.updateTextFields();
+      /* eslint-enable */
+    });
+  },
+
   // beforeDestroy() { clearInterval(this.timer); },
+
   methods: {
+    loadNewChart(data) {
+      if (this.chart != null) {
+        this.chart.dispose();
+      }
+
+      this.chart = am4core.create('chart-new', am4charts.XYChart);
+      this.chart.paddingRight = 20;
+
+      this.chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd hh:mm';
+
+      // https://www.amcharts.com/docs/v4/reference/dateaxis/
+      const dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
+      dateAxis.renderer.grid.template.location = 0;
+      dateAxis.skipEmptyPeriods = true;
+
+      const valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.tooltip.disabled = true;
+
+      const series = this.chart.series.push(new am4charts.CandlestickSeries());
+      series.dataFields.dateX = 'date';
+      series.dataFields.valueY = 'close';
+      series.dataFields.openValueY = 'open';
+      series.dataFields.lowValueY = 'low';
+      series.dataFields.highValueY = 'high';
+      series.dataFields.diff = 'diff';
+      series.simplifiedProcessing = true;
+      series.tooltipText = '%: {diff}\n' +
+        'Open: ${openValueY.value}\nHigh: ${highValueY.value}\n' +
+        'Low: ${lowValueY.value}\nClose: ${valueY.value}';
+
+      this.chart.cursor = new am4charts.XYCursor();
+
+      // a separate series for scrollbar
+      const lineSeries = this.chart.series.push(new am4charts.LineSeries());
+      lineSeries.dataFields.dateX = 'date';
+      lineSeries.dataFields.valueY = 'close';
+      // need to set on default state, as initially series is "show"
+      lineSeries.defaultState.properties.visible = false;
+
+      // hide from legend too (in case there is one)
+      lineSeries.hiddenInLegend = true;
+      lineSeries.fillOpacity = 0.2;
+      lineSeries.strokeOpacity = 0.4;
+
+      const scrollbarX = new am4charts.XYChartScrollbar();
+      scrollbarX.series.push(lineSeries);
+      this.chart.scrollbarX = scrollbarX;
+
+      this.chart.data = data;
+    },
+
+    async onChangeInterval() {
+      this.isLoading = true;
+      const data = await api.pricesChartOHLC(this);
+      this.isLoading = false;
+      this.$nextTick(() => {
+        this.loadNewChart(data);
+      });
+    },
+
+    // Old chart
     change() {
       this.loadChart();
     },
@@ -144,50 +239,6 @@ export default {
       } else {
         this.chart.load({ columns, categories });
       }
-    },
-    loadNewChart(data) {
-      const chart = am4core.create('chart-new', am4charts.XYChart);
-      chart.paddingRight = 20;
-
-      chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd hh:mm';
-
-      const dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-      dateAxis.renderer.grid.template.location = 0;
-
-      const valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.tooltip.disabled = true;
-
-      const series = chart.series.push(new am4charts.CandlestickSeries());
-      series.dataFields.dateX = 'date';
-      series.dataFields.valueY = 'close';
-      series.dataFields.openValueY = 'open';
-      series.dataFields.lowValueY = 'low';
-      series.dataFields.highValueY = 'high';
-      series.dataFields.diff = 'diff';
-      series.simplifiedProcessing = true;
-      series.tooltipText = '%: {diff}\n' +
-        'Open: ${openValueY.value}\nLow: ${lowValueY.value}\n' +
-        'High: ${highValueY.value}\nClose: ${valueY.value}';
-
-      chart.cursor = new am4charts.XYCursor();
-
-      // a separate series for scrollbar
-      const lineSeries = chart.series.push(new am4charts.LineSeries());
-      lineSeries.dataFields.dateX = 'date';
-      lineSeries.dataFields.valueY = 'close';
-      // need to set on default state, as initially series is "show"
-      lineSeries.defaultState.properties.visible = false;
-
-      // hide from legend too (in case there is one)
-      lineSeries.hiddenInLegend = true;
-      lineSeries.fillOpacity = 0.2;
-      lineSeries.strokeOpacity = 0.4;
-
-      const scrollbarX = new am4charts.XYChartScrollbar();
-      scrollbarX.series.push(lineSeries);
-      chart.scrollbarX = scrollbarX;
-
-      chart.data = data;
     }
   }
 };
@@ -211,5 +262,7 @@ export default {
 .chart-new
   height: 600px
   margin-left: -30px
-  margin-right: -30px
+
+  @media only screen and (min-width: 993px)
+    margin-right: -30px
 </style>

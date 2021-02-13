@@ -428,8 +428,8 @@ export default {
     return data;
   },
 
-  async pricesChartOHLC({ token, id }) {
-    const url = `${DOMAIN}/charts/s/ohlc_prices?id=${id}`;
+  async pricesChartOHLC({ token, id, interval }) {
+    const url = `${DOMAIN}/charts/s/ohlc_prices?id=${id}&interval=${interval}`;
     const response = await fetch(url, { headers: this.headers(token) });
     const data = await response.json();
     this.log(url, data);
