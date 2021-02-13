@@ -115,14 +115,15 @@ export default {
     this.description = symbol?.company?.description;
     this.website = symbol?.company?.website;
     this.ceo = symbol?.company?.ceo;
-    this.isLoading = false;
 
     // Old chart
     // await this.loadChart();
     // this.timer = setInterval(this.loadChart, 10000);
 
     const data = await api.pricesChartOHLC(this);
-    this.loadNewChart(data);
+    this.isLoading = false;
+
+    this.$nextTick(() => this.loadNewChart(data));
   },
 
   async mounted() {
@@ -192,9 +193,7 @@ export default {
       this.isLoading = true;
       const data = await api.pricesChartOHLC(this);
       this.isLoading = false;
-      this.$nextTick(() => {
-        this.loadNewChart(data);
-      });
+      this.$nextTick(() => this.loadNewChart(data));
     },
 
     // Old chart
