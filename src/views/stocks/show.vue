@@ -72,7 +72,6 @@ const md = new MobileDetect(window.navigator.userAgent);
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
-
 am4core.useTheme(am4themes_animated);
 
 export default {
@@ -97,7 +96,7 @@ export default {
       { name: 'Неделя', interval: 'w1' }
     ],
     chart: undefined,
-    timer: undefined,
+    // timer: undefined,
     isLoading: true,
     isPhone: md.phone() != null
   }),
@@ -109,7 +108,7 @@ export default {
   async created() {
     const symbol = await api.symbol(this.token, { id: this.id });
     this.name = symbol?.company?.name || symbol.name;
-    // TODO: Update lastPrice by timer from chart data.
+    // todo: Update lastPrice by timer from chart data.
     this.lastPrice = symbol.lastPrice;
     this.logoUrl = symbol?.company?.logoUrl || symbol.logoUrl;
     this.description = symbol?.company?.description;
@@ -244,9 +243,9 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-.chart
-  height: 400px
-  margin-left: -12px
+// .chart
+//   height: 400px
+//   margin-left: -12px
 
 .logo
   height: 48px
