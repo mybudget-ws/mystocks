@@ -90,9 +90,12 @@ export default {
     description: undefined,
     lastPrice: 0,
 
-    interval: 'w1',
+    // interval: 'w1',
+    interval: 'd1',
+    // interval: 'minute1',
     intervals: [
       { name: 'Минута', interval: 'minute1' },
+      { name: 'День', interval: 'd1' },
       { name: 'Неделя', interval: 'w1' }
     ],
     chart: undefined,
