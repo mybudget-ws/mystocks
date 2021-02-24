@@ -48,14 +48,6 @@ export default new Router({
       name: 'indexes',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/indexes/index')
     }, {
-      path: '/companies',
-      name: 'companies',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/companies/index')
-    }, {
-      path: '/companies/:id',
-      name: 'company',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/companies/show')
-    }, {
       path: '/settings/:tab',
       name: 'settings',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/settings/index'),

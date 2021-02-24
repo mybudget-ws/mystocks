@@ -30,23 +30,58 @@
           </div>
         </div>
 
-        <table>
-          <thead>
-            <tr>
-              <th>Текущая цена</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>
-                $ {{ lastPrice }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class='col s12'>
+          <table>
+            <thead>
+              <tr>
+                <th>Текущая цена</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  $ {{ lastPrice }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div class='col s12'>
-          <h5>Description</h5>
+          <!--h5>Дивиденды</h5-->
+          <table>
+            <thead>
+              <tr>
+                <th>Дивиденды</th>
+                <th>Дата</th>
+                <th>Частота</th>
+                <th>Детали</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for='item in dividends'
+                :key='item.id'
+              >
+                <td>
+                  <Amount
+                    :value='item.amount'
+                    :currency='item.currency.name'
+                  />
+                </td>
+                <td>{{ dateFormatted(item) }}</td>
+                <td>{{ item.frequency }}</td>
+                <td>{{ item.description }} ({{ item.flag }})</td>
+              </tr>
+            </tbody>
+          </table>
+          <p v-if='dividends.length === 0' class='note'>
+            В ближайшее время дивидендов нет
+          </p>
+        </div>
+
+        <div class='col s12'>
+          <h5>Описание</h5>
           <p>{{ description }}</p>
           <p>
             CEO - {{ ceo }}
@@ -59,12 +94,17 @@
 </template>
 
 <script>
+import Amount from '@/components/amount';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
 import api from '../../api';
 import c3 from 'c3';
 import { get } from 'vuex-pathify';
+
+const moment = require('moment');
+moment.locale('ru');
+// const SERVER_UTC_OFFSET = 3;
 
 import MobileDetect from 'mobile-detect';
 const md = new MobileDetect(window.navigator.userAgent);
@@ -77,6 +117,7 @@ am4core.useTheme(am4themes_animated);
 export default {
   name: 'Companies',
   components: {
+    Amount,
     Loader,
     Menu,
     PageHeader
@@ -89,6 +130,7 @@ export default {
     ceo: undefined,
     description: undefined,
     lastPrice: 0,
+    dividends: [],
 
     // interval: 'w1',
     interval: 'd1',
@@ -117,6 +159,7 @@ export default {
     this.description = symbol?.company?.description;
     this.website = symbol?.company?.website;
     this.ceo = symbol?.company?.ceo;
+    this.dividends = symbol?.company?.dividends || [];
 
     // Old chart
     // await this.loadChart();
@@ -140,6 +183,9 @@ export default {
   // beforeDestroy() { clearInterval(this.timer); },
 
   methods: {
+    dateFormatted({ dateAt }) {
+      return moment(dateAt).format('DD.MM.YYYY');
+    },
     loadNewChart(data) {
       if (this.chart != null) {
         this.chart.dispose();
@@ -266,4 +312,8 @@ export default {
 
   @media only screen and (min-width: 993px)
     margin-right: -30px
+
+.note
+  margin-left: 4px
+  color: #90a4ae
 </style>

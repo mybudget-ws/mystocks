@@ -73,7 +73,13 @@ export default {
 
   async company(token, { id }) {
     const query = `query($id:ID!) {
-      item:company(id:$id) { id name logoUrl website ceo description lastPrice }
+      item:company(id:$id) {
+        id name logoUrl website ceo description lastPrice
+        dividends {
+          currency { name }
+          amount dateAt description flag frequency
+        }
+      }
     }`;
     const vars = { id };
     const data = await this.client(token).request(query, vars);
@@ -110,7 +116,13 @@ export default {
     const query = `query($id:ID!) {
       item:symbol(id:$id) {
         id name logoUrl lastPrice
-        company { id name logoUrl website ceo description }
+        company {
+          id name logoUrl website ceo description
+          dividends {
+            currency { name }
+            amount dateAt description flag frequency
+          }
+        }
       }
     }`;
     const vars = { id };
