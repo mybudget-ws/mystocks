@@ -7,7 +7,7 @@
         <Amount
           v-if='!isLoading'
           class='last-price'
-          :value='lastPrice'
+          :value='lastPriceAmount'
           currency='USD'
         />
       </PageHeader>
@@ -119,6 +119,7 @@ export default {
     ceo: undefined,
     description: undefined,
     lastPrice: 0,
+    lastDiff: 0,
     dividends: [],
 
     // interval: 'w1',
@@ -136,7 +137,11 @@ export default {
   }),
   computed: {
     token: get('user/token'),
-    id() { return this.$route.params.id; }
+    id() { return this.$route.params.id; },
+    lastPriceAmount() {
+      if (this.lastDiff > 0) { return this.lastPrice; }
+      return this.lastPrice * (-1);
+    }
   },
 
   async created() {
@@ -155,6 +160,10 @@ export default {
     // this.timer = setInterval(this.loadChart, 10000);
 
     const data = await api.pricesChartOHLC(this);
+    const lastPoint = data[data.length - 1];
+    if (lastPoint) {
+      this.lastDiff = lastPoint['diff'];
+    }
     this.isLoading = false;
 
     this.$nextTick(() => this.loadNewChart(data));
