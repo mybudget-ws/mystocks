@@ -4,6 +4,12 @@
     <div class='container container-wide'>
       <PageHeader :name='name'>
         <img v-if='!isLoading' class='logo' :src='logoUrl'>
+        <Amount
+          v-if='!isLoading'
+          class='last-price'
+          :value='lastPrice'
+          currency='USD'
+        />
       </PageHeader>
 
       <Loader v-if='isLoading' />
@@ -28,23 +34,6 @@
               </select>
             </div>
           </div>
-        </div>
-
-        <div class='col s12'>
-          <table>
-            <thead>
-              <tr>
-                <th>Текущая цена</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  $ {{ lastPrice }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
 
         <div class='col s12'>
@@ -295,6 +284,13 @@ export default {
 // .chart
 //   height: 400px
 //   margin-left: -12px
+
+.last-price
+  font-size: 28px
+
+  @media only screen and (min-width: 993px)
+    display: inline-block
+    margin-left: 20px
 
 .logo
   height: 48px
