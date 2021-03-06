@@ -4,6 +4,12 @@
     <div class='container container-wide'>
       <PageHeader :name='name'>
         <img v-if='!isLoading' class='logo' :src='logoUrl'>
+        <Amount
+          v-if='!isLoading'
+          class='last-price'
+          :value='lastPrice'
+          currency='USD'
+        />
       </PageHeader>
 
       <Loader v-if='isLoading' />
@@ -50,6 +56,7 @@
 </template>
 
 <script>
+import Amount from '@/components/amount';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
@@ -68,6 +75,7 @@ am4core.useTheme(am4themes_animated);
 export default {
   name: 'Companies',
   components: {
+    Amount,
     Loader,
     Menu,
     PageHeader
@@ -229,6 +237,13 @@ export default {
 // .chart
 //   height: 400px
 //   margin-left: -12px
+
+.last-price
+  font-size: 28px
+
+  @media only screen and (min-width: 993px)
+    display: inline-block
+    margin-left: 20px
 
 .logo
   height: 48px
