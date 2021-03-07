@@ -59,7 +59,7 @@ export default {
     },
 
     name() {
-      if (this.symbol == null) { return 'Loading...'; }
+      if (this.symbol == null) { return ''; }
 
       const { name, company } = this.symbol;
       if (company == null) { return name; }
