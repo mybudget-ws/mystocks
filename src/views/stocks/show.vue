@@ -87,86 +87,34 @@ import Amount from '@/components/amount';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
-import api from '../../api';
-import c3 from 'c3';
-import { get } from 'vuex-pathify';
+import SymbolShow from '@/mixins/symbol_show';
+// import { get } from 'vuex-pathify';
 
 const moment = require('moment');
 moment.locale('ru');
 // const SERVER_UTC_OFFSET = 3;
 
-import MobileDetect from 'mobile-detect';
-const md = new MobileDetect(window.navigator.userAgent);
-
-import * as am4core from '@amcharts/amcharts4/core';
-import * as am4charts from '@amcharts/amcharts4/charts';
-import am4themes_animated from '@amcharts/amcharts4/themes/animated';
-am4core.useTheme(am4themes_animated);
-
 export default {
-  name: 'Companies',
+  name: 'Company',
   components: {
     Amount,
     Loader,
     Menu,
     PageHeader
   },
+  mixins: [SymbolShow],
   props: {},
-  data: () => ({
-    name: '',
-    logoUrl: '',
-    website: undefined,
-    ceo: undefined,
-    description: undefined,
-    lastPrice: 0,
-    lastDiff: 0,
-    dividends: [],
-
-    // interval: 'w1',
-    interval: 'd1',
-    intervals: [
-      { name: 'Минута', interval: 'minute1' },
-      { name: 'День', interval: 'd1' },
-      { name: 'Неделя', interval: 'w1' },
-      { name: 'Месяц', interval: 'm1' }
-    ],
-    chart: undefined,
-    // timer: undefined,
-    isLoading: true,
-    isPhone: md.phone() != null
-  }),
+  data: () => ({}),
   computed: {
-    token: get('user/token'),
-    id() { return this.$route.params.id; },
-    lastPriceAmount() {
-      if (this.lastDiff > 0) { return this.lastPrice; }
-      return this.lastPrice * (-1);
+    ceo() { return this?.symbol?.company?.ceo; },
+    description() { return this?.symbol?.company?.description; },
+    website() { return this?.symbol?.company?.website; },
+    dividends() {
+      if (this.company == null) { return []; }
+      if (this.company.dividends == null) { return []; }
+
+      return this.company.dividends;
     }
-  },
-
-  async created() {
-    const symbol = await api.symbol(this.token, { id: this.id });
-    this.name = symbol?.company?.name || symbol.name;
-    // todo: Update lastPrice by timer from chart data.
-    this.lastPrice = symbol.lastPrice;
-    this.logoUrl = symbol?.company?.logoUrl || symbol.logoUrl;
-    this.description = symbol?.company?.description;
-    this.website = symbol?.company?.website;
-    this.ceo = symbol?.company?.ceo;
-    this.dividends = symbol?.company?.dividends || [];
-
-    // Old chart
-    // await this.loadChart();
-    // this.timer = setInterval(this.loadChart, 10000);
-
-    const data = await api.pricesChartOHLC(this);
-    const lastPoint = data[data.length - 1];
-    if (lastPoint) {
-      this.lastDiff = lastPoint['diff'];
-    }
-    this.isLoading = false;
-
-    this.$nextTick(() => this.loadNewChart(data));
   },
 
   async mounted() {
@@ -178,112 +126,9 @@ export default {
     });
   },
 
-  // beforeDestroy() { clearInterval(this.timer); },
-
   methods: {
     dateFormatted({ dateAt }) {
       return moment(dateAt).format('DD.MM.YYYY');
-    },
-    loadNewChart(data) {
-      if (this.chart != null) {
-        this.chart.dispose();
-      }
-
-      this.chart = am4core.create('chart-new', am4charts.XYChart);
-      this.chart.paddingRight = 20;
-
-      this.chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd hh:mm';
-
-      // https://www.amcharts.com/docs/v4/reference/dateaxis/
-      const dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
-      dateAxis.renderer.grid.template.location = 0;
-      dateAxis.skipEmptyPeriods = true;
-
-      const valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.tooltip.disabled = true;
-
-      const series = this.chart.series.push(new am4charts.CandlestickSeries());
-      series.dataFields.dateX = 'date';
-      series.dataFields.valueY = 'close';
-      series.dataFields.openValueY = 'open';
-      series.dataFields.lowValueY = 'low';
-      series.dataFields.highValueY = 'high';
-      series.dataFields.diff = 'diff';
-      series.simplifiedProcessing = true;
-      series.tooltipText = '%: {diff}\n' +
-        'Open: ${openValueY.value}\nHigh: ${highValueY.value}\n' +
-        'Low: ${lowValueY.value}\nClose: ${valueY.value}';
-
-      this.chart.cursor = new am4charts.XYCursor();
-
-      // a separate series for scrollbar
-      const lineSeries = this.chart.series.push(new am4charts.LineSeries());
-      lineSeries.dataFields.dateX = 'date';
-      lineSeries.dataFields.valueY = 'close';
-      // need to set on default state, as initially series is "show"
-      lineSeries.defaultState.properties.visible = false;
-
-      // hide from legend too (in case there is one)
-      lineSeries.hiddenInLegend = true;
-      lineSeries.fillOpacity = 0.2;
-      lineSeries.strokeOpacity = 0.4;
-
-      const scrollbarX = new am4charts.XYChartScrollbar();
-      scrollbarX.series.push(lineSeries);
-      this.chart.scrollbarX = scrollbarX;
-
-      this.chart.data = data;
-    },
-
-    async onChangeInterval() {
-      this.isLoading = true;
-      const data = await api.pricesChartOHLC(this);
-      this.isLoading = false;
-      this.$nextTick(() => this.loadNewChart(data));
-    },
-
-    // Old chart
-    change() {
-      this.loadChart();
-    },
-    async loadChart() {
-      const columns = await api.pricesChart(this.token, this.id);
-      const categories = columns[0].slice(1);
-      if (this.chart == null) {
-        this.chart = c3.generate({
-          bindto: '.chart',
-          data: {
-            x: 'x',
-            // xFormat: '%Y-%m-%d %H:%M',
-            type: 'spline',
-            columns: columns
-          },
-          axis: {
-            x: {
-              type: 'category',
-              categories: categories,
-              tick: {
-                multiline: false,
-                centered: true,
-                culling: { max: 6 }
-                // format: '%d.%m.%Y %H:%M',
-                // count: 10
-              },
-              padding: { left: 0, right: 0 }
-            },
-            y: {
-              padding: { top: 20 }
-            }
-          },
-          point: { show: false },
-          grid: {
-            x: { show: false },
-            y: { show: true }
-          }
-        });
-      } else {
-        this.chart.load({ columns, categories });
-      }
     }
   }
 };
