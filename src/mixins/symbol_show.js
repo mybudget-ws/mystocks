@@ -13,10 +13,10 @@ am4core.useTheme(am4themes_animated);
 export default {
   data: () => ({
     symbol: undefined,
-    // interval: 'w1',
-    interval: 'd1',
+    interval: 'h1',
     intervals: [
       { name: 'Минута', interval: 'minute1' },
+      { name: 'Час', interval: 'h1' },
       { name: 'День', interval: 'd1' },
       { name: 'Неделя', interval: 'w1' },
       { name: 'Месяц', interval: 'm1' }
