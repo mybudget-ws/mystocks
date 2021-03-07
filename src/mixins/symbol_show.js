@@ -16,6 +16,7 @@ export default {
     interval: 'h1',
     intervals: [
       { name: 'Минута', interval: 'min1' },
+      { name: '5 минут', interval: 'min5' },
       { name: '10 минут', interval: 'min10' },
       { name: '15 минут', interval: 'min15' },
       { name: '30 минут', interval: 'min30' },
