@@ -20,6 +20,18 @@
         </div>
 
         <div class='col s12'>
+          <a
+            v-for='item in intervals'
+            :key='item.interval'
+            class='waves-effect waves-teal btn-flat'
+            :class="{ disabled: item.interval == interval }"
+            @click='onChangeInterval(item.interval)'
+          >
+            {{ item.name }}
+          </a>
+        </div>
+
+        <!--div class='col s12'>
           <div class='row'>
             <div class='col s12 m6 offset-m6 l2 offset-l10'>
               <select
@@ -34,7 +46,7 @@
               </select>
             </div>
           </div>
-        </div>
+        </div-->
 
         <div class='col s12'>
           <!--h5>Дивиденды</h5-->
@@ -117,14 +129,15 @@ export default {
     }
   },
 
-  async mounted() {
-    this.$nextTick(() => {
-      /* eslint-disable */
-      M.FormSelect.init(this.$refs.selectIntervals, {});
-      M.updateTextFields();
-      /* eslint-enable */
-    });
-  },
+  // NOTE: Init select
+  // async mounted() {
+  //   this.$nextTick(() => {
+  //     /* eslint-disable */
+  //     M.FormSelect.init(this.$refs.selectIntervals, {});
+  //     M.updateTextFields();
+  //     /* eslint-enable */
+  //   });
+  // },
 
   methods: {
     dateFormatted({ dateAt }) {

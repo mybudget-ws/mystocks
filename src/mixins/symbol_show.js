@@ -89,7 +89,9 @@ export default {
   // beforeDestroy() { clearInterval(this.timer); },
 
   methods: {
-    async onChangeInterval() {
+    async onChangeInterval(interval = null) {
+      if (interval === this.interval) { return; }
+      if (interval) { this.interval = interval; }
       this.isLoading = true;
       const data = await api.pricesChartOHLC(this);
       this.isLoading = false;

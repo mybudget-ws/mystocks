@@ -16,24 +16,18 @@
       <div v-else class='row'>
         <div class='col s12'>
           <div class='chart-new' />
-          <!--div class='chart' /-->
         </div>
 
         <div class='col s12'>
-          <div class='row'>
-            <div class='col s12 m6 offset-m6 l2 offset-l10'>
-              <select
-                ref='selectIntervals'
-                v-model='interval'
-                :class="{ 'browser-default': true }"
-                @change='onChangeInterval'
-              >
-                <option v-for='v in intervals' :key='v.interval' :value='v.interval'>
-                  {{ v.name }}
-                </option>
-              </select>
-            </div>
-          </div>
+          <a
+            v-for='item in intervals'
+            :key='item.interval'
+            class='waves-effect waves-teal btn-flat'
+            :class="{ disabled: item.interval == interval }"
+            @click='onChangeInterval(item.interval)'
+          >
+            {{ item.name }}
+          </a>
         </div>
       </div>
     </div>
@@ -60,26 +54,11 @@ export default {
   props: {},
   data: () => ({}),
   computed: {},
-
-  async mounted() {
-    this.$nextTick(() => {
-      /* eslint-disable */
-      M.FormSelect.init(this.$refs.selectIntervals, {});
-      M.updateTextFields();
-      /* eslint-enable */
-    });
-  },
-
-  methods: {
-  }
+  methods: {}
 };
 </script>
 
 <style scoped lang='sass'>
-// .chart
-//   height: 400px
-//   margin-left: -12px
-
 .last-price
   font-size: 28px
 
