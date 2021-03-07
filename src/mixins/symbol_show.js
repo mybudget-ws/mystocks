@@ -15,7 +15,8 @@ export default {
     symbol: undefined,
     interval: 'h1',
     intervals: [
-      { name: 'Минута', interval: 'minute1' },
+      { name: 'Минута', interval: 'min1' },
+      { name: '30 минут', interval: 'min30' },
       { name: 'Час', interval: 'h1' },
       { name: 'День', interval: 'd1' },
       { name: 'Неделя', interval: 'w1' },
