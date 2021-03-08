@@ -112,6 +112,8 @@ export default {
         id name logoUrl lastPrice
         company {
           id name logoUrl website ceo description
+          sector { id name }
+          industry { id name }
           dividends {
             currency { name }
             amount dateAt description flag frequency

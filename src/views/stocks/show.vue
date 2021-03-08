@@ -15,6 +15,18 @@
       <Loader v-if='isLoading' />
       <div v-else class='row'>
         <div class='col s12'>
+          <div class='badges'>
+            <span
+              v-if='sector'
+              class='new badge tag indigo lighten-4'
+              :data-badge-caption='sector'
+            />
+            <span
+              v-if='industry'
+              class='new badge tag indigo lighten-4'
+              :data-badge-caption='industry'
+            />
+          </div>
           <div class='chart-new' />
           <!--div class='chart' /-->
         </div>
@@ -121,6 +133,8 @@ export default {
     ceo() { return this?.symbol?.company?.ceo; },
     description() { return this?.symbol?.company?.description; },
     website() { return this?.symbol?.company?.website; },
+    sector() { return this?.symbol?.company?.sector?.name; },
+    industry() { return this?.symbol?.company?.industry?.name; },
     dividends() {
       if (this.company == null) { return []; }
       if (this.company.dividends == null) { return []; }
@@ -179,4 +193,12 @@ export default {
 .note
   margin-left: 4px
   color: #90a4ae
+
+.badges
+  display: inline-block
+
+  .badge
+    margin-left: 0
+    margin-right: 10px
+    color: #212121 !important
 </style>
