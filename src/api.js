@@ -61,16 +61,6 @@ export default {
   // ---------------------------------
   // S::Companies
   // ---------------------------------
-  async companies() {
-    const query = `{
-      items:companies { id name logoUrl lastPrice }
-    }`;
-    const data = await this.client().request(query);
-    this.log(query, data);
-
-    return data.items;
-  },
-
   async company(token, { id }) {
     const query = `query($id:ID!) {
       item:company(id:$id) {
@@ -91,14 +81,18 @@ export default {
   // ---------------------------------
   // S::Symbols
   // ---------------------------------
-  async symbols({ kind }) {
-    const query = `query($kind:String) {
-      items:symbols(kind:$kind) {
+  async symbols({ kind, isPopular, page, perPage }) {
+    const query = `query($kind:String, $isPopular:Boolean, $page:Int, $perPage:Int) {
+      items:symbols(kind:$kind, isPopular:$isPopular, page:$page, perPage:$perPage) {
         id name lastPrice logoUrl
-        company { id name logoUrl }
+        company {
+          id name logoUrl
+          sector { id name }
+          industry { id name }
+        }
       }
     }`;
-    const vars = { kind };
+    const vars = { kind, isPopular, page, perPage };
     const data = await this.client().request(query, vars);
     // const query = `query {
     //   items:symbols {

@@ -31,6 +31,18 @@
             </tbody>
           </table>
         </div>
+
+        <div v-if='!isLoading' class='col s12'>
+          <Loader v-if='isLoadingPage' size='small' />
+          <br>
+          <a
+            v-if='!isLoadingPage && isMore'
+            class='btn btn-flat'
+            @click='more'
+          >
+            Загрузить ещё...
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -63,12 +75,16 @@ export default {
     ...get('stocks/*')
   },
   async created() {
-    await this.fetch();
+    await this.fetch({ isPopular: false });
   },
   methods: {
     ...call([
-      'stocks/fetch'
+      'stocks/fetch',
+      'stocks/fetchNext'
     ]),
+    more() {
+      this.fetchNext({ isPopular: false });
+    },
     gotoStock(symbol) {
       this.$router.push(`/stocks/${symbol.id}`);
     },
