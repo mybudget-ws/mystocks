@@ -11,8 +11,9 @@
             <thead>
               <tr>
                 <th class='logoUrl' />
-                <th />
-                <th />
+                <th>Название</th>
+                <th>Сектор, индустрия</th>
+                <th class='right-align'>Цена</th>
               </tr>
             </thead>
             <tbody>
@@ -24,12 +25,36 @@
                   <span>{{ item.company.name }}</span>
                   <span class='symbol'>{{ item.name }}</span>
                 </td>
+                <td>
+                  <span
+                    v-if='item.company.sector'
+                    class='new badge tag indigo lighten-4'
+                    :data-badge-caption='item.company.sector.name'
+                  />
+                  <span
+                    v-if='item.company.industry'
+                    class='new badge tag indigo lighten-4'
+                    :data-badge-caption='item.company.industry.name'
+                  />
+                </td>
                 <td class='price'>
                   <span v-if='item.lastPrice'>$ {{ item.lastPrice }}</span>
                 </td>
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div v-if='!isLoading' class='col s12'>
+          <Loader v-if='isLoadingPage' size='small' />
+          <br>
+          <a
+            v-if='!isLoadingPage && isMore'
+            class='btn btn-flat'
+            @click='more'
+          >
+            Загрузить ещё...
+          </a>
         </div>
       </div>
     </div>
@@ -63,12 +88,16 @@ export default {
     ...get('stocks/*')
   },
   async created() {
-    await this.fetch();
+    await this.fetch({ isPopular: false });
   },
   methods: {
     ...call([
-      'stocks/fetch'
+      'stocks/fetch',
+      'stocks/fetchNext'
     ]),
+    more() {
+      this.fetchNext({ isPopular: false });
+    },
     gotoStock(symbol) {
       this.$router.push(`/stocks/${symbol.id}`);
     },
@@ -105,4 +134,8 @@ tbody
 .symbol
   margin-left: 10px
   color: #90a4ae
+
+.badge
+  margin-right: 10px
+  color: #212121 !important
 </style>

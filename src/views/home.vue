@@ -142,8 +142,8 @@ export default {
     itemsIndexes: get('indexes/items')
   },
   async created() {
-    await this.fetchStocks();
-    await this.fetchIndexes();
+    await this.fetchStocks({ isPopular: true });
+    await this.fetchIndexes({ isPopular: true });
   },
   methods: {
     fetchStocks: call('stocks/fetch'),

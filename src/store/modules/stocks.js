@@ -6,25 +6,60 @@ export default {
   state: {
     isLoading: true,
     isLoaded: false,
-    items: []
+    isLoadingPage: false,
+    items: [],
+    page: 1,
+    perPage: 20,
+    isMore: true
   },
 
   actions: {
-    async fetch({ commit }) {
+    async fetch({ commit, state }, { isPopular }) {
       commit('START_LOADING');
-      const items = await api.symbols({ kind: 'stock' });
+      const { page, perPage } = state;
+      const items = await api.symbols({
+        kind: 'stock',
+        isPopular,
+        page,
+        perPage
+      });
       commit('FINISH_LOADING', items);
+    },
+    async fetchNext({ commit, state }, { isPopular }) {
+      commit('START_NEXT_PAGE');
+      const { page, perPage } = state;
+      const items = await api.symbols({
+        kind: 'stock',
+        isPopular,
+        page,
+        perPage
+      });
+      commit('FINISH_NEXT_PAGE', items);
     }
   },
 
   mutations: {
     START_LOADING(state) {
       state.isLoading = true;
+      state.isLoadingPage = false;
+      state.isLoaded = false;
+      state.isMore = true;
+      state.page = 1;
     },
     FINISH_LOADING(state, items) {
       state.items = items;
       state.isLoading = false;
       state.isLoaded = true;
+      state.isMore = items.length >= state.perPage;
+    },
+    START_NEXT_PAGE(state) {
+      state.isLoadingPage = true;
+      state.page = state.page + 1;
+    },
+    FINISH_NEXT_PAGE(state, items) {
+      state.isLoadingPage = false;
+      state.isMore = items.length >= state.perPage;
+      state.items = [...state.items, ...items];
     }
   }
 };
