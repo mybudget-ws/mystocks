@@ -26,7 +26,7 @@ export default {
     async fetchNext({ commit, state }) {
       commit('START_NEXT_PAGE');
       const { page, perPage } = state;
-      const items = await api.symbols({
+      const items = await api.articles({
         page,
         perPage
       });
