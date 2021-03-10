@@ -108,9 +108,38 @@
     </div>
 
     <div v-if='!isLoadingArticles' class='container articles'>
-      <div v-for='item in itemsArticles' :key='item.id'>
-        {{ item.title }}
+      <div class='row'>
+        <h4 class='col s12'>
+          Последние новости
+          <router-link to='/news' class='btn btn-flat right'>
+            Все
+          </router-link>
+        </h4>
       </div>
+      <div class='row'>
+        <div v-for='item in itemsArticles' :key='item.id' class='col s12 m6x l4x'>
+          <div class='card'>
+            <div class='card-content'>
+              <div class='badges'>
+                <span
+                  v-for='symbol in item.symbols'
+                  :key='symbol.id'
+                  class='new badge tag indigo lighten-4'
+                  :data-badge-caption='symbol.name'
+                />
+              </div>
+              <span class='card-title'>{{ item.title }}</span>
+              <p>{{ item.summary }}</p>
+              <br>
+              <p><a :href='item.url' target='_blank'>Источник: {{ item.source }}</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <router-link v-if='!isLoadingArticles' to='/news' class='btn btn-flat'>
+        Все новости
+      </router-link>
     </div>
 
     <Footer />
@@ -240,4 +269,10 @@ tbody
 .symbol
   margin-left: 10px
   color: #90a4ae
+
+.badges
+  .badge
+    margin-left: 0
+    margin-right: 10px
+    color: #212121 !important
 </style>
