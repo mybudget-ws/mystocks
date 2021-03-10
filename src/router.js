@@ -48,6 +48,10 @@ export default new Router({
       name: 'indexes',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/indexes/index')
     }, {
+      path: '/news',
+      name: 'news',
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/news/index')
+    }, {
       path: '/settings/:tab',
       name: 'settings',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/settings/index'),
@@ -79,20 +83,11 @@ export default new Router({
     //   component: () => import(/* webpackChunkName: "inner" */ '@/views/accounts/edit'),
     //   beforeEnter: requireAuth
     // }, {
-    //   path: '/currencies',
-    //   name: 'currencies',
-    //   component: () => import(/* webpackChunkName: "home-group" */ '@/views/currencies/index')
-    // }, {
     //   path: '/settings/:tab',
     //   name: 'settings',
     //   component: () => import(/* webpackChunkName: "inner" */ '@/views/settings/index'),
     //   beforeEnter: requireAuth
     // }, {
-    //   path: '/helps/iphone-icon',
-    //   name: 'helps_iphone_icon',
-    //   component: () => import(/* webpackChunkName: "inner" */ '@/views/helps/iphone_icon')
-    // }
-    // , {
     //   path: '*',
     //   component: () => import(/* webpackChunkName: "landing" */ '@/views/dynamic')
     // }

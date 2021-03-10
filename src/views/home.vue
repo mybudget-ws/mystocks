@@ -117,7 +117,8 @@
         </h4>
       </div>
       <div class='row'>
-        <div v-for='item in itemsArticles' :key='item.id' class='col s12 m6x l4x'>
+        <!-- TODO: Extract news component -->
+        <div v-for='item in itemsArticles' :key='item.id' class='col s12'>
           <div class='card'>
             <div class='card-content'>
               <div class='badges'>
@@ -131,6 +132,7 @@
               <span class='card-title'>{{ item.title }}</span>
               <p>{{ item.summary }}</p>
               <br>
+              <p class='grey-text'>{{ dateFormat(item) }}</p>
               <p><a :href='item.url' target='_blank'>Источник: {{ item.source }}</a></p>
             </div>
           </div>
