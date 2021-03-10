@@ -67,7 +67,7 @@
             </tbody>
           </table>
           <br>
-          <router-link v-if='!isLoading' to='/stocks' class='btn btn-flat'>
+          <router-link v-if='!isLoadingStocks' to='/stocks' class='btn btn-flat'>
             Все акции
           </router-link>
         </div>
@@ -100,10 +100,16 @@
             </tbody>
           </table>
           <br>
-          <router-link v-if='!isLoading' to='/indexes' class='btn btn-flat'>
+          <router-link v-if='!isLoadingIndexes' to='/indexes' class='btn btn-flat'>
             Все индексы
           </router-link>
         </div>
+      </div>
+    </div>
+
+    <div v-if='!isLoadingArticles' class='container articles'>
+      <div v-for='item in itemsArticles' :key='item.id'>
+        {{ item.title }}
       </div>
     </div>
 
@@ -138,16 +144,20 @@ export default {
 
     isLoadingStocks: get('stocks/isLoading'),
     isLoadingIndexes: get('indexes/isLoading'),
+    isLoadingArticles: get('articles/isLoading'),
     itemsStocks: get('stocks/items'),
-    itemsIndexes: get('indexes/items')
+    itemsIndexes: get('indexes/items'),
+    itemsArticles: get('articles/items')
   },
   async created() {
     await this.fetchStocks({ isPopular: true });
     await this.fetchIndexes({ isPopular: true });
+    await this.fetchArticles();
   },
   methods: {
     fetchStocks: call('stocks/fetch'),
     fetchIndexes: call('indexes/fetch'),
+    fetchArticles: call('articles/fetch'),
     gotoStock(symbol) {
       this.$router.push(`/stocks/${symbol.id}`);
     },

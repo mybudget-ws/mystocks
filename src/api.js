@@ -94,13 +94,6 @@ export default {
     }`;
     const vars = { kind, isPopular, page, perPage };
     const data = await this.client().request(query, vars);
-    // const query = `query {
-    //   items:symbols {
-    //     id name lastPrice logoUrl
-    //     company { id name logoUrl }
-    //   }
-    // }`;
-    // const data = await this.client().request(query);
     this.log(query, data);
 
     return data.items;
@@ -126,6 +119,25 @@ export default {
     this.log(query, data);
 
     return data.item;
+  },
+
+  // ---------------------------------
+  // S::Articles
+  // ---------------------------------
+  async articles({ page, perPage }) {
+    const query = `query($page:Int, $perPage:Int) {
+      items:articles(page:$page, perPage:$perPage) {
+        id title dateAt url source summary
+        symbols {
+          id name logoUrl
+        }
+      }
+    }`;
+    const vars = { page, perPage };
+    const data = await this.client().request(query, vars);
+    this.log(query, data);
+
+    return data.items;
   },
 
   // ---------------------------------
@@ -408,22 +420,6 @@ export default {
   },
 
   // ---------------------------------
-  // Hidden
-  // ---------------------------------
-
-  async toggleIsHidden(token, id, model) {
-    const query = `
-      mutation($id:Int!, $model:String!) {
-        action:toggleIsHidden(id: $id, model: $model)
-      }
-    `;
-    const data = await this.client(token).request(query, { id, model });
-    this.log('toggleIsHidden', data);
-
-    return data.action;
-  },
-
-  // ---------------------------------
   // Reports
   // ---------------------------------
 
@@ -477,26 +473,6 @@ export default {
     this.log(query, data);
 
     return data.items;
-  },
-
-  // ---------------------------------
-  // Test
-  // ---------------------------------
-
-  async ping() {
-    const query = '{ ping }';
-    const data = await this.client().request(query);
-    this.log('ping', data);
-
-    return data;
-  },
-
-  async pingMutation() {
-    const query = 'mutation { pingMutation }';
-    const data = await this.client().request(query);
-    this.log('pingMutation', data);
-
-    return data;
   },
 
   // ---------------------------------
