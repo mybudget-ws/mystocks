@@ -49,7 +49,7 @@ export default new Router({
       component: () => import(/* webpackChunkName: "inner" */ '@/views/indexes/index')
     }, {
       path: '/news',
-      name: 'news',
+      name: 'articles',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/news/index')
     }, {
       path: '/settings/:tab',

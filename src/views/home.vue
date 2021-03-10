@@ -117,31 +117,17 @@
         </h4>
       </div>
       <div class='row'>
-        <!-- TODO: Extract news component -->
         <div v-for='item in itemsArticles' :key='item.id' class='col s12'>
-          <div class='card'>
-            <div class='card-content'>
-              <div class='badges'>
-                <span
-                  v-for='symbol in item.symbols'
-                  :key='symbol.id'
-                  class='new badge tag indigo lighten-4'
-                  :data-badge-caption='symbol.name'
-                />
-              </div>
-              <span class='card-title'>{{ item.title }}</span>
-              <p>{{ item.summary }}</p>
-              <br>
-              <p class='grey-text'>{{ dateFormat(item) }}</p>
-              <p><a :href='item.url' target='_blank'>Источник: {{ item.source }}</a></p>
-            </div>
-          </div>
+          <Article :item='item' />
         </div>
       </div>
-      <br>
-      <router-link v-if='!isLoadingArticles' to='/news' class='btn btn-flat'>
-        Все новости
-      </router-link>
+      <div class='row'>
+        <div class='col'>
+          <router-link to='/news' class='btn btn-flat'>
+            Все новости
+          </router-link>
+        </div>
+      </div>
     </div>
 
     <Footer />
@@ -149,6 +135,7 @@
 </template>
 
 <script>
+import Article from '@/components/article';
 import Footer from '@/components/footer';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
@@ -160,6 +147,7 @@ const md = new MobileDetect(window.navigator.userAgent);
 export default {
   name: 'Home',
   components: {
+    Article,
     Footer,
     Loader,
     Menu

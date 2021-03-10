@@ -92,9 +92,9 @@ export default {
   data: () => ({
     items: [
       { path: '/stocks', name: 'Акции' },
-      { path: '/indexes', name: 'Индексы' }
+      { path: '/indexes', name: 'Индексы' },
+      { path: '/news', name: 'Новости' }
       // { path: '/companies', name: 'Компании' }
-      // { path: '/reports', name: 'Отчеты' },
     ]
   }),
   computed: {
