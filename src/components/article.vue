@@ -35,12 +35,12 @@ export default {
       const date = moment(news.dateAt).utcOffset(SERVER_UTC_OFFSET, true);
       const current = moment().utcOffset(SERVER_UTC_OFFSET, true);
       if (moment(date).isSame(current, 'day')) {
-        return `Сегодня ${date.format('hh:mm')}`;
+        return `Сегодня ${date.format('HH:mm')}`;
       }
       if (current.subtract(1, 'days').isSame(date, 'day')) {
-        return `Вчера ${date.format('hh:mm')}`;
+        return `Вчера ${date.format('HH:mm')}`;
       }
-      return date.format('DD.MM.YYYY hh:mm');
+      return date.format('DD.MM.YYYY HH:mm');
     }
   }
 };
