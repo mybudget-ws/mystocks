@@ -21,6 +21,7 @@
 <script>
 const moment = require('moment');
 moment.locale('ru');
+const SERVER_UTC_OFFSET = 3;
 
 export default {
   name: 'Article',
@@ -31,8 +32,8 @@ export default {
   computed: {},
   methods: {
     dateFormat(news) {
-      const date = moment(news.dateAt);
-      const current = moment();
+      const date = moment(news.dateAt).utcOffset(SERVER_UTC_OFFSET, true);
+      const current = moment().utcOffset(SERVER_UTC_OFFSET, true);
       if (moment(date).isSame(current, 'day')) {
         return `Сегодня ${date.format('hh:mm')}`;
       }
