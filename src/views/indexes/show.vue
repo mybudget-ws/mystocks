@@ -22,11 +22,14 @@
           <a
             v-for='item in intervals'
             :key='item.interval'
-            class='waves-effect waves-teal btn-flat'
-            :class="{ disabled: item.interval == interval }"
+            class='waves-effect waves-purple btn-flat'
+            :class="{
+              'deep-purple lighten-5 deep-purple-text text-darken-4': item.interval == interval
+            }"
             @click='onChangeInterval(item.interval)'
           >
-            {{ item.name }}
+            <b v-if='item.interval == interval'>{{ item.name }}</b>
+            <span v-else>{{ item.name }}</span>
           </a>
         </div>
       </div>

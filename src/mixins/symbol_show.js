@@ -47,6 +47,10 @@ export default {
     this.isLoading = false;
 
     this.$nextTick(() => this.loadNewChart(data));
+
+    if (this.objectCallback) {
+      await this.objectCallback();
+    }
   },
 
   computed: {

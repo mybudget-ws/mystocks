@@ -1,12 +1,12 @@
 <template>
   <div class='card'>
     <div class='card-content'>
-      <div class='badges'>
+      <div v-if='!isHideBadge' class='badges'>
         <span
           v-for='symbol in item.symbols'
           :key='symbol.id'
           :data-badge-caption='badgeName(symbol)'
-          class='new badge tag lighten-4'
+          class='new badge tag light-blue'
           @click='gotoStock(symbol)'
         />
       </div>
@@ -28,7 +28,8 @@ export default {
   name: 'Article',
   components: {},
   props: {
-    item: { type: Object, required: true }
+    item: { type: Object, required: true },
+    isHideBadge: { type: Boolean, required: false, default: false }
   },
   computed: {
   },

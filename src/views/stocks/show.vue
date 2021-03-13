@@ -35,71 +35,82 @@
           <a
             v-for='item in intervals'
             :key='item.interval'
-            class='waves-effect waves-teal btn-flat'
-            :class="{ disabled: item.interval == interval }"
+            class='waves-effect waves-purple btn-flat'
+            :class="{
+              'deep-purple lighten-5 deep-purple-text text-darken-4': item.interval == interval
+            }"
             @click='onChangeInterval(item.interval)'
           >
-            {{ item.name }}
+            <b v-if='item.interval == interval'>{{ item.name }}</b>
+            <span v-else>{{ item.name }}</span>
           </a>
         </div>
 
-        <!--div class='col s12'>
-          <div class='row'>
-            <div class='col s12 m6 offset-m6 l2 offset-l10'>
-              <select
-                ref='selectIntervals'
-                v-model='interval'
-                :class="{ 'browser-default': true }"
-                @change='onChangeInterval'
-              >
-                <option v-for='v in intervals' :key='v.interval' :value='v.interval'>
-                  {{ v.name }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div-->
-
-        <div class='col s12'>
-          <!--h5>Дивиденды</h5-->
-          <table>
-            <thead>
-              <tr>
-                <th>Дивиденды</th>
-                <th>Дата</th>
-                <th>Частота</th>
-                <th>Детали</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for='item in dividends'
-                :key='item.id'
-              >
-                <td>
-                  <Amount
-                    :value='item.amount'
-                    :currency='item.currency.name'
-                  />
-                </td>
-                <td>{{ dateFormatted(item) }}</td>
-                <td>{{ item.frequency }}</td>
-                <td>{{ item.description }} ({{ item.flag }})</td>
-              </tr>
-            </tbody>
-          </table>
-          <p v-if='dividends.length === 0' class='note'>
-            В ближайшее время дивидендов нет
-          </p>
+        <div class='row'>
+          <div class='hr col s12' />
         </div>
 
-        <div class='col s12'>
-          <h5>Описание</h5>
-          <p>{{ description }}</p>
-          <p>
-            CEO - {{ ceo }}
-            <a :href='website' target='_blank' class='website'>{{ website }}</a>
-          </p>
+        <div class='row'>
+          <div class='col s12'>
+            <div
+              v-for='(tab, index) in tabs'
+              :key='index'
+              class='waves-effect waves-purple btn-flat'
+              :class="{
+                'deep-purple lighten-5 deep-purple-text text-darken-4': index === tabIndex
+              }"
+              @click='setTab(index)'
+            >
+              <b v-if='index === tabIndex'>{{ tabs[index] }}</b>
+              <span v-else>{{ tabs[index] }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div v-if='tabIndex === 0' class='col s12'>
+            <div v-for='item in itemsArticles' :key='item.id'>
+              <Article :item='item' is-hide-badge />
+            </div>
+          </div>
+          <div v-if='tabIndex === 1' class='col s12'>
+            <p>{{ description }}</p>
+            <p>
+              CEO - {{ ceo }}
+              <a :href='website' target='_blank' class='website'>{{ website }}</a>
+            </p>
+          </div>
+          <div v-if='tabIndex === 2' class='col s12'>
+            <table>
+              <thead>
+                <tr>
+                  <th>Дивиденды</th>
+                  <th>Дата</th>
+                  <th>Частота</th>
+                  <th>Детали</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for='item in dividends'
+                  :key='item.id'
+                >
+                  <td>
+                    <Amount
+                      :value='item.amount'
+                      :currency='item.currency.name'
+                    />
+                  </td>
+                  <td>{{ dateFormatted(item) }}</td>
+                  <td>{{ item.frequency }}</td>
+                  <td>{{ item.description }} ({{ item.flag }})</td>
+                </tr>
+              </tbody>
+            </table>
+            <p v-if='dividends.length === 0' class='note'>
+              В ближайшее время дивидендов нет
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -108,19 +119,21 @@
 
 <script>
 import Amount from '@/components/amount';
+import Article from '@/components/article';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
 import SymbolShow from '@/mixins/symbol_show';
-// import { get } from 'vuex-pathify';
+import { get, call } from 'vuex-pathify';
 
 const moment = require('moment');
 moment.locale('ru');
-// const SERVER_UTC_OFFSET = 3;
+const SERVER_UTC_OFFSET = 3;
 
 export default {
   name: 'Company',
   components: {
+    Article,
     Amount,
     Loader,
     Menu,
@@ -128,8 +141,14 @@ export default {
   },
   mixins: [SymbolShow],
   props: {},
-  data: () => ({}),
+  data: () => ({
+    tabs: [
+      'Новости', 'Описание', 'Дивиденды'
+    ],
+    tabIndex: 0
+  }),
   computed: {
+    itemsArticles: get('articles/items'),
     ceo() { return this?.symbol?.company?.ceo; },
     description() { return this?.symbol?.company?.description; },
     website() { return this?.symbol?.company?.website; },
@@ -143,19 +162,19 @@ export default {
     }
   },
 
-  // NOTE: Init select
-  // async mounted() {
-  //   this.$nextTick(() => {
-  //     /* eslint-disable */
-  //     M.FormSelect.init(this.$refs.selectIntervals, {});
-  //     M.updateTextFields();
-  //     /* eslint-enable */
-  //   });
-  // },
-
   methods: {
+    fetchArticles: call('articles/fetch'),
+    updateArticlesScope: call('articles/updateScope'),
     dateFormatted({ dateAt }) {
-      return moment(dateAt).format('DD.MM.YYYY');
+      return moment(dateAt)
+        .utcOffset(SERVER_UTC_OFFSET, true)
+        .format('DD.MM.YYYY');
+    },
+    setTab(index) {
+      this.tabIndex = index;
+    },
+    async objectCallback() {
+      await this.fetchArticles({ symbolID: this.symbol.id });
     }
   }
 };
@@ -193,6 +212,11 @@ export default {
 .note
   margin-left: 4px
   color: #90a4ae
+
+.hr
+  margin: 40px 0
+  // border-top: 1px solid #90a4ae
+  border-top: 1px solid rgba(0, 0, 0, 0.12)
 
 .badges
   display: inline-block

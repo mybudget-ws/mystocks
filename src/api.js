@@ -124,9 +124,9 @@ export default {
   // ---------------------------------
   // S::Articles
   // ---------------------------------
-  async articles({ page, perPage }) {
-    const query = `query($page:Int, $perPage:Int) {
-      items:articles(page:$page, perPage:$perPage) {
+  async articles({ id, page, perPage }) {
+    const query = `query($id:Int, $page:Int, $perPage:Int) {
+      items:articles(id:$id, page:$page, perPage:$perPage) {
         id title dateAt url source summary
         symbols {
           id name
@@ -136,7 +136,7 @@ export default {
         }
       }
     }`;
-    const vars = { page, perPage };
+    const vars = { id, page, perPage };
     const data = await this.client().request(query, vars);
     this.log(query, data);
 
