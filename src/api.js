@@ -129,7 +129,10 @@ export default {
       items:articles(page:$page, perPage:$perPage) {
         id title dateAt url source summary
         symbols {
-          id name logoUrl
+          id name
+          company {
+            id name logoUrl
+          }
         }
       }
     }`;

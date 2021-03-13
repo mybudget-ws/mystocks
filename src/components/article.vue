@@ -5,8 +5,9 @@
         <span
           v-for='symbol in item.symbols'
           :key='symbol.id'
-          class='new badge tag indigo lighten-4'
-          :data-badge-caption='symbol.name'
+          :data-badge-caption='badgeName(symbol)'
+          class='new badge tag lighten-4'
+          @click='gotoStock(symbol)'
         />
       </div>
       <span class='card-title'>{{ item.title }}</span>
@@ -29,7 +30,8 @@ export default {
   props: {
     item: { type: Object, required: true }
   },
-  computed: {},
+  computed: {
+  },
   methods: {
     dateFormat(news) {
       const date = moment(news.dateAt).utcOffset(SERVER_UTC_OFFSET, true);
@@ -41,10 +43,28 @@ export default {
         return `Вчера ${date.format('HH:mm')}`;
       }
       return date.format('DD.MM.YYYY HH:mm');
+    },
+    badgeName(symbol) {
+      const { company } = symbol;
+      return company == null ? symbol.name : company.name;
+    },
+    gotoStock(symbol) {
+      this.$router.push(`/stocks/${symbol.id}`);
     }
   }
 };
 </script>
 
 <style scoped lang='sass'>
+.badges
+  .badge
+    margin-left: 0
+    margin-right: 10px
+    // color: #212121 !important
+    cursor: pointer
+
+    &:hover
+      opacity: 0.8
+    &:active
+      opacity: 1.0
 </style>
