@@ -70,7 +70,7 @@
         <div class='row'>
           <div v-if='tabIndex === 0' class='col s12'>
             <div v-for='item in itemsArticles' :key='item.id'>
-              <Article :item='item' is-hide-badge />
+              <Article :item='item' />
             </div>
           </div>
           <div v-if='tabIndex === 1' class='col s12'>
