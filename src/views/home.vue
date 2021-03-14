@@ -164,6 +164,7 @@ export default {
     isSignedIn: get('user/isSignedIn'),
     isGuest: get('user/isGuest'),
     email: get('user/email'),
+    token: get('user/token'),
 
     isLoadingStocks: get('stocks/isLoading'),
     isLoadingIndexes: get('indexes/isLoading'),
@@ -175,7 +176,7 @@ export default {
   async created() {
     await this.fetchStocks({ isPopular: true });
     await this.fetchIndexes({ isPopular: true });
-    await this.fetchArticles();
+    await this.fetchArticles(this.token);
   },
   methods: {
     fetchStocks: call('stocks/fetch'),

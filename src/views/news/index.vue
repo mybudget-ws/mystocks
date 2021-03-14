@@ -55,11 +55,12 @@ export default {
   computed: {
     isSignedIn: get('user/isSignedIn'),
     isGuest: get('user/isGuest'),
+    token: get('user/token'),
     email: get('user/email'),
     ...get('articles/*')
   },
   async created() {
-    await this.fetch();
+    await this.fetch(this.token);
   },
   methods: {
     ...call([
@@ -67,7 +68,7 @@ export default {
       'articles/fetchNext'
     ]),
     more() {
-      this.fetchNext();
+      this.fetchNext(this.token);
     }
   }
 };

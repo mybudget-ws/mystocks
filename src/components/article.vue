@@ -12,7 +12,12 @@
       </div>
       <span class='card-title'>
         {{ item.title }}
-        <a class='btn-flat' :title='titleFavourite' @click='onFavourite'>
+        <a
+          v-if='isSignedIn'
+          class='btn-flat'
+          :title='titleFavourite'
+          @click='onFavourite'
+        >
           <i v-if='item.isFavourite' class='material-icons yellow-text text-accent-4'>star</i>
           <i v-else class='material-icons grey-text'>star_border</i>
         </a>
@@ -40,6 +45,8 @@ export default {
     isHideBadge: { type: Boolean, required: false, default: false }
   },
   computed: {
+    isSignedIn: get('user/isSignedIn'),
+    token: get('user/token'),
     ...get(['articles/isSubmitting']),
     titleFavourite() {
       if (this.item.isFavourite) {

@@ -21,21 +21,21 @@ export default {
       if (state.symbolID == symbolID) { return; }
       commit('UPDATE_SCOPE', symbolID);
     },
-    async fetch({ commit, state }, options = {}) {
+    async fetch({ commit, state }, token, options = {}) {
       commit('START_LOADING');
       commit('UPDATE_SCOPE', options?.symbolID || null);
       const { symbolID, page, perPage } = state;
-      const items = await api.articles({
+      const items = await api.articles(token, {
         id: symbolID,
         page,
         perPage
       });
       commit('FINISH_LOADING', items);
     },
-    async fetchNext({ commit, state }) {
+    async fetchNext({ commit, state }, token) {
       commit('START_NEXT_PAGE');
       const { symbolID, page, perPage } = state;
-      const items = await api.articles({
+      const items = await api.articles(token, {
         id: symbolID,
         page,
         perPage

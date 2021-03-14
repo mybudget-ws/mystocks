@@ -124,10 +124,10 @@ export default {
   // ---------------------------------
   // S::Articles
   // ---------------------------------
-  async articles({ id, page, perPage }) {
+  async articles(token, { id, page, perPage }) {
     const query = `query($id:Int, $page:Int, $perPage:Int) {
       items:articles(id:$id, page:$page, perPage:$perPage) {
-        id title dateAt url source summary
+        id title dateAt url source summary isFavourite
         symbols {
           id name
           company {
@@ -137,7 +137,7 @@ export default {
       }
     }`;
     const vars = { id, page, perPage };
-    const data = await this.client().request(query, vars);
+    const data = await this.client(token).request(query, vars);
     this.log(query, data);
 
     return data.items;
