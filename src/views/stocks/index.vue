@@ -12,7 +12,7 @@
               <tr>
                 <th class='logoUrl' />
                 <th>Название</th>
-                <th>Сектор, индустрия</th>
+                <th v-if='!isPhone'>Сектор, индустрия</th>
                 <th class='right-align'>Цена</th>
               </tr>
             </thead>
@@ -25,7 +25,7 @@
                   <span>{{ item.company.name }}</span>
                   <span class='symbol'>{{ item.name }}</span>
                 </td>
-                <td>
+                <td v-if='!isPhone'>
                   <span
                     v-if='item.company.sector'
                     class='new badge tag indigo lighten-4'
@@ -38,7 +38,7 @@
                   />
                 </td>
                 <td class='price'>
-                  <span v-if='item.lastPrice'>$ {{ item.lastPrice }}</span>
+                  <span v-if='item.lastPrice'>${{ item.lastPrice }}</span>
                 </td>
               </tr>
             </tbody>
@@ -135,7 +135,15 @@ tbody
   margin-left: 10px
   color: #90a4ae
 
+  @media only screen and (max-width: 601px)
+    margin-left: 0
+    display: block
+
 .badge
   margin-right: 10px
   color: #212121 !important
+  // NOTE: To prevent broken badges on the mobile view.
+  //       Need another version to show list of stocks for mobile version.
+  overflow: hidden
+  text-overflow: ellipsis
 </style>
