@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   isLoaded: false,
   isLoadingPage: false,
   isSubmitting: false,
+  isFavouriteOnly: false,
   symbolID: null,
   items: [],
   page: 1,
@@ -21,22 +22,24 @@ export default {
       if (state.symbolID == symbolID) { return; }
       commit('UPDATE_SCOPE', symbolID);
     },
-    async fetch({ commit, state }, token, options = {}) {
+    async fetch({ commit, state }, { token, options = {} }) {
       commit('START_LOADING');
-      commit('UPDATE_SCOPE', options?.symbolID || null);
-      const { symbolID, page, perPage } = state;
+      commit('UPDATE_SCOPE', options);
+      const { symbolID, isFavouriteOnly, page, perPage } = state;
       const items = await api.articles(token, {
         id: symbolID,
+        isFavouriteOnly,
         page,
         perPage
       });
       commit('FINISH_LOADING', items);
     },
-    async fetchNext({ commit, state }, token) {
+    async fetchNext({ commit, state }, { token }) {
       commit('START_NEXT_PAGE');
-      const { symbolID, page, perPage } = state;
+      const { symbolID, isFavouriteOnly, page, perPage } = state;
       const items = await api.articles(token, {
         id: symbolID,
+        isFavouriteOnly,
         page,
         perPage
       });
@@ -53,10 +56,10 @@ export default {
   },
 
   mutations: {
-    UPDATE_SCOPE(state, symbolID) {
+    UPDATE_SCOPE(state, { symbolID, isFavouriteOnly }) {
       Object.assign(
         state,
-        { ...INITIAL_STATE, symbolID: symbolID }
+        { ...INITIAL_STATE, symbolID, isFavouriteOnly }
       );
     },
     START_LOADING(state) {

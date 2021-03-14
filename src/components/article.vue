@@ -50,9 +50,9 @@ export default {
     ...get(['articles/isSubmitting']),
     titleFavourite() {
       if (this.item.isFavourite) {
-        return 'Добавить новость в избранное';
-      } else {
         return 'Удалить новость из избранного';
+      } else {
+        return 'Добавить новость в избранное';
       }
     }
   },

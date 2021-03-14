@@ -124,9 +124,9 @@ export default {
   // ---------------------------------
   // S::Articles
   // ---------------------------------
-  async articles(token, { id, page, perPage }) {
-    const query = `query($id:Int, $page:Int, $perPage:Int) {
-      items:articles(id:$id, page:$page, perPage:$perPage) {
+  async articles(token, { id, isFavouriteOnly, page, perPage }) {
+    const query = `query($id:Int, $isFavouriteOnly:Boolean, $page:Int, $perPage:Int) {
+      items:articles(id:$id, isFavouriteOnly:$isFavouriteOnly, page:$page, perPage:$perPage) {
         id title dateAt url source summary isFavourite
         symbols {
           id name
@@ -136,9 +136,9 @@ export default {
         }
       }
     }`;
-    const vars = { id, page, perPage };
+    const vars = { id, isFavouriteOnly, page, perPage };
     const data = await this.client(token).request(query, vars);
-    this.log(query, data);
+    // this.log(query, data);
 
     return data.items;
   },

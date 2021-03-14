@@ -176,7 +176,7 @@ export default {
   async created() {
     await this.fetchStocks({ isPopular: true });
     await this.fetchIndexes({ isPopular: true });
-    await this.fetchArticles(this.token);
+    await this.fetchArticles({ token: this.token });
   },
   methods: {
     fetchStocks: call('stocks/fetch'),

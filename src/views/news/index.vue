@@ -4,6 +4,23 @@
     <div class='container container-wide'>
       <PageHeader name='Новости' />
 
+      <div v-if='isSignedIn' class='row'>
+        <div class='col s12'>
+          <div
+            v-for='(tab, index) in tabs'
+            :key='index'
+            class='waves-effect waves-purple btn-flat'
+            :class="{
+              'deep-purple lighten-5 deep-purple-text text-darken-4': index === tabIndex
+            }"
+            @click='setTab(index)'
+          >
+            <b v-if='index === tabIndex'>{{ tabs[index] }}</b>
+            <span v-else>{{ tabs[index] }}</span>
+          </div>
+        </div>
+      </div>
+
       <div class='row'>
         <div class='col s12'>
           <Loader v-if='isLoading' class='loading' />
@@ -50,6 +67,10 @@ export default {
   },
   props: {},
   data: () => ({
+    tabs: [
+      'Все', 'Избранные'
+    ],
+    tabIndex: 0,
     isPhone: md.phone() != null
   }),
   computed: {
@@ -60,7 +81,7 @@ export default {
     ...get('articles/*')
   },
   async created() {
-    await this.fetch(this.token);
+    await this.fetch({ token: this.token });
   },
   methods: {
     ...call([
@@ -68,7 +89,12 @@ export default {
       'articles/fetchNext'
     ]),
     more() {
-      this.fetchNext(this.token);
+      this.fetchNext({ token: this.token });
+    },
+    setTab(index) {
+      if (index === this.tabIndex) { return; }
+      this.tabIndex = index;
+      this.fetch({ token: this.token, options: { isFavouriteOnly: index === 1 } });
     }
   }
 };

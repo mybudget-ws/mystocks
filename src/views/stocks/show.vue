@@ -149,6 +149,7 @@ export default {
   }),
   computed: {
     itemsArticles: get('articles/items'),
+    token: get('user/token'),
     ceo() { return this?.symbol?.company?.ceo; },
     description() { return this?.symbol?.company?.description; },
     website() { return this?.symbol?.company?.website; },
@@ -174,7 +175,7 @@ export default {
       this.tabIndex = index;
     },
     async objectCallback() {
-      await this.fetchArticles({ symbolID: this.symbol.id });
+      await this.fetchArticles({ token: this.token, options: { symbolID: this.symbol.id } });
     }
   }
 };
