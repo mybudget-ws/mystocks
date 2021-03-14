@@ -59,9 +59,8 @@ export default {
 <style scoped lang='sass'>
 .badges
   .badge
-    margin-left: 0
-    margin-right: 10px
-    // color: #212121 !important
+    margin-top: 4px
+    margin-left: 10px
     cursor: pointer
 
     &:hover
