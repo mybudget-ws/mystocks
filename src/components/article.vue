@@ -10,7 +10,13 @@
           @click='gotoStock(symbol)'
         />
       </div>
-      <span class='card-title'>{{ item.title }}</span>
+      <span class='card-title'>
+        {{ item.title }}
+        <a class='btn-flat' :title='titleFavourite' @click='onFavourite'>
+          <i v-if='item.isFavourite' class='material-icons yellow-text text-accent-4'>star</i>
+          <i v-else class='material-icons grey-text'>star_border</i>
+        </a>
+      </span>
       <p>{{ item.summary }}</p>
       <br>
       <p class='grey-text'>{{ dateFormat(item) }}</p>
@@ -32,6 +38,9 @@ export default {
     isHideBadge: { type: Boolean, required: false, default: false }
   },
   computed: {
+    titleFavourite() {
+      return 'TODO';
+    }
   },
   methods: {
     dateFormat(news) {
@@ -51,6 +60,9 @@ export default {
     },
     gotoStock(symbol) {
       this.$router.push(`/stocks/${symbol.id}`);
+    },
+    onFavourite() {
+      console.log('TODO');
     }
   }
 };
