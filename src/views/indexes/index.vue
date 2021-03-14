@@ -24,7 +24,7 @@
                   <span>{{ item.name }}</span>
                 </td>
                 <td class='price'>
-                  <span v-if='item.lastPrice'>$ {{ item.lastPrice }}</span>
+                  <span v-if='item.lastPrice'>${{ item.lastPrice }}</span>
                 </td>
               </tr>
             </tbody>
