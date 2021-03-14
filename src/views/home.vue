@@ -5,7 +5,11 @@
       <div class='row'>
         <div class='col'>
           <h1 class='white-text'>Моя Биржа</h1>
-          <h5 class='grey-text text-lighten-3'>Акции, индексы, новости</h5>
+          <h5 class='grey-text text-lighten-3 header-links'>
+            <router-link class='grey-text text-lighten-3' to='/stocks'>Акции</router-link>,
+            <router-link class='grey-text text-lighten-3' to='/indexes'>индексы</router-link>,
+            <router-link class='grey-text text-lighten-3' to='/news'>новости</router-link>
+          </h5>
           <h6 class='grey-text text-lighten-2'>Нью-Йоркская фондовая биржа</h6>
         </div>
       </div>
@@ -265,4 +269,9 @@ tbody
     margin-left: 0
     margin-right: 10px
     color: #212121 !important
+
+.header-links
+  a
+    &:hover
+      text-decoration: underline
 </style>
