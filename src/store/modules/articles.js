@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   isLoading: true,
   isLoaded: false,
   isLoadingPage: false,
+  isSubmitting: false,
   symbolID: null,
   items: [],
   page: 1,
@@ -40,6 +41,14 @@ export default {
         perPage
       });
       commit('FINISH_NEXT_PAGE', items);
+    },
+    async toggleIsFavourite({ commit, state }, { token, article }) {
+      if (state.isSubmitting) { return; }
+      commit('START_SUBMITTING');
+      const isFavourite = await api.toggleIsFavourite(token, article.id, 's_article');
+      commit('TOGGLE_IS_FAVOURITE', { item:article, isFavourite });
+      commit('FINISH_SUBMITTING');
+      return isFavourite;
     }
   },
 
@@ -71,6 +80,18 @@ export default {
       state.isLoadingPage = false;
       state.isMore = items.length >= state.perPage;
       state.items = [...state.items, ...items];
+    },
+    START_SUBMITTING(state) {
+      state.isSubmitting = true;
+    },
+    FINISH_SUBMITTING(state) {
+      state.isSubmitting = false;
+    },
+    TOGGLE_IS_FAVOURITE(state, { item, isFavourite }) {
+      const article = state.items.find(v => v.id === item.id);
+      if (article) {
+        article.isFavourite = isFavourite;
+      }
     }
   }
 };

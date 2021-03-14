@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { get, call } from 'vuex-pathify';
+
 const moment = require('moment');
 moment.locale('ru');
 const SERVER_UTC_OFFSET = 3;
@@ -38,11 +40,17 @@ export default {
     isHideBadge: { type: Boolean, required: false, default: false }
   },
   computed: {
+    ...get(['articles/isSubmitting']),
     titleFavourite() {
-      return 'TODO';
+      if (this.item.isFavourite) {
+        return 'Добавить новость в избранное';
+      } else {
+        return 'Удалить новость из избранного';
+      }
     }
   },
   methods: {
+    ...call(['articles/toggleIsFavourite']),
     dateFormat(news) {
       const date = moment(news.dateAt).utcOffset(SERVER_UTC_OFFSET, true);
       const current = moment().utcOffset(SERVER_UTC_OFFSET, true);
@@ -61,8 +69,16 @@ export default {
     gotoStock(symbol) {
       this.$router.push(`/stocks/${symbol.id}`);
     },
-    onFavourite() {
-      console.log('TODO');
+    async onFavourite() {
+      if (this.isSubmitting) { return; }
+
+      const isFavourite = await this.toggleIsFavourite({
+        token: this.token, article: this.item
+      });
+      const message = isFavourite ?
+        'Новость добавлена в избранное' :
+        'Новость удалена из избранного';
+      /* eslint-disable */ M.toast({ html: message }); /* eslint-enable */
     }
   }
 };
