@@ -145,9 +145,9 @@ export default {
   // ---------------------------------
   // S::Signals
   // ---------------------------------
-  async signals(token, { page, perPage }) {
-    const query = `query($page:Int, $perPage:Int) {
-      items:signals(page:$page, perPage:$perPage) {
+  async signals(token, { symbolId, page, perPage }) {
+    const query = `query($symbolId:Int, $page:Int, $perPage:Int) {
+      items:signals(symbolId:$symbolId, page:$page, perPage:$perPage) {
         id dateAt kind interval direction
         symbol {
           id name logoUrl kind
@@ -157,7 +157,7 @@ export default {
         }
       }
     }`;
-    const vars = { page, perPage };
+    const vars = { symbolId, page, perPage };
     const data = await this.client(token).request(query, vars);
     this.log(query, data);
 

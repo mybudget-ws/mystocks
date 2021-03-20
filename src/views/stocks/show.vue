@@ -111,6 +111,34 @@
               В ближайшее время дивидендов нет
             </p>
           </div>
+          <div v-if='tabIndex === 3' class='col s12'>
+            <div v-if='itemsSignals.length == 0'>
+              <div class='card blue-grey'>
+                <div class='card-content white-text'>
+                  <span class='card-title'>Скоро</span>
+                  <p>Данный фукнционал находится в разработке</p>
+                </div>
+              </div>
+            </div>
+            <table v-else>
+              <thead>
+                <tr>
+                  <th>Время</th>
+                  <th>Тип</th>
+                  <th>Интервал</th>
+                  <th>Направление</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for='item in itemsSignals' :key='item.id'>
+                  <td>{{ itemDate(item) }}</td>
+                  <td>{{ item.kind }}</td>
+                  <td>{{ item.interval }}</td>
+                  <td>{{ item.direction }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -143,12 +171,13 @@ export default {
   props: {},
   data: () => ({
     tabs: [
-      'Новости', 'Описание', 'Дивиденды'
+      'Новости', 'Описание', 'Дивиденды', 'Сигналы'
     ],
     tabIndex: 0
   }),
   computed: {
     itemsArticles: get('articles/items'),
+    itemsSignals: get('signals/items'),
     token: get('user/token'),
     ceo() { return this?.symbol?.company?.ceo; },
     description() { return this?.symbol?.company?.description; },
@@ -165,7 +194,7 @@ export default {
 
   methods: {
     fetchArticles: call('articles/fetch'),
-    updateArticlesScope: call('articles/updateScope'),
+    fetchSignals: call('signals/fetch'),
     dateFormatted({ dateAt }) {
       return moment(dateAt)
         .utcOffset(SERVER_UTC_OFFSET, true)
@@ -176,6 +205,11 @@ export default {
     },
     async objectCallback() {
       await this.fetchArticles({ token: this.token, options: { symbolID: this.symbol.id } });
+      await this.fetchSignals({ token: this.token, options: { symbolId: this.symbol.id } });
+    },
+    itemDate({ dateAt }) {
+      const date = moment(dateAt).utcOffset(SERVER_UTC_OFFSET, true);
+      return date.format('DD.MM.YYYY HH:mm');
     }
   }
 };
