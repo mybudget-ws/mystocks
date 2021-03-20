@@ -93,7 +93,8 @@ export default {
     items: [
       { path: '/stocks', name: 'Акции' },
       { path: '/indexes', name: 'Индексы' },
-      { path: '/news', name: 'Новости' }
+      { path: '/news', name: 'Новости' },
+      { path: '/signals', name: 'Сигналы' }
       // { path: '/companies', name: 'Компании' }
     ]
   }),

@@ -138,7 +138,6 @@ export default {
     }`;
     const vars = { id, isFavouriteOnly, page, perPage };
     const data = await this.client(token).request(query, vars);
-    // this.log(query, data);
 
     return data.items;
   },
@@ -148,10 +147,10 @@ export default {
   // ---------------------------------
   async signals(token, { page, perPage }) {
     const query = `query($page:Int, $perPage:Int) {
-      items:articles(page:$page, perPage:$perPage) {
+      items:signals(page:$page, perPage:$perPage) {
         id dateAt kind interval direction
         symbol {
-          id name
+          id name logoUrl kind
           company {
             id name logoUrl
           }
@@ -160,7 +159,7 @@ export default {
     }`;
     const vars = { page, perPage };
     const data = await this.client(token).request(query, vars);
-    // this.log(query, data);
+    this.log(query, data);
 
     return data.items;
   },
