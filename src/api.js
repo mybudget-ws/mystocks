@@ -144,6 +144,28 @@ export default {
   },
 
   // ---------------------------------
+  // S::Signals
+  // ---------------------------------
+  async signals(token, { page, perPage }) {
+    const query = `query($page:Int, $perPage:Int) {
+      items:articles(page:$page, perPage:$perPage) {
+        id dateAt kind interval direction
+        symbol {
+          id name
+          company {
+            id name logoUrl
+          }
+        }
+      }
+    }`;
+    const vars = { page, perPage };
+    const data = await this.client(token).request(query, vars);
+    // this.log(query, data);
+
+    return data.items;
+  },
+
+  // ---------------------------------
   // Account
   // ---------------------------------
 
