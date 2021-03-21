@@ -132,8 +132,9 @@ tbody
       cursor: pointer
 
 .symbol
-  margin-left: 10px
   color: #90a4ae
+  font-weight: 200
+  margin-left: 10px
 
   @media only screen and (max-width: 601px)
     margin-left: 0

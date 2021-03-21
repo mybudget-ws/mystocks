@@ -68,8 +68,8 @@ export default {
     ...call([
       'indexes/fetch'
     ]),
-    gotoIndex(symbol) {
-      this.$router.push(`/indexes/${symbol.id}`);
+    gotoIndex({ id }) {
+      this.$router.push(`/indexes/${id}`);
     }
   }
 };
@@ -97,8 +97,4 @@ tbody
     &:hover
       background-color: #fafafa
       cursor: pointer
-
-.symbol
-  margin-left: 10px
-  color: #90a4ae
 </style>
