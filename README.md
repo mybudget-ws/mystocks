@@ -1,3 +1,3 @@
 # myStocks
 
-https://mystocks.mybudget.ws
+https://stocks.mybudget.ws
