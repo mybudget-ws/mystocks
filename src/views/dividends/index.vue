@@ -7,20 +7,19 @@
       <div class='row'>
         <div class='col s12'>
           <Loader v-if='isLoading' class='loading' />
-          <table v-else>
+          <table v-else class='highlight'>
             <thead>
               <tr>
-                <th class='logoUrl' />
+                <th>Дата</th>
                 <th>Компания</th>
                 <th class='right-align'>Цена акции</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for='item in items' :key='item.id' @click='gotoStock(item.symbol)'>
-                <td class='logoUrl'>
-                  <img :src='logoUrl(item.symbol)'>
-                </td>
+                <td class='"blue-text text-darken-2": isActual(item)'>{{ dateFormat(item) }}</td>
                 <td>
+                  <span class='logoUrl' :style='backgroundImgStyle(item)' />
                   <span>{{ item.symbol.company.name }}</span>
                   <span class='symbol'>{{ item.symbol.name }}</span>
                 </td>
@@ -57,6 +56,10 @@ import { get, call } from 'vuex-pathify';
 import MobileDetect from 'mobile-detect';
 const md = new MobileDetect(window.navigator.userAgent);
 
+const moment = require('moment');
+moment.locale('ru');
+const SERVER_UTC_OFFSET = 3;
+
 export default {
   name: 'Dividends',
   components: {
@@ -88,32 +91,55 @@ export default {
     },
     logoUrl(symbol) {
       return symbol?.company?.logoUrl || symbol.logoUrl;
+    },
+    dateFormat({ dateAt }) {
+      const date = moment(dateAt).utcOffset(SERVER_UTC_OFFSET, true);
+      const current = moment().utcOffset(SERVER_UTC_OFFSET, true);
+      if (date.isSame(current, 'day')) {
+        return 'Сегодня';
+      }
+      if (current.subtract(1, 'days').isSame(date, 'day')) {
+        return 'Вчера';
+      }
+      if (current.isSame(date, 'year')) {
+        return date.format('DD MMMM');
+      }
+      return date.format('DD.MM.YYYY');
+    },
+    isActual({ dateAt }) {
+      const date = moment(dateAt).utcOffset(SERVER_UTC_OFFSET, true);
+      const current = moment().utcOffset(SERVER_UTC_OFFSET, true);
+      const yesterday = current.subtract(1, 'days');
+      const max = moment.max(date, yesterday);
+      return max == date;
+    },
+    backgroundImgStyle({ symbol }) {
+      return `background-image: url(${this.logoUrl(symbol)})`;
     }
   }
 };
 </script>
 
 <style scoped lang='sass'>
-th.logoUrl
-  width: 40px
+.logoUrl
+  background-position: center
+  background-repeat: no-repeat
+  background-size: contain
+  border-radius: 4px
+  display: inline-block
+  height: 24px
+  margin-bottom: -7px
+  margin-right: 6px
+  text-align: center
+  width: 24px
 
 td
-  &.logoUrl
-    text-align: center
-
-    img
-      border-radius: 4px
-      margin-bottom: -4px
-      height: 24px
-      width: 24px
-
   &.price
     text-align: right
 
 tbody
   tr
     &:hover
-      background-color: #fafafa
       cursor: pointer
 
 .symbol

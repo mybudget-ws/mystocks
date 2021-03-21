@@ -10,7 +10,6 @@
           <table v-else>
             <thead>
               <tr>
-                <th class='logoUrl' />
                 <th>Название</th>
                 <th v-if='!isPhone'>Сектор, индустрия</th>
                 <th class='right-align'>Цена</th>
@@ -18,10 +17,8 @@
             </thead>
             <tbody>
               <tr v-for='item in items' :key='item.id' @click='gotoStock(item)'>
-                <td class='logoUrl'>
-                  <img :src='logoUrl(item)'>
-                </td>
                 <td>
+                  <span class='logoUrl' :style='backgroundImgStyle(item)' />
                   <span>{{ item.company.name }}</span>
                   <span class='symbol'>{{ item.name }}</span>
                 </td>
@@ -103,25 +100,28 @@ export default {
     },
     logoUrl(symbol) {
       return symbol?.company?.logoUrl || symbol.logoUrl;
+    },
+    backgroundImgStyle(symbol) {
+      return `background-image: url(${this.logoUrl(symbol)})`;
     }
   }
 };
 </script>
 
 <style scoped lang='sass'>
-th.logoUrl
-  width: 40px
+.logoUrl
+  background-position: center
+  background-repeat: no-repeat
+  background-size: contain
+  border-radius: 4px
+  display: inline-block
+  height: 24px
+  margin-bottom: -7px
+  margin-right: 6px
+  text-align: center
+  width: 24px
 
 td
-  &.logoUrl
-    text-align: center
-
-    img
-      border-radius: 4px
-      margin-bottom: -4px
-      height: 24px
-      width: 24px
-
   &.price
     text-align: right
 
