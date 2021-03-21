@@ -29,7 +29,6 @@
             />
           </div>
           <div class='chart-new' />
-          <!--div class='chart' /-->
         </div>
 
         <div class='col s12'>
@@ -217,10 +216,6 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-// .chart
-//   height: 400px
-//   margin-left: -12px
-
 .symbol
   color: #90a4ae
   font-weight: 200
