@@ -143,6 +143,29 @@ export default {
   },
 
   // ---------------------------------
+  // S::Dividends
+  // ---------------------------------
+  async dividends(token, { page, perPage }) {
+    const query = `query($page:Int, $perPage:Int) {
+      items:dividends(page:$page, perPage:$perPage) {
+        id amount dateAt description flag frequency
+        currency { name }
+        symbol {
+          id name logoUrl kind lastPrice
+          company {
+            id name logoUrl
+          }
+        }
+      }
+    }`;
+    const vars = { page, perPage };
+    const data = await this.client(token).request(query, vars);
+    this.log(query, data);
+
+    return data.items;
+  },
+
+  // ---------------------------------
   // S::Signals
   // ---------------------------------
   async signals(token, { symbolId, page, perPage }) {

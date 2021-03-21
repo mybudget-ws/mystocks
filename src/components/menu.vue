@@ -94,8 +94,8 @@ export default {
       { path: '/stocks', name: 'Акции' },
       { path: '/indexes', name: 'Индексы' },
       { path: '/news', name: 'Новости' },
+      { path: '/dividends', name: 'Дивиденды' },
       { path: '/signals', name: 'Сигналы' }
-      // { path: '/companies', name: 'Компании' }
     ]
   }),
   computed: {
