@@ -11,20 +11,33 @@
             <thead>
               <tr>
                 <th>Дата</th>
+                <th>Доход</th>
+                <th>Сумма</th>
                 <th>Компания</th>
                 <th class='right-align'>Цена акции</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for='item in items' :key='item.id' @click='gotoStock(item.symbol)'>
-                <td class='"blue-text text-darken-2": isActual(item)'>{{ dateFormat(item) }}</td>
+                <td :class="{ 'green-text text-darken-2': isActual(item) }">
+                  {{ dateFormat(item) }}
+                </td>
+                <td :class="{ 'green-text text-darken-2': isActual(item) }">
+                  {{ percentage(item) }}
+                </td>
+                <td>
+                  <Amount
+                    :value='item.amount'
+                    :currency='item.currency.name'
+                  />
+                </td>
                 <td>
                   <span class='logoUrl' :style='backgroundImgStyle(item)' />
                   <span>{{ item.symbol.company.name }}</span>
                   <span class='symbol'>{{ item.symbol.name }}</span>
                 </td>
                 <td class='price'>
-                  <span v-if='item.symbol.lastPrice'>${{ item.symbol.lastPrice }}</span>
+                  <span v-if='item.symbol.lastPrice'>${{ item.symbol.lastPrice.toFixed(2) }}</span>
                 </td>
               </tr>
             </tbody>
@@ -48,6 +61,7 @@
 </template>
 
 <script>
+import Amount from '@/components/amount';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
@@ -63,6 +77,7 @@ const SERVER_UTC_OFFSET = 3;
 export default {
   name: 'Dividends',
   components: {
+    Amount,
     Loader,
     Menu,
     PageHeader
@@ -115,6 +130,13 @@ export default {
     },
     backgroundImgStyle({ symbol }) {
       return `background-image: url(${this.logoUrl(symbol)})`;
+    },
+    percentage(item) {
+      if (item.amount == 0) { return '-'; }
+      if (item.symbol?.lastPrice == null) { return '-'; }
+
+      const percentage =  (item.amount / item.symbol?.lastPrice) * 100;
+      return `${percentage.toFixed(2)} %`;
     }
   }
 };

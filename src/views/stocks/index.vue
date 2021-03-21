@@ -35,7 +35,7 @@
                   />
                 </td>
                 <td class='price'>
-                  <span v-if='item.lastPrice'>${{ item.lastPrice }}</span>
+                  <span v-if='item.lastPrice'>${{ item.lastPrice.toFixed(2) }}</span>
                 </td>
               </tr>
             </tbody>
