@@ -129,6 +129,7 @@ tbody
       cursor: pointer
 
 .symbol
-  margin-left: 10px
   color: #90a4ae
+  font-weight: 200
+  margin-left: 10px
 </style>
