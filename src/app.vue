@@ -31,4 +31,7 @@ export default {
 
 .container.container-wide
   max-width: 1400px
+
+.no-wrap
+  white-space: nowrap
 </style>

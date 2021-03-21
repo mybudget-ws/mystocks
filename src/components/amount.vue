@@ -1,5 +1,5 @@
 <template>
-  <div :class='classes'>
+  <div :class='classes' class='no-wrap'>
     <span class='value'>{{ formatedValue }}</span>
     <span class='currency grey-text text-darken-1' :title='titleCurrency'>
       {{ formatedCurrency }}

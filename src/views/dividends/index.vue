@@ -22,14 +22,18 @@
                 <td :class="{ 'green-text text-darken-2': isActual(item) }">
                   {{ dateFormat(item) }}
                 </td>
-                <td :class="{ 'green-text text-darken-2': isActual(item) }">
+                <td
+                  :class="{ 'green-text text-darken-2': isActual(item) }"
+                  class='no-wrap'
+                >
                   {{ percentage(item) }}
                 </td>
-                <td>
-                  <Amount
+                <td :class="{ 'green-text text-darken-2': isActual(item) }">
+                  ${{ item.amount.toFixed(2) }}
+                  <!--Amount
                     :value='item.amount'
                     :currency='item.currency.name'
-                  />
+                  /-->
                 </td>
                 <td>
                   <span class='logoUrl' :style='backgroundImgStyle(item)' />
@@ -61,7 +65,7 @@
 </template>
 
 <script>
-import Amount from '@/components/amount';
+//import Amount from '@/components/amount';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
@@ -77,7 +81,6 @@ const SERVER_UTC_OFFSET = 3;
 export default {
   name: 'Dividends',
   components: {
-    Amount,
     Loader,
     Menu,
     PageHeader
