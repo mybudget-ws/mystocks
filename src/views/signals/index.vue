@@ -18,27 +18,26 @@
           <table v-else>
             <thead>
               <tr>
-                <th class='logoUrl' />
-                <th>Инструмент</th>
                 <th>Время</th>
                 <th>Тип</th>
                 <th>Интервал</th>
                 <th>Направление</th>
+                <th>Инструмент</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for='item in items' :key='item.id' @click='gotoStock(item)'>
-                <td class='logoUrl'>
-                  <img :src='itemLogoUrl(item)'>
+                <td :class="{ 'green-text text-darken-2': isActual(item) }">
+                  {{ itemDate(item) }}
                 </td>
-                <td>
-                  <span>{{ itemName(item) }}</span>
-                  <span class='symbol'>{{ item.symbol.name }}</span>
-                </td>
-                <td>{{ itemDate(item) }}</td>
                 <td>{{ item.kind }}</td>
                 <td>{{ item.interval }}</td>
                 <td>{{ item.direction }}</td>
+                <td>
+                  <span class='logoUrl' :style='backgroundImgStyle(item)' />
+                  <span>{{ itemName(item) }}</span>
+                  <span class='symbol'>{{ item.symbol.name }}</span>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -49,14 +48,11 @@
 </template>
 
 <script>
+import DateFormat from '@/utils/date_format';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
 import { get, call } from 'vuex-pathify';
-
-const moment = require('moment');
-moment.locale('ru');
-const SERVER_UTC_OFFSET = 3;
 
 import MobileDetect from 'mobile-detect';
 const md = new MobileDetect(window.navigator.userAgent);
@@ -87,7 +83,7 @@ export default {
     more() {
       this.fetchNext({ token: this.token });
     },
-    itemLogoUrl({ symbol }) {
+    logoUrl(symbol) {
       return symbol?.company?.logoUrl || symbol.logoUrl;
     },
     itemName({ symbol }) {
@@ -95,8 +91,13 @@ export default {
       return symbol.name;
     },
     itemDate({ dateAt }) {
-      const date = moment(dateAt).utcOffset(SERVER_UTC_OFFSET, true);
-      return date.format('DD.MM.YYYY HH:mm');
+      return DateFormat.shortTime(dateAt);
+    },
+    isActual({ dateAt }) {
+      return DateFormat.isActual(dateAt);
+    },
+    backgroundImgStyle({ symbol }) {
+      return `background-image: url(${this.logoUrl(symbol)})`;
     },
     gotoStock({ symbol }) {
       this.$router.push(`/stocks/${symbol.id}`);
@@ -106,19 +107,19 @@ export default {
 </script>
 
 <style scoped lang='sass'>
-th.logoUrl
-  width: 40px
+.logoUrl
+  background-position: center
+  background-repeat: no-repeat
+  background-size: contain
+  border-radius: 4px
+  display: inline-block
+  height: 24px
+  margin-bottom: -7px
+  margin-right: 6px
+  text-align: center
+  width: 24px
 
 td
-  &.logoUrl
-    text-align: center
-
-    img
-      border-radius: 4px
-      margin-bottom: -4px
-      height: 24px
-      width: 24px
-
   &.price
     text-align: right
 
@@ -132,4 +133,8 @@ tbody
   color: #90a4ae
   font-weight: 200
   margin-left: 10px
+
+  @media only screen and (max-width: 601px)
+    margin-left: 0
+    display: block
 </style>

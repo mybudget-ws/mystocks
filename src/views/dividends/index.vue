@@ -66,6 +66,8 @@
 
 <script>
 //import Amount from '@/components/amount';
+
+import DateFormat from '@/utils/date_format';
 import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
@@ -73,10 +75,6 @@ import { get, call } from 'vuex-pathify';
 
 import MobileDetect from 'mobile-detect';
 const md = new MobileDetect(window.navigator.userAgent);
-
-const moment = require('moment');
-moment.locale('ru');
-const SERVER_UTC_OFFSET = 3;
 
 export default {
   name: 'Dividends',
@@ -111,25 +109,10 @@ export default {
       return symbol?.company?.logoUrl || symbol.logoUrl;
     },
     dateFormat({ dateAt }) {
-      const date = moment(dateAt).utcOffset(SERVER_UTC_OFFSET, true);
-      const current = moment().utcOffset(SERVER_UTC_OFFSET, true);
-      if (date.isSame(current, 'day')) {
-        return 'Сегодня';
-      }
-      if (current.subtract(1, 'days').isSame(date, 'day')) {
-        return 'Вчера';
-      }
-      if (current.isSame(date, 'year')) {
-        return date.format('DD MMMM');
-      }
-      return date.format('DD.MM.YYYY');
+      return DateFormat.short(dateAt);
     },
     isActual({ dateAt }) {
-      const date = moment(dateAt).utcOffset(SERVER_UTC_OFFSET, true);
-      const current = moment().utcOffset(SERVER_UTC_OFFSET, true);
-      const yesterday = current.subtract(1, 'days');
-      const max = moment.max(date, yesterday);
-      return max == date;
+      return DateFormat.isActual(dateAt);
     },
     backgroundImgStyle({ symbol }) {
       return `background-image: url(${this.logoUrl(symbol)})`;
