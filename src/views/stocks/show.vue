@@ -221,6 +221,20 @@ export default {
   font-weight: 200
   margin-right: 20px
 
+  @media only screen and (max-width: 993px)
+    color: #fff
+    font-size: 2rem
+    font-weight: 400
+    left: calc(50% - 50px)
+    margin: 0
+    position: absolute
+    text-align: center
+    top: 0.4rem
+    width: 100px
+
+  @media only screen and (min-width: 601px)
+    top: 0.6rem
+
 .last-price
   font-size: 28px
 
