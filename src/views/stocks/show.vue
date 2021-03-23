@@ -3,14 +3,14 @@
     <Menu />
     <div class='container container-wide'>
       <PageHeader :name='name'>
-        <span class='symbol'>{{ symbol.name }}</span>
+        <img v-if='!isLoading' class='logo' :src='logoUrl'>
+        <span class='symbol'>&nbsp;{{ symbol.name }}</span>
         <Amount
           v-if='!isLoading'
           class='last-price'
           :value='lastPriceAmount'
           currency='USD'
         />
-        <img v-if='!isLoading' class='logo' :src='logoUrl'>
       </PageHeader>
 
       <Loader v-if='isLoading' />
@@ -219,7 +219,7 @@ export default {
 .symbol
   color: #90a4ae
   font-weight: 200
-  margin-left: 20px
+  margin-right: 20px
 
 .last-price
   font-size: 28px
