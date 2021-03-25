@@ -227,9 +227,12 @@ export default {
     font-weight: 400
     left: calc(50% - 50px)
     margin: 0
+    overflow: hidden
     position: absolute
     text-align: center
+    text-overflow: ellipsis
     top: 0.4rem
+    white-space: nowrap
     width: 100px
 
   @media only screen and (min-width: 601px)
