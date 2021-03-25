@@ -29,7 +29,7 @@
                   {{ itemDate(item) }}
                 </td>
                 <td :class='directionClasses(item)'>
-                  {{ iconText(item) }} {{ item.direction }}
+                  <span class='direction'>{{ iconText(item) }} {{ item.direction }}</span>
                   <span class='interval'>{{ item.interval }}</span>
                 </td>
                 <td>
@@ -167,10 +167,12 @@ tbody
     margin-left: 0
     display: block
 
+.direction
+  margin-right: 6px
+
 .interval
   border-radius: 4px
   box-sizing: border-box
   color: #90a4ae
   display: inline-block
-  margin-left: 6px
 </style>
