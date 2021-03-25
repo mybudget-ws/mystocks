@@ -20,8 +20,6 @@
               <tr>
                 <th>Время</th>
                 <th>Тип</th>
-                <th>Интервал</th>
-                <th>Направление</th>
                 <th>Инструмент</th>
               </tr>
             </thead>
@@ -30,13 +28,22 @@
                 <td :class="{ 'green-text text-darken-2': isActual(item) }">
                   {{ itemDate(item) }}
                 </td>
-                <td>{{ item.kind }}</td>
-                <td>{{ item.interval }}</td>
-                <td>{{ item.direction }}</td>
+                <td :class='directionClasses(item)'>
+                  {{ iconText(item) }} {{ item.direction }}
+                  <span class='interval'>{{ item.interval }}</span>
+                </td>
                 <td>
                   <span class='logoUrl' :style='backgroundImgStyle(item)' />
                   <span>{{ itemName(item) }}</span>
                   <span class='symbol'>{{ item.symbol.name }}</span>
+                  <!--router-link
+                    :to='pathStock(item)'
+                    class='symbol'
+                    target='_blank'
+                    @click.stop
+                  >
+                    {{ item.symbol.name }}
+                  </router-link-->
                 </td>
               </tr>
             </tbody>
@@ -101,6 +108,28 @@ export default {
     },
     gotoStock({ symbol }) {
       this.$router.push(`/stocks/${symbol.id}`);
+    },
+    pathStock({ symbol }) {
+      return `/stocks/${symbol.id}`;
+    },
+    iconText({ kind, direction }) {
+      if (kind == 'umbrella_direct') {
+        return direction == 'sell' ? '⊥' : '⊤';
+      }
+      if (kind == 'umbrella_reverse') {
+        return direction == 'sell' ? '⊤' : '⊥';
+      }
+      return '?';
+    },
+    directionClasses({ direction }) {
+      if (direction == 'buy') {
+        return 'green-text text-darken-4';
+      }
+      if (direction == 'sell') {
+        return 'red-text text-darken-3';
+      }
+
+      return 'grey-text text-darken-1';
     }
   }
 };
@@ -137,4 +166,11 @@ tbody
   @media only screen and (max-width: 601px)
     margin-left: 0
     display: block
+
+.interval
+  border-radius: 4px
+  box-sizing: border-box
+  color: #90a4ae
+  display: inline-block
+  margin-left: 6px
 </style>
