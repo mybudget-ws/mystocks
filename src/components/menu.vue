@@ -62,7 +62,9 @@
       class='sidenav'
     >
       <li v-for='item in items' :key='item.path'>
-        <a href='#' @click='goto(item.path)'>{{ item.name }}</a>
+        <a :href='mobileLinkPath(item)' @click='goto(item.path)'>
+          {{ item.name }}
+        </a>
       </li>
       <!--li class='divider' />
       <li v-if='isGuest'>
@@ -135,6 +137,9 @@ export default {
       /* eslint-disable */
       // https://github.com/vuejs/vue-router/issues/2872
       this.$router.push({ path }).catch(_e => {});
+    },
+    mobileLinkPath({ path }) {
+      return `#${path}`;
     }
   }
 };
