@@ -20,7 +20,7 @@
         <tr v-for='item in items' :key='item.id' @click='gotoStock(item)'>
           <td :class="{ 'green-text text-darken-2': isActual(item) }">
             {{ itemDate(item.dateAt) }}
-            <div class='created-at'>Создан {{ itemDate(item.createdAt) }}</div>
+            <div class='created-at'>Создан • {{ itemDate(item.createdAt) }}</div>
           </td>
           <td :class='directionClasses(item)'>
             <span class='direction'>{{ iconText(item) }} {{ item.direction }}</span>
