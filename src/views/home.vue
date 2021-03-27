@@ -95,7 +95,7 @@
                   <img :src='logoUrl(item)'>
                 </td>
                 <td>
-                  <span>{{ item.name }}</span>
+                  <span>{{ item.displayName }}</span>
                 </td>
                 <td class='price'>
                   <span v-if='item.lastPrice'>${{ item.lastPrice }}</span>

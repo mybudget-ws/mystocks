@@ -84,7 +84,7 @@ export default {
   async symbols({ kind, isPopular, page, perPage }) {
     const query = `query($kind:String, $isPopular:Boolean, $page:Int, $perPage:Int) {
       items:symbols(kind:$kind, isPopular:$isPopular, page:$page, perPage:$perPage) {
-        id name lastPrice logoUrl
+        id name displayName lastPrice logoUrl
         company {
           id name logoUrl
           sector { id name }
