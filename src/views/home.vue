@@ -182,11 +182,11 @@ export default {
     fetchStocks: call('stocks/fetch'),
     fetchIndexes: call('indexes/fetch'),
     fetchArticles: call('articles/fetch'),
-    gotoStock(symbol) {
-      this.$router.push(`/stocks/${symbol.id}`);
+    gotoStock({ name }) {
+      this.$router.push(`/stocks/${name}`);
     },
-    gotoIndex(symbol) {
-      this.$router.push(`/indexes/${symbol.id}`);
+    gotoIndex({ name }) {
+      this.$router.push(`/indexes/${name}`);
     },
     logoUrl(symbol) {
       return symbol?.company?.logoUrl || symbol.logoUrl;

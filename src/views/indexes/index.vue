@@ -68,8 +68,8 @@ export default {
     ...call([
       'indexes/fetch'
     ]),
-    gotoIndex({ id }) {
-      this.$router.push(`/indexes/${id}`);
+    gotoIndex({ name }) {
+      this.$router.push(`/indexes/${name}`);
     }
   }
 };

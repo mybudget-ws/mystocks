@@ -102,8 +102,8 @@ export default {
     more() {
       this.fetchNext({ token: this.token });
     },
-    gotoStock({ id }) {
-      this.$router.push(`/stocks/${id}`);
+    gotoStock({ name }) {
+      this.$router.push(`/stocks/${name}`);
     },
     logoUrl(symbol) {
       return symbol?.company?.logoUrl || symbol.logoUrl;

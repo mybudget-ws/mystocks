@@ -73,10 +73,10 @@ export default {
       return `background-image: url(${this.logoUrl(symbol)})`;
     },
     gotoStock({ symbol }) {
-      this.$router.push(`/stocks/${symbol.id}`);
+      this.$router.push(`/stocks/${symbol.name}`);
     },
     pathStock({ symbol }) {
-      return `/stocks/${symbol.id}`;
+      return `/stocks/${symbol.name}`;
     },
     iconText({ kind, direction }) {
       if (kind == 'umbrella_direct') {

@@ -56,7 +56,7 @@ export default {
   computed: {
     token: get('user/token'),
 
-    id() { return this.$route.params.id; },
+    id() { return this.$route.params.symbol; },
 
     lastPriceAmount() {
       if (this.lastDiff > 0) { return this.lastPrice; }

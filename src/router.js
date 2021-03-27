@@ -36,11 +36,11 @@ export default new Router({
       name: 'stocks',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/stocks/index')
     }, {
-      path: '/stocks/:id',
+      path: '/stocks/:symbol',
       name: 'stock',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/stocks/show')
     }, {
-      path: '/indexes/:id',
+      path: '/indexes/:symbol',
       name: 'index',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/indexes/show')
     }, {

@@ -73,8 +73,8 @@ export default {
       const { company } = symbol;
       return company == null ? symbol.name : company.name;
     },
-    gotoStock(symbol) {
-      this.$router.push(`/stocks/${symbol.id}`);
+    gotoStock({ name }) {
+      this.$router.push(`/stocks/${name}`);
     },
     async onFavourite() {
       if (this.isSubmitting) { return; }

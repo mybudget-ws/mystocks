@@ -96,7 +96,7 @@ export default {
       this.fetchNext({ isPopular: false });
     },
     gotoStock(symbol) {
-      this.$router.push(`/stocks/${symbol.id}`);
+      this.$router.push(`/stocks/${symbol.name}`);
     },
     logoUrl(symbol) {
       return symbol?.company?.logoUrl || symbol.logoUrl;
