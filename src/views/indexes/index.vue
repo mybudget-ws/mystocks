@@ -21,7 +21,8 @@
                   <img :src='item.logoUrl'>
                 </td>
                 <td>
-                  <span>{{ item.name }}</span>
+                  <span>{{ item.displayName }}</span>
+                  <span class='symbol'>{{ item.name }}</span>
                 </td>
                 <td class='price'>
                   <span v-if='item.lastPrice'>${{ item.lastPrice }}</span>
@@ -97,4 +98,13 @@ tbody
     &:hover
       background-color: #fafafa
       cursor: pointer
+
+.symbol
+  color: #90a4ae
+  font-weight: 200
+  margin-left: 10px
+
+  @media only screen and (max-width: 601px)
+    margin-left: 0
+    display: block
 </style>
