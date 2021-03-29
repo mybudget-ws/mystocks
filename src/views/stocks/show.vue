@@ -4,7 +4,7 @@
     <div class='container container-wide'>
       <PageHeader :name='name'>
         <img v-if='!isLoading' class='logo' :src='logoUrl'>
-        <span class='symbol'>&nbsp;{{ symbol.name }}</span>
+        <span class='symbol'>&nbsp;{{ symbolName }}</span>
         <Amount
           v-if='!isLoading'
           class='last-price'
@@ -161,6 +161,7 @@ export default {
     website() { return this?.symbol?.company?.website; },
     sector() { return this?.symbol?.company?.sector?.name; },
     industry() { return this?.symbol?.company?.industry?.name; },
+    symbolName() { return this?.symbol?.name; },
     dividends() {
       if (this.company == null) { return []; }
       if (this.company.dividends == null) { return []; }
