@@ -33,7 +33,7 @@
           <span class='dot-devider' />
           <span class='interval'>{{ item.interval }}</span>
           <span class='dot-devider' />
-          <span>Price</span>
+          <span>${{ item.point.close.toFixed(2) }}</span>
           <span class='dot-devider' />
           <span class='indigo-text text-darken-4'>TP: TODO</span>
           <span class='dot-devider' />
@@ -161,7 +161,7 @@ tbody
 .interval
   border-radius: 4px
   box-sizing: border-box
-  color: #90a4ae
+  color: #546e7a
   display: inline-block
 
 .dot-devider

@@ -172,6 +172,7 @@ export default {
     const query = `query($symbolId:Int, $page:Int, $perPage:Int) {
       items:signals(symbolId:$symbolId, page:$page, perPage:$perPage) {
         id dateAt kind interval direction createdAt
+        point { close }
         symbol {
           id name logoUrl kind
           company {
