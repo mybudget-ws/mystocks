@@ -35,9 +35,9 @@
           <span class='dot-devider' />
           <span title='Цена закрытия на момент сигнала'>${{ item.point.close.toFixed(2) }}</span>
           <span class='dot-devider' />
-          <span class='indigo-text text-darken-4'>TP: TODO</span>
+          <span class='indigo-text text-darken-4'>TP: ${{ item.takeProfit }}</span>
           <span class='dot-devider' />
-          <span class='purple-text text-darken-3'>SL: TODO</span>
+          <span class='purple-text text-darken-3'>SL: ${{ item.stopLoss }}</span>
         </div>
       </div>
       <div v-if='isShowAction' class='card-action'>
