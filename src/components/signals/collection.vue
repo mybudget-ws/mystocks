@@ -174,7 +174,7 @@ tbody
 .created-at
   font-size: 10px
   font-weight: 200
-  opacity: 0.7
+  color: #455a64
 
 .details
   margin-top: 14px
