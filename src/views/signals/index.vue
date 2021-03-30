@@ -7,7 +7,7 @@
       <div class='row'>
         <div class='col s12'>
           <Loader v-if='isLoading' class='loading' />
-          <Collection v-else :items='items' />
+          <Collection v-else :items='items' is-show-action />
         </div>
       </div>
 

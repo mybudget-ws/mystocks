@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   symbolId: null,
   items: [],
   page: 1,
-  perPage: 50,
+  perPage: 5,
   isMore: true
 };
 
