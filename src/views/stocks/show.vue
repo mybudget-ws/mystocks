@@ -69,18 +69,13 @@
 
         <div class='row'>
           <div v-if='tabIndex === 0' class='col s12'>
-            <div v-for='item in itemsArticles' :key='item.id'>
-              <Article :item='item' />
-            </div>
-          </div>
-          <div v-if='tabIndex === 1' class='col s12'>
             <p>{{ description }}</p>
             <p>
               CEO - {{ ceo }}
               <a :href='website' target='_blank' class='website'>{{ website }}</a>
             </p>
           </div>
-          <div v-if='tabIndex === 2' class='col s12'>
+          <div v-if='tabIndex === 1' class='col s12'>
             <table>
               <thead>
                 <tr>
@@ -110,6 +105,11 @@
             <p v-if='dividends.length === 0' class='note'>
               В ближайшее время дивидендов нет
             </p>
+          </div>
+          <div v-if='tabIndex === 2' class='col s12'>
+            <div v-for='item in itemsArticles' :key='item.id'>
+              <Article :item='item' />
+            </div>
           </div>
           <div v-if='tabIndex === 3' class='col s12'>
             <Collection :items='itemsSignals' />
@@ -148,7 +148,7 @@ export default {
   props: {},
   data: () => ({
     tabs: [
-      'Новости', 'Описание', 'Дивиденды', 'Сигналы'
+      'Описание', 'Дивиденды', 'Новости', 'Сигналы'
     ],
     tabIndex: 0
   }),
