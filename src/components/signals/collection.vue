@@ -28,16 +28,19 @@
             :class='directionClasses(item)'
             class='direction'
           >
-            {{ iconText(item) }} {{ item.direction }}
+            {{ item.direction }}
+            <span class='kind'>
+              {{ directionKind(item) }}
+            </span>
           </span>
           <span class='dot-devider' />
-          <span class='interval'>{{ item.interval }}</span>
-          <span class='dot-devider' />
           <span title='Цена закрытия на момент сигнала'>${{ item.point.close.toFixed(2) }}</span>
-          <span class='dot-devider' />
-          <span class='indigo-text text-darken-4'>TP: ${{ item.takeProfit }}</span>
-          <span class='dot-devider' />
-          <span class='purple-text text-darken-3'>SL: ${{ item.stopLoss }}</span>
+          <!--span class='dot-devider' />
+          <span class='interval'>{{ item.interval }}</span-->
+          <div>
+            <div class='indigo-text text-darken-4'>TP: ${{ item.takeProfit }}</div>
+            <div class='purple-text text-darken-3'>SL: ${{ item.stopLoss }}</div>
+          </div>
         </div>
       </div>
       <div v-if='isShowAction' class='card-action'>
@@ -99,6 +102,15 @@ export default {
       }
       return '?';
     },
+    directionKind({ kind }) {
+      if (kind == 'umbrella_direct') {
+        return 'Прямой';
+      }
+      if (kind == 'umbrella_reverse') {
+        return 'Обратный';
+      }
+      return '?';
+    },
     directionClasses({ direction }) {
       if (direction == 'buy') {
         return 'green-text text-darken-4';
@@ -148,7 +160,7 @@ tbody
 
 .symbol
   color: #546e7a
-  font-weight: 200
+  font-weight: 400
   margin-left: 10px
 
   @media only screen and (max-width: 601px)
@@ -156,7 +168,12 @@ tbody
     display: block
 
 .direction
-  font-weight: 600
+  font-weight: 700
+  text-transform: uppercase
+
+.kind
+  font-weight: 400
+  text-transform: none
 
 .interval
   border-radius: 4px
