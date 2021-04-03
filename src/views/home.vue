@@ -8,7 +8,8 @@
           <h5 class='grey-text text-lighten-3 header-links'>
             <router-link class='grey-text text-lighten-3' to='/stocks'>Акции</router-link>,
             <router-link class='grey-text text-lighten-3' to='/indexes'>индексы</router-link>,
-            <router-link class='grey-text text-lighten-3' to='/news'>новости</router-link>
+            <router-link class='grey-text text-lighten-3' to='/news'>новости</router-link>,
+            <router-link class='grey-text text-lighten-3' to='/dividends'>календарь дивидендов</router-link>
           </h5>
           <h6 class='grey-text text-lighten-2'>Нью-Йоркская фондовая биржа</h6>
         </div>
