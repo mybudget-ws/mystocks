@@ -7,6 +7,8 @@ import store from '@/store/index';
 Vue.use(VueHead);
 Vue.use(Router);
 
+const DEFAULT_TITLE = 'Моя Биржа';
+
 function requireAuth(to, from, next) {
   if (!store.getters['user/isSignedIn']) {
     next({ path: '/sign_in', query: { redirect: to.fullPath } });
@@ -15,14 +17,22 @@ function requireAuth(to, from, next) {
   }
 }
 
+function updateTitle(to, _from, next) {
+  const symbol = to.params?.symbol;
+  Vue.nextTick(() => {
+    document.title = symbol || DEFAULT_TITLE;
+  });
+  next();
+}
+
 export default new Router({
-  // mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
       name: 'home',
-      component: () => import(/* webpackChunkName: "landing" */ '@/views/home')
+      component: () => import(/* webpackChunkName: "landing" */ '@/views/home'),
+      beforeEnter: updateTitle
     }, {
       path: '/sign_in',
       name: 'sign_in',
@@ -34,67 +44,44 @@ export default new Router({
     }, {
       path: '/stocks',
       name: 'stocks',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/stocks/index')
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/stocks/index'),
+      beforeEnter: updateTitle
     }, {
       path: '/stocks/:symbol',
       name: 'stock',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/stocks/show')
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/stocks/show'),
+      beforeEnter: updateTitle
     }, {
       path: '/indexes/:symbol',
       name: 'index',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/indexes/show')
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/indexes/show'),
+      beforeEnter: updateTitle
     }, {
       path: '/indexes',
       name: 'indexes',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/indexes/index')
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/indexes/index'),
+      beforeEnter: updateTitle
     }, {
       path: '/news',
       name: 'articles',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/news/index')
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/news/index'),
+      beforeEnter: updateTitle
     }, {
       path: '/dividends',
       name: 'dividends',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/dividends/index')
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/dividends/index'),
+      beforeEnter: updateTitle
     }, {
       path: '/signals',
       name: 'signals',
-      component: () => import(/* webpackChunkName: "inner" */ '@/views/signals/index')
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/signals/index'),
+      beforeEnter: updateTitle
     }, {
       path: '/settings/:tab',
       name: 'settings',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/settings/index'),
       beforeEnter: requireAuth
     }
-    // {
-    //   path: '/transactions/:id/edit',
-    //   name: 'edit_transaction',
-    //   component: () => import(/* webpackChunkName: "inner" */ '@/views/transactions/edit'),
-    //   beforeEnter: requireAuth
-    // }, {
-    //   path: '/transactions/transfers/new',
-    //   name: 'new_transfer',
-    //   component: () => import(/* webpackChunkName: "inner" */ '@/views/transactions/new_transfer'),
-    //   beforeEnter: requireAuth
-    // }, {
-    //   path: '/accounts',
-    //   name: 'accounts',
-    //   component: () => import(/* webpackChunkName: "inner" */ '@/views/accounts/index'),
-    //   beforeEnter: requireAuth
-    // }, {
-    //   path: '/accounts/new',
-    //   name: 'new_account',
-    //   component: () => import(/* webpackChunkName: "inner" */ '@/views/accounts/new'),
-    //   beforeEnter: requireAuth
-    // }, {
-    //   path: '/accounts/:id/edit',
-    //   name: 'edit_account',
-    //   component: () => import(/* webpackChunkName: "inner" */ '@/views/accounts/edit'),
-    //   beforeEnter: requireAuth
-    // }, {
-    //   path: '/settings/:tab',
-    //   name: 'settings',
-    //   component: () => import(/* webpackChunkName: "inner" */ '@/views/settings/index'),
-    //   beforeEnter: requireAuth
     // }, {
     //   path: '*',
     //   component: () => import(/* webpackChunkName: "landing" */ '@/views/dynamic')
