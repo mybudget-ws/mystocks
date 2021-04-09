@@ -2,9 +2,10 @@
   <div :class='cardClasses(item)'>
     <div class='card-content'>
       <div class='card-title'>
+        <span class='logoUrl hide-on-small-only' :style='backgroundImgStyle(item)' />
         {{ item.symbol.name }}
-        <span class='dot-devider' />
-        <span title='Цена закрытия на момент сигнала'>${{ item.point.close.toFixed(2) }}</span>
+        <!--span class='dot-devider' />
+        <span class='price' title='Цена закрытия на момент сигнала'>${{ item.point.close.toFixed(2) }}</span-->
         <span
           :class='directionClasses(item)'
           :data-badge-caption='directionKind(item)'
@@ -16,15 +17,13 @@
       </div>
       <div :class="{ 'green-text text-darken-2': isActual(item) }" class='right right-align'>
         {{ itemDate(item.dateAt) }}
-        <div class='created-at'>Создан • {{ itemDate(item.createdAt) }}</div>
-      </div>
-      <div>
-        <span class='logoUrl' :style='backgroundImgStyle(item)' />
-        <span>{{ itemName(item) }}</span>
+        <div class='created-at'>Создан • {{ itemTimeCreated(item) }}</div>
       </div>
       <div class='details'>
-        <div class='indigo-text text-darken-4'>TP: ${{ item.takeProfit }}</div>
-        <div class='purple-text text-darken-3'>SL: ${{ item.stopLoss }}</div>
+        <!--span>{{ itemName(item) }}</span-->
+        <div class='price' title='Цена закрытия на момент сигнала'>PR: ${{ item.point.close.toFixed(2) }}</div>
+        <div class='price indigo-text text-darken-4'>TP: ${{ item.takeProfit }}</div>
+        <div class='price purple-text text-darken-3'>SL: ${{ item.stopLoss }}</div>
       </div>
     </div>
     <div v-if='isShowAction' class='card-action'>
@@ -62,6 +61,9 @@ export default {
     },
     itemDate(dateAt) {
       return DateFormat.shortTime(dateAt);
+    },
+    itemTimeCreated({ createdAt }) {
+      return DateFormat.timeOnly(createdAt);
     },
     isActual({ dateAt }) {
       return DateFormat.isActual(dateAt);
@@ -133,7 +135,7 @@ export default {
   border-radius: 4px
   display: inline-block
   height: 24px
-  margin-bottom: -7px
+  margin-bottom: -3px
   margin-right: 6px
   text-align: center
   width: 24px
@@ -175,4 +177,8 @@ export default {
 
 .details
   margin-top: 14px
+
+.price
+  font-size: 16px !important
+  font-weight: 400 !important
 </style>

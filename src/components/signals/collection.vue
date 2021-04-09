@@ -9,7 +9,7 @@
       </div>
     </div>
     <div>
-      <div v-if='todayItems.length > 0'>
+      <div v-if='todayItems.length > 0' class='today'>
         <h5>Сегодня</h5>
         <Signal
           v-for='item in todayItems'
@@ -57,4 +57,6 @@ export default {
 </script>
 
 <style scoped lang='sass'>
+.today
+  margin-bottom: 40px
 </style>

@@ -38,6 +38,11 @@ export default {
     return date.format('DD.MM.YYYY HH:mm');
   },
 
+  timeOnly(dateAt) {
+    const date = moment(dateAt).utcOffset(SERVER_UTC_OFFSET, true);
+    return date.format('HH:mm');
+  },
+
   isActual(dateAt) {
     const date = moment(dateAt).utcOffset(SERVER_UTC_OFFSET, true);
     const current = moment().utcOffset(SERVER_UTC_OFFSET, true);
