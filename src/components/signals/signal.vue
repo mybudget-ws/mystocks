@@ -1,6 +1,19 @@
 <template>
   <div :class='cardClasses(item)'>
     <div class='card-content'>
+      <div class='card-title'>
+        {{ item.symbol.name }}
+        <span class='dot-devider' />
+        <span title='Цена закрытия на момент сигнала'>${{ item.point.close.toFixed(2) }}</span>
+        <span
+          :class='directionClasses(item)'
+          :data-badge-caption='directionKind(item)'
+        />
+        <span
+          :class='directionClasses(item)'
+          :data-badge-caption='directionText(item)'
+        />
+      </div>
       <div :class="{ 'green-text text-darken-2': isActual(item) }" class='right right-align'>
         {{ itemDate(item.dateAt) }}
         <div class='created-at'>Создан • {{ itemDate(item.createdAt) }}</div>
@@ -8,26 +21,10 @@
       <div>
         <span class='logoUrl' :style='backgroundImgStyle(item)' />
         <span>{{ itemName(item) }}</span>
-        <span class='symbol'>{{ item.symbol.name }}</span>
       </div>
       <div class='details'>
-        <span
-          :class='directionClasses(item)'
-          class='direction'
-        >
-          {{ item.direction }}
-          <span class='kind'>
-            {{ directionKind(item) }}
-          </span>
-        </span>
-        <span class='dot-devider' />
-        <span title='Цена закрытия на момент сигнала'>${{ item.point.close.toFixed(2) }}</span>
-        <!--span class='dot-devider' />
-        <span class='interval'>{{ item.interval }}</span-->
-        <div>
-          <div class='indigo-text text-darken-4'>TP: ${{ item.takeProfit }}</div>
-          <div class='purple-text text-darken-3'>SL: ${{ item.stopLoss }}</div>
-        </div>
+        <div class='indigo-text text-darken-4'>TP: ${{ item.takeProfit }}</div>
+        <div class='purple-text text-darken-3'>SL: ${{ item.stopLoss }}</div>
       </div>
     </div>
     <div v-if='isShowAction' class='card-action'>
@@ -87,6 +84,11 @@ export default {
       }
       return '?';
     },
+    directionText({ direction }) {
+      if (direction === 'sell') { return 'SELL'; }
+      if (direction === 'buy') { return 'BUY'; }
+      return '?';
+    },
     directionKind({ kind }) {
       if (kind == 'umbrella_direct') {
         return 'Прямой';
@@ -98,20 +100,23 @@ export default {
     },
     directionClasses({ direction }) {
       if (direction == 'buy') {
-        return 'green-text text-darken-4';
+        return 'badge new green lighten-4 green-text text-darken-4';
       }
       if (direction == 'sell') {
-        return 'red-text text-darken-3';
+        return 'badge new red lighten-4 red-text text-darken-3';
       }
 
-      return 'grey-text text-darken-1';
+      return 'badge new grey lighten-2 grey-text text-darken-3';
     },
     cardClasses({ direction }) {
+      // Использовать цвета в будущем для сработавших и не сработавших сигналов.
       if (direction === 'buy') {
-        return 'card green lighten-5 z-depth-1';
+        // return 'card green lighten-5 z-depth-1';
+        return 'card z-depth-1';
       }
       if (direction === 'sell') {
-        return 'card red lighten-5 z-depth-1';
+        // return 'card red lighten-5 z-depth-1';
+        return 'card z-depth-1';
       }
 
       return 'card z-depth-1';
