@@ -44,5 +44,12 @@ export default {
     const yesterday = current.subtract(1, 'days');
     const max = moment.max(date, yesterday);
     return max == date;
+  },
+
+  isToday(dateAt) {
+    const date = moment(dateAt).utcOffset(SERVER_UTC_OFFSET, true);
+    const current = moment().utcOffset(SERVER_UTC_OFFSET, true);
+
+    return date.isSame(current, 'day');
   }
 };
