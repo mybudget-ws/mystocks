@@ -21,9 +21,9 @@
       </div>
       <div class='details'>
         <!--span>{{ itemName(item) }}</span-->
-        <div class='price' title='Цена закрытия на момент сигнала'>PR: ${{ item.point.close.toFixed(2) }}</div>
-        <div class='price indigo-text text-darken-4'>TP: ${{ item.takeProfit }}</div>
-        <div class='price purple-text text-darken-3'>SL: ${{ item.stopLoss }}</div>
+        <pre class='price' title='Цена закрытия на момент сигнала'>PR: ${{ item.point.close.toFixed(2) }}</pre>
+        <pre class='price indigo-text text-darken-4'>TP: ${{ item.takeProfit }}</pre>
+        <pre class='price purple-text text-darken-3'>SL: ${{ item.stopLoss }}</pre>
       </div>
     </div>
     <div v-if='isShowAction' class='card-action'>
@@ -181,4 +181,5 @@ export default {
 .price
   font-size: 16px !important
   font-weight: 400 !important
+  margin: 0
 </style>
