@@ -1,23 +1,27 @@
 <template>
   <div :class='cardClasses(item)'>
     <div class='card-content'>
-      <div class='card-title'>
-        <span class='logoUrl hide-on-small-only' :style='backgroundImgStyle(item)' />
-        {{ item.symbol.name }}
-        <!--span class='dot-devider' />
-        <span class='price' title='Цена закрытия на момент сигнала'>${{ item.point.close.toFixed(2) }}</span-->
-        <span
-          :class='directionClasses(item)'
-          :data-badge-caption='directionKind(item)'
-        />
-        <span
-          :class='directionClasses(item)'
-          :data-badge-caption='directionText(item)'
-        />
-      </div>
       <div :class="{ 'green-text text-darken-2': isActual(item) }" class='right right-align'>
         {{ itemDate(item.dateAt) }}
         <div class='created-at'>Создан • {{ itemTimeCreated(item) }}</div>
+      </div>
+      <div class='card-title'>
+        <span class='logoUrl hide-on-small-only' :style='backgroundImgStyle(item)' />
+        {{ item.symbol.name }}
+        <span class='hide-on-small-only'>
+          <span class='dot-devider' />
+          <span>{{ itemName(item) }}</span>
+        </span>
+        <div class='tags'>
+          <span
+            :class='directionClasses(item)'
+            :data-badge-caption='directionKind(item)'
+          />
+          <span
+            :class='directionClasses(item)'
+            :data-badge-caption='directionText(item)'
+          />
+        </div>
       </div>
       <div class='details'>
         <!--span>{{ itemName(item) }}</span-->
@@ -182,4 +186,7 @@ export default {
   font-size: 16px !important
   font-weight: 400 !important
   margin: 0
+
+.tags
+  display: inline-block
 </style>
