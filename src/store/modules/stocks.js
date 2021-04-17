@@ -14,25 +14,27 @@ export default {
   },
 
   actions: {
-    async fetch({ commit, state }, { isPopular }) {
+    async fetch({ commit, state }, { isPopular, search }) {
       commit('START_LOADING');
       const { page, perPage } = state;
       const items = await api.symbols({
         kind: 'stock',
         isPopular,
         page,
-        perPage
+        perPage,
+        search
       });
       commit('FINISH_LOADING', items);
     },
-    async fetchNext({ commit, state }, { isPopular }) {
+    async fetchNext({ commit, state }, { isPopular, search }) {
       commit('START_NEXT_PAGE');
       const { page, perPage } = state;
       const items = await api.symbols({
         kind: 'stock',
         isPopular,
         page,
-        perPage
+        perPage,
+        search
       });
       commit('FINISH_NEXT_PAGE', items);
     }

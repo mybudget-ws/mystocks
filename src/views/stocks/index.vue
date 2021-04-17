@@ -4,10 +4,27 @@
     <div class='container container-wide'>
       <PageHeader name='Акции' />
 
-      <div class='row'>
+      <Loader v-if='isLoading' class='loading' />
+
+      <div v-if='!isLoading' class='row'>
+        <div class='col l3 m6 s12'>
+          <input
+            v-model.trim='search'
+            placeholder='Поиск по символу ↵ Enter'
+            @keyup.enter='fetchSearch'
+          >
+        </div>
+      </div>
+
+      <div v-if='!isLoading && isNothingFound' class='row'>
+        <p class='col s12 blue-grey-text'>
+          По запросу <b>{{ searchPrev }}</b> ничего не найдено.
+        </p>
+      </div>
+
+      <div v-if='!isLoading && !isNothingFound' class='row'>
         <div class='col s12'>
-          <Loader v-if='isLoading' class='loading' />
-          <table v-else>
+          <table>
             <thead>
               <tr>
                 <th>Название</th>
@@ -76,24 +93,35 @@ export default {
   },
   props: {},
   data: () => ({
+    search: '',
+    searchPrev: '',
     isPhone: md.phone() != null
   }),
   computed: {
     isSignedIn: get('user/isSignedIn'),
     isGuest: get('user/isGuest'),
     email: get('user/email'),
-    ...get('stocks/*')
+    ...get('stocks/*'),
+    isNothingFound() {
+      if (this.isLoading) { return false; }
+      if (this.searchPrev == '') { return false; }
+      return this.items.length === 0;
+    }
   },
   async created() {
-    await this.fetch({ isPopular: false });
+    await this.fetch({ isPopular: false, search: this.search });
   },
   methods: {
     ...call([
       'stocks/fetch',
       'stocks/fetchNext'
     ]),
+    async fetchSearch() {
+      this.searchPrev = this.search;
+      await this.fetch({ isPopular: false, search: this.search });
+    },
     more() {
-      this.fetchNext({ isPopular: false });
+      this.fetchNext({ isPopular: false, search: this.search });
     },
     gotoStock(symbol) {
       this.$router.push(`/stocks/${symbol.name}`);

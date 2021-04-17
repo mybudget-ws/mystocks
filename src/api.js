@@ -81,9 +81,13 @@ export default {
   // ---------------------------------
   // S::Symbols
   // ---------------------------------
-  async symbols({ kind, isPopular, page, perPage }) {
-    const query = `query($kind:String, $isPopular:Boolean, $page:Int, $perPage:Int) {
-      items:symbols(kind:$kind, isPopular:$isPopular, page:$page, perPage:$perPage) {
+  async symbols({ kind, isPopular, page, perPage, search }) {
+    const query = `query(
+      $kind:String, $isPopular:Boolean, $page:Int, $perPage:Int, $search:String
+    ) {
+      items:symbols(
+        kind:$kind, isPopular:$isPopular, page:$page, perPage:$perPage, search:$search
+      ) {
         id name displayName lastPrice logoUrl
         company {
           id name logoUrl
@@ -92,9 +96,9 @@ export default {
         }
       }
     }`;
-    const vars = { kind, isPopular, page, perPage };
+    const vars = { kind, isPopular, page, perPage, search };
     const data = await this.client().request(query, vars);
-    this.log(query, data);
+    this.log(query, data, vars);
 
     return data.items;
   },
@@ -538,13 +542,16 @@ export default {
     return token ? { authorization: `Bearer ${token}` } : {};
   },
 
-  log(query, data) {
-    if (!process.env.NODE_ENV == 'development') { return; }
+  log(query, data, vars) {
+    if (process.env.NODE_ENV !== 'development') { return; }
 
     if (data != null) {
       console.log(query, JSON.stringify(data, undefined, 2));
     } else {
       console.log(query, 'Data is NULL!');
+    }
+    if (vars != null) {
+      console.log(JSON.stringify({ vars }, undefined, 2));
     }
   }
 };
