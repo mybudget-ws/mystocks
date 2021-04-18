@@ -26,8 +26,8 @@
       <div class='details'>
         <!--span>{{ itemName(item) }}</span-->
         <pre class='price' title='Цена закрытия на момент сигнала'>PR: ${{ item.point.close.toFixed(2) }}</pre>
-        <pre class='price indigo-text text-darken-4'>TP: ${{ item.takeProfit }}</pre>
-        <pre class='price purple-text text-darken-3'>SL: ${{ item.stopLoss }}</pre>
+        <pre class='price indigo-text text-darken-4'>TP: ${{ item.takeProfit.toFixed(2) }}</pre>
+        <pre class='price purple-text text-darken-3'>SL: ${{ item.stopLoss.toFixed(2) }}</pre>
       </div>
     </div>
     <div v-if='isShowAction' class='card-action'>
