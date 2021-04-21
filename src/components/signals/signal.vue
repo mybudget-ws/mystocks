@@ -1,5 +1,6 @@
 <template>
-  <div :class='cardClasses(item)'>
+  <div :class='cardClasses(item)' class='signal'>
+    <div class='rating'>{{ item.rating }}</div>
     <div class='card-content'>
       <div :class="{ 'green-text text-darken-2': isActual(item) }" class='right right-align'>
         {{ itemDate(item.dateAt) }}
@@ -132,6 +133,20 @@ export default {
 </script>
 
 <style scoped lang='sass'>
+.signal
+  position: relative
+
+  .rating
+    background-color: #5c6bc0
+    border-bottom-right-radius: 8px
+    color: #fff
+    font-size: 12px
+    font-weight: 700
+    left: 0
+    padding: 2px 10px
+    position: absolute
+    top: 0
+
 .logoUrl
   background-position: center
   background-repeat: no-repeat

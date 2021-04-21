@@ -175,7 +175,7 @@ export default {
   async signals(token, { symbolId, page, perPage }) {
     const query = `query($symbolId:Int, $page:Int, $perPage:Int) {
       items:signals(symbolId:$symbolId, page:$page, perPage:$perPage) {
-        id dateAt kind interval direction createdAt
+        id dateAt kind interval direction createdAt rating
         point { close }
         takeProfit
         stopLoss
