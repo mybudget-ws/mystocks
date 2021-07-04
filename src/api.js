@@ -172,11 +172,13 @@ export default {
   // ---------------------------------
   // S::Signals
   // ---------------------------------
-  async signals(token, { symbolId, search, minRating, page, perPage }) {
+  async signals(token, { symbolId, search, minRating, direction, interval, page, perPage }) {
     const query = `query(
       $symbolId:Int,
       $search:String,
       $minRating:Int,
+      $direction:String,
+      $interval:String,
       $page:Int,
       $perPage:Int
     ) {
@@ -184,6 +186,8 @@ export default {
         symbolId:$symbolId,
         search:$search,
         minRating:$minRating,
+        direction:$direction,
+        interval:$interval,
         page:$page,
         perPage:$perPage
       ) {
@@ -199,7 +203,7 @@ export default {
         }
       }
     }`;
-    const vars = { symbolId, search, minRating, page, perPage };
+    const vars = { symbolId, search, minRating, direction, interval, page, perPage };
     const data = await this.client(token).request(query, vars);
     this.log(query, data);
 

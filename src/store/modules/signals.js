@@ -7,6 +7,8 @@ const INITIAL_STATE = {
   symbolId: null,
   search: null,
   minRating: null,
+  direction: null,
+  interval: null,
   items: [],
   page: 1,
   perPage: 100,
@@ -25,11 +27,13 @@ export default {
     async fetch({ commit, state }, { token, options = {} }) {
       commit('START_LOADING');
       commit('UPDATE_SCOPE', options);
-      const { symbolId, search, minRating, page, perPage } = state;
+      const { symbolId, search, minRating, direction, interval, page, perPage } = state;
       const items = await api.signals(token, {
         symbolId,
         search,
         minRating,
+        direction,
+        interval,
         page,
         perPage
       });
@@ -37,11 +41,13 @@ export default {
     },
     async fetchNext({ commit, state }, { token }) {
       commit('START_NEXT_PAGE');
-      const { symbolId, search, minRating, page, perPage } = state;
+      const { symbolId, search, minRating, direction, interval, page, perPage } = state;
       const items = await api.signals(token, {
         symbolId,
         search,
         minRating,
+        direction,
+        interval,
         page,
         perPage
       });
@@ -50,10 +56,10 @@ export default {
   },
 
   mutations: {
-    UPDATE_SCOPE(state, { symbolId, search, minRating }) {
+    UPDATE_SCOPE(state, { symbolId, search, minRating, direction, interval }) {
       Object.assign(
         state,
-        { ...INITIAL_STATE, symbolId, search, minRating }
+        { ...INITIAL_STATE, symbolId, search, minRating, direction, interval }
       );
     },
     START_LOADING(state) {

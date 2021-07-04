@@ -22,6 +22,20 @@
             @keyup.enter='fetchSearch'
           >
         </div>
+        <div class='col l1 m2 s3'>
+          <input
+            v-model='direction'
+            placeholder='buy | sell'
+            @keyup.enter='fetchSearch'
+          >
+        </div>
+        <div class='col l1 m2 s3'>
+          <input
+            v-model='interval'
+            placeholder='h1 | d1'
+            @keyup.enter='fetchSearch'
+          >
+        </div>
       </div>
 
       <div class='row'>
@@ -70,6 +84,8 @@ export default {
   data: () => ({
     search: '',
     minRating: 20,
+    direction: '',
+    interval: '',
     isPhone: md.phone() != null
   }),
   computed: {
@@ -84,11 +100,16 @@ export default {
   async mounted() {
     this.search = this.$route.query.search || '';
     this.minRating = parseInt(this.$route.query.minRating) || 20;
+    this.direction = this.$route.query.direction || '';
+    this.interval = this.$route.query.interval || '';
+
     await this.fetch({
       token: this.token,
       options: {
         search: this.search,
-        minRating: this.minRating
+        minRating: this.minRating,
+        direction: this.direction,
+        interval: this.interval
       }
     });
   },
@@ -98,16 +119,16 @@ export default {
       'signals/fetchNext'
     ]),
     async fetchSearch() {
-      this.$router.push({
-        name: 'signals',
-        query: { search: this.search, minRating: this.minRating }
-      });
+      const query = {
+        search: this.search,
+        minRating: parseInt(this.minRating),
+        direction: this.direction,
+        interval: this.interval
+      };
+      this.$router.push({ name: 'signals', query });
       await this.fetch({
         token: this.token,
-        options: {
-          search: this.search,
-          minRating: parseInt(this.minRating)
-        }
+        options: query
       });
     },
     more() {
