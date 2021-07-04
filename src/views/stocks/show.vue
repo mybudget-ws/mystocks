@@ -112,7 +112,8 @@
             </div>
           </div>
           <div v-if='tabIndex === 3' class='col s12'>
-            <Collection :items='itemsSignals' />
+            <Loader v-if='isSignalsLoading' />
+            <Collection v-if='!isSignalsLoading' :items='itemsSignals' />
           </div>
         </div>
       </div>
@@ -155,6 +156,7 @@ export default {
   computed: {
     itemsArticles: get('articles/items'),
     itemsSignals: get('signals/items'),
+    isSignalsLoading: get('signals/isLoading'),
     token: get('user/token'),
     ceo() { return this?.symbol?.company?.ceo; },
     description() { return this?.symbol?.company?.description; },

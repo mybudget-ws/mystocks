@@ -172,9 +172,9 @@ export default {
   // ---------------------------------
   // S::Signals
   // ---------------------------------
-  async signals(token, { symbolId, page, perPage }) {
-    const query = `query($symbolId:Int, $page:Int, $perPage:Int) {
-      items:signals(symbolId:$symbolId, page:$page, perPage:$perPage) {
+  async signals(token, { symbolId, search, page, perPage }) {
+    const query = `query($symbolId:Int, $search:String, $page:Int, $perPage:Int) {
+      items:signals(symbolId:$symbolId, search:$search, page:$page, perPage:$perPage) {
         id dateAt kind interval direction createdAt rating
         point { close }
         takeProfit
@@ -187,7 +187,7 @@ export default {
         }
       }
     }`;
-    const vars = { symbolId, page, perPage };
+    const vars = { symbolId, search, page, perPage };
     const data = await this.client(token).request(query, vars);
     this.log(query, data);
 
