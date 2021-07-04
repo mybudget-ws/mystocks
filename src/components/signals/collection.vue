@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div v-if='items.length == 0'>
+    <div v-if='isNothingFound' class='row'>
+      <p class='col s12 blue-grey-text'>
+        По выбранным фильтрам ничего не найдено.
+      </p>
+    </div>
+    <div v-if='items.length == 0 && !isNothingFound'>
       <div class='card blue-grey'>
         <div class='card-content white-text'>
           <span class='card-title'>Скоро</span>
@@ -50,6 +55,9 @@ export default {
     },
     pastItems() {
       return this.items.filter(v => !DateFormat.isToday(v.dateAt));
+    },
+    isNothingFound() {
+      return this.items.length == 0 && (this.$route.query.search || this.$route.query.minRating);
     }
   },
   methods: {}

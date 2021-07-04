@@ -12,6 +12,16 @@
             @keyup.enter='fetchSearch'
           >
         </div>
+        <div class='col l1 m2 s3'>
+          <input
+            v-model='minRating'
+            type='number'
+            min='0'
+            max='100'
+            placeholder='Минимальный рейтинг'
+            @keyup.enter='fetchSearch'
+          >
+        </div>
       </div>
 
       <div class='row'>
@@ -59,7 +69,7 @@ export default {
   props: {},
   data: () => ({
     search: '',
-    searchPrev: '',
+    minRating: 20,
     isPhone: md.phone() != null
   }),
   computed: {
@@ -73,11 +83,12 @@ export default {
   },
   async mounted() {
     this.search = this.$route.query.search || '';
-    this.searchPrev = this.search;
+    this.minRating = parseInt(this.$route.query.minRating) || 20;
     await this.fetch({
       token: this.token,
       options: {
-        search: this.search
+        search: this.search,
+        minRating: this.minRating
       }
     });
   },
@@ -87,12 +98,15 @@ export default {
       'signals/fetchNext'
     ]),
     async fetchSearch() {
-      this.$router.push({ name: 'signals', query: { search: this.search } });
-      this.searchPrev = this.search;
+      this.$router.push({
+        name: 'signals',
+        query: { search: this.search, minRating: this.minRating }
+      });
       await this.fetch({
         token: this.token,
         options: {
-          search: this.search
+          search: this.search,
+          minRating: parseInt(this.minRating)
         }
       });
     },
