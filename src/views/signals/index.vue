@@ -71,8 +71,15 @@ export default {
       'signals/isLoadingPage'
     ])
   },
-  async created() {
-    await this.fetch({ token: this.token });
+  async mounted() {
+    this.search = this.$route.query.search || '';
+    this.searchPrev = this.search;
+    await this.fetch({
+      token: this.token,
+      options: {
+        search: this.search
+      }
+    });
   },
   methods: {
     ...call([
@@ -80,8 +87,8 @@ export default {
       'signals/fetchNext'
     ]),
     async fetchSearch() {
+      this.$router.push({ name: 'signals', query: { search: this.search } });
       this.searchPrev = this.search;
-      console.log(this.search);
       await this.fetch({
         token: this.token,
         options: {
