@@ -1,37 +1,52 @@
 <template>
   <div :class='cardClasses(item)' class='signal'>
-    <div class='rating'>{{ item.rating }}</div>
+    <!--div class='rating'>{{ item.rating }}</div-->
     <div class='card-content'>
       <div :class="{ 'green-text text-darken-2': isActual(item) }" class='right right-align'>
         {{ itemDate(item.dateAt) }}
         <div class='created-at'>Создан • {{ itemTimeCreated(item) }}</div>
       </div>
       <div class='card-title'>
-        <span class='logoUrl hide-on-small-only' :style='backgroundImgStyle(item)' />
+        <span class='logoUrl' :style='backgroundImgStyle(item)' />
         {{ item.symbol.name }}
         <span class='hide-on-small-only'>
           <span class='dot-devider' />
-          <span>{{ itemName(item) }}</span>
+          <span class='full-name'>{{ itemName(item) }}</span>
         </span>
-        <div class='tags'>
-          <span
-            :class='directionClasses(item)'
-            :data-badge-caption='directionKind(item)'
-          />
-          <span
-            :class='directionClasses(item)'
-            :data-badge-caption='directionText(item)'
-          />
-        </div>
       </div>
-      <div class='details'>
-        <!--span>{{ itemName(item) }}</span-->
-        <pre class='price' title='Цена закрытия на момент сигнала'>PR: ${{ item.point.close.toFixed(2) }}</pre>
-        <pre class='price indigo-text text-darken-4'>TP: ${{ item.takeProfit.toFixed(2) }}</pre>
-        <pre class='price purple-text text-darken-3'>SL: ${{ item.stopLoss.toFixed(2) }}</pre>
+      <div class='tags'>
+        <span
+          class='badge new indigo lighten-1 white-text'
+          :data-badge-caption="`★ ${item.rating}`"
+        />
+        <span
+          :class='directionClasses(item)'
+          :data-badge-caption='directionText(item)'
+        />
+        <span
+          :class='directionClasses(item)'
+          :data-badge-caption='directionKind(item)'
+        />
+      </div>
+      <div class='details' :class="{ 'with-margin': !isShowAction }">
+        <div class='prices'>
+          <pre class='price' title='Цена закрытия на момент сигнала'>PR: ${{ item.point.close.toFixed(2) }}</pre>
+          <pre class='price green-text text-darken-4'>TP: ${{ item.takeProfit.toFixed(2) }}</pre>
+          <pre class='price red-text text-darken-3'>SL: ${{ item.stopLoss.toFixed(2) }}</pre>
+        </div>
+        <router-link
+          v-if='isShowAction'
+          :to='pathStock(item)'
+          target='_blank'
+          class='btn-small btn-flat waves-effect waves-light blue-text text-darken-2'
+          title='Открыть в новой вкладке'
+        >
+          Просмотр
+          <i class='material-icons right'>open_in_new</i>
+        </router-link>
       </div>
     </div>
-    <div v-if='isShowAction' class='card-action'>
+    <!--div v-if='isShowAction' class='card-action'>
       <router-link :to='pathStock(item)' class='blue-text text-darken-2'>Просмотр</router-link>
       <router-link
         :to='pathStock(item)'
@@ -42,7 +57,7 @@
       >
         <i class='tiny material-icons'>open_in_new</i>
       </router-link>
-    </div>
+    </div-->
   </div>
 </template>
 
@@ -92,8 +107,8 @@ export default {
       return '?';
     },
     directionText({ direction }) {
-      if (direction === 'sell') { return 'SELL'; }
-      if (direction === 'buy') { return 'BUY'; }
+      if (direction === 'sell') { return '⇩ SELL'; }
+      if (direction === 'buy') { return '⇧ BUY'; }
       return '?';
     },
     directionKind({ kind }) {
@@ -136,6 +151,21 @@ export default {
 .signal
   position: relative
 
+  .card-title
+    font-size: 18px
+    display: flex
+    align-items: center
+    font-weight: 400
+
+    .full-name
+      font-weight: 200
+
+  .card-content
+    padding: 18px
+
+  .card-action
+    padding: 8px 18px
+
   .rating
     background-color: #5c6bc0
     border-bottom-right-radius: 8px
@@ -148,16 +178,16 @@ export default {
     top: 0
 
 .logoUrl
+  background-color: #eee
   background-position: center
   background-repeat: no-repeat
   background-size: contain
   border-radius: 4px
   display: inline-block
-  height: 24px
-  margin-bottom: -3px
+  height: 20px
   margin-right: 6px
   text-align: center
-  width: 24px
+  width: 20px
 
 .symbol
   color: #546e7a
@@ -194,14 +224,32 @@ export default {
   font-weight: 200
   color: #455a64
 
-.details
-  margin-top: 14px
-
-.price
-  font-size: 16px !important
-  font-weight: 400 !important
-  margin: 0
-
 .tags
   display: inline-block
+
+  span.badge
+    float: none
+    display: inline-block
+    margin: 0 10px 0 0
+
+.details
+  display: flex
+  justify-content: space-between
+  align-items: flex-end
+
+  &.with-margin
+    margin-top: 10px
+
+  @media only screen and (max-width: 601px)
+    margin-top: 10px
+
+  .price
+    font-size: 16px !important
+    font-weight: 400 !important
+    margin: 0
+
+    @media only screen and (min-width: 601px)
+      display: inline-block
+      margin-right: 16px
+
 </style>
