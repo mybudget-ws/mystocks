@@ -107,8 +107,8 @@ export default {
       return '?';
     },
     directionText({ direction }) {
-      if (direction === 'sell') { return '⇩ SELL'; }
-      if (direction === 'buy') { return '⇧ BUY'; }
+      if (direction === 'sell') { return '⬇ SELL'; }
+      if (direction === 'buy') { return '⬆ BUY'; }
       return '?';
     },
     directionKind({ kind }) {
