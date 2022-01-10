@@ -1,6 +1,5 @@
 <template>
   <div :class='cardClasses(item)' class='signal'>
-    <!--div class='rating'>{{ item.rating }}</div-->
     <div class='card-content'>
       <div :class="{ 'green-text text-darken-2': isActual(item) }" class='right right-align'>
         {{ itemDate(item.dateAt) }}
@@ -17,8 +16,12 @@
       <div class='tags'>
         <span
           class='badge new indigo lighten-1 white-text'
-          :data-badge-caption="`★ ${item.rating}`"
+          :data-badge-caption="`★ ${item.rating} ┆ ${item.interval.toUpperCase()}`"
         />
+        <!--span
+          class='badge new indigo lighten-3 white-text'
+          :data-badge-caption="`${item.interval.toUpperCase()}`"
+        /-->
         <span
           :class='directionClasses(item)'
           :data-badge-caption='directionText(item)'
@@ -96,15 +99,6 @@ export default {
     },
     pathStock({ symbol }) {
       return `/stocks/${symbol.name}`;
-    },
-    iconText({ kind, direction }) {
-      if (kind == 'umbrella_direct') {
-        return direction == 'sell' ? '⊥' : '⊤';
-      }
-      if (kind == 'umbrella_reverse') {
-        return direction == 'sell' ? '⊤' : '⊥';
-      }
-      return '?';
     },
     directionText({ direction }) {
       if (direction === 'sell') { return '⬇ SELL'; }
