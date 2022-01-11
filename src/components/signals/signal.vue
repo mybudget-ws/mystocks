@@ -106,22 +106,22 @@ export default {
       return '?';
     },
     directionKind({ kind }) {
-      if (kind == 'umbrella_direct') {
+      if (kind === 'umbrella_direct') {
         return 'Прямой';
       }
-      if (kind == 'umbrella_reverse') {
+      if (kind === 'umbrella_reverse') {
         return 'Обратный';
       }
       return '?';
     },
     directionClasses({ direction, kind }, isKind = false) {
-      if (isKind && kind == 'umbrella_reverse') {
+      if (isKind && kind === 'umbrella_reverse') {
         return 'badge new grey lighten-2 grey-text text-darken-3';
       }
-      if (direction == 'buy') {
+      if (direction === 'buy') {
         return 'badge new green lighten-4 green-text text-darken-4';
       }
-      if (direction == 'sell') {
+      if (direction === 'sell') {
         return 'badge new red lighten-4 red-text text-darken-3';
       }
 
