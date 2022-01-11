@@ -27,7 +27,7 @@
           :data-badge-caption='directionText(item)'
         />
         <span
-          :class='directionClasses(item)'
+          :class='directionClasses(item, true)'
           :data-badge-caption='directionKind(item)'
         />
       </div>
@@ -114,7 +114,10 @@ export default {
       }
       return '?';
     },
-    directionClasses({ direction }) {
+    directionClasses({ direction, kind }, isKind = false) {
+      if (isKind && kind == 'umbrella_reverse') {
+        return 'badge new grey lighten-2 grey-text text-darken-3';
+      }
       if (direction == 'buy') {
         return 'badge new green lighten-4 green-text text-darken-4';
       }
