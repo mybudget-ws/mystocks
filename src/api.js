@@ -195,6 +195,7 @@ export default {
         point { close }
         takeProfit
         stopLoss
+        isTakeProfit
         symbol {
           id name logoUrl kind
           company {

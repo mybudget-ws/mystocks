@@ -30,6 +30,11 @@
           :class='directionClasses(item, true)'
           :data-badge-caption='directionKind(item)'
         />
+        <span
+          v-if='item.isTakeProfit'
+          class='badge new green'
+          data-badge-caption='✔'
+        />
       </div>
       <div class='details' :class="{ 'with-margin': !isShowAction }">
         <div class='prices'>
