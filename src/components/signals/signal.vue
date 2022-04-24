@@ -56,7 +56,7 @@
           class='btn-small btn-flat waves-effect waves-light blue-text text-darken-2'
           title='Открыть в новой вкладке'
         >
-          Просмотр
+          Просмотр [{{ item.id }}]
           <i class='material-icons right'>open_in_new</i>
         </router-link>
       </div>
