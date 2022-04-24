@@ -38,7 +38,7 @@
         <span
           v-if='item.dealResultPercent != null'
           class='badge new'
-          :class="item.dealResultPercent > 0 ? 'green' : 'red'"
+          :class="item.dealResultPercent >= 0 ? 'green' : 'red'"
           :data-badge-caption="`${item.dealResultPercent}%`"
         />
       </div>
