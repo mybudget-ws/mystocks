@@ -35,12 +35,19 @@
           class='badge new green'
           data-badge-caption='✔'
         />
+        <span
+          v-if='item.dealResultPercent'
+          class='badge new'
+          :class="item.dealResultPercent > 0 ? 'green' : 'red'"
+          :data-badge-caption="`${item.dealResultPercent}%`"
+        />
       </div>
       <div class='details' :class="{ 'with-margin': !isShowAction }">
         <div class='prices'>
           <pre class='price' title='Цена закрытия на момент сигнала'>PR: ${{ item.point.close.toFixed(2) }}</pre>
           <pre class='price green-text text-darken-4'>TP: ${{ item.takeProfit.toFixed(2) }}</pre>
           <pre class='price red-text text-darken-3'>SL: ${{ item.stopLoss.toFixed(2) }}</pre>
+          <pre v-if='item.lastDailyPrice' class='price grey-text text-darken-0'>LPR: ${{ item.lastDailyPrice.toFixed(2) }}</pre>
         </div>
         <router-link
           v-if='isShowAction'
@@ -245,13 +252,15 @@ export default {
   @media only screen and (max-width: 601px)
     margin-top: 10px
 
-  .price
-    font-size: 16px !important
-    font-weight: 400 !important
-    margin: 0
+  .prices
+    display: flex
 
-    @media only screen and (min-width: 601px)
-      display: inline-block
-      margin-right: 16px
+    .price
+      font-size: 16px !important
+      font-weight: 400 !important
+      margin: 0
 
+      @media only screen and (min-width: 601px)
+        display: inline-block
+        margin-right: 16px
 </style>

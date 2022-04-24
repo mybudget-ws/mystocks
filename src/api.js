@@ -196,6 +196,8 @@ export default {
         takeProfit
         stopLoss
         isTakeProfit
+        lastDailyPrice
+        dealResultPercent
         symbol {
           id name logoUrl kind
           company {
