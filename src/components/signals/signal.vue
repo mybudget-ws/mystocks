@@ -37,8 +37,9 @@
         />
         <span
           v-if='item.dealResultPercent != null'
+          title='Если закрыть сделку по цене на конец дня'
           class='badge new'
-          :class="item.dealResultPercent >= 0 ? 'green' : 'red'"
+          :class="item.dealResultPercent >= 0 ? 'green' : 'grey'"
           :data-badge-caption="`${item.dealResultPercent}%`"
         />
       </div>
