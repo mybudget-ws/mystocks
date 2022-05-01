@@ -87,7 +87,7 @@ export default {
   props: {},
   data: () => ({
     search: '',
-    minRating: 20,
+    minRating: 26,
     direction: '',
     interval: '',
     isPhone: md.phone() != null
