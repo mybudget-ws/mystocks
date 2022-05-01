@@ -77,6 +77,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "inner" */ '@/views/signals/index'),
       beforeEnter: updateTitle
     }, {
+      path: '/signals/stats',
+      name: 'signals_stats',
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/signals/stats'),
+      beforeEnter: updateTitle
+    }, {
       path: '/settings/:tab',
       name: 'settings',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/settings/index'),
