@@ -76,7 +76,7 @@ import { get, call } from 'vuex-pathify';
 import MobileDetect from 'mobile-detect';
 const md = new MobileDetect(window.navigator.userAgent);
 
-const DEFAULT_MIN_RATING = 26;
+const DEFAULT_MIN_RATING = 28;
 
 export default {
   name: 'Signals',
