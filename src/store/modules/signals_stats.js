@@ -1,6 +1,8 @@
 import api from '../../api';
 
 const INITIAL_STATE = {
+  categories: [],
+  series: [],
   isLoading: true
 };
 
@@ -9,20 +11,11 @@ export default {
   state: { ...INITIAL_STATE },
 
   actions: {
-    async fetch({ commit, state }, { token, options = {} }) {
+    async fetch({ commit }, { token, _options = {} }) {
       commit('START_LOADING');
-      commit('UPDATE_SCOPE', options);
-      const { symbolId, search, minRating, direction, interval, page, perPage } = state;
-      const items = await api.signals(token, {
-        symbolId,
-        search,
-        minRating,
-        direction,
-        interval,
-        page,
-        perPage
-      });
-      commit('FINISH_LOADING', items);
+      // const { symbolId, search, minRating, direction, interval, page, perPage } = state;
+      const data = await api.signalsStats(token, {});
+      commit('FINISH_LOADING', data);
     }
   },
 
@@ -30,7 +23,9 @@ export default {
     START_LOADING(state) {
       state.isLoading = true;
     },
-    FINISH_LOADING(state, /*items*/) {
+    FINISH_LOADING(state, { categories, series }) {
+      state.categories = categories;
+      state.series = series;
       state.isLoading = false;
     }
   }
