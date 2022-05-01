@@ -213,6 +213,23 @@ export default {
     return data.items;
   },
 
+  async signalsStats(token, _params) {
+    const query = `query {
+      chart:signalsStats {
+        categories
+        series {
+          name
+          data
+        }
+      }
+    }`;
+    // const vars = { symbolId, search, minRating, direction, interval, page, perPage };
+    const data = await this.client(token).request(query);
+    this.log(query, data);
+
+    return data.chart;
+  },
+
   // ---------------------------------
   // Account
   // ---------------------------------

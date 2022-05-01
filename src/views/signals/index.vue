@@ -2,7 +2,11 @@
   <div>
     <Menu />
     <div class='container container-wide'>
-      <PageHeader name='Сигналы' />
+      <PageHeader name='Сигналы'>
+        <router-link to='signals/stats' class='stats'>
+          Статистика
+        </router-link>
+      </PageHeader>
 
       <div v-if='!isLoading' class='row'>
         <div class='col l3 m6 s12'>
@@ -139,4 +143,7 @@ export default {
 </script>
 
 <style scoped lang='sass'>
+.stats
+  font-size: 16px
+  float: right
 </style>
