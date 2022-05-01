@@ -76,6 +76,8 @@ import { get, call } from 'vuex-pathify';
 import MobileDetect from 'mobile-detect';
 const md = new MobileDetect(window.navigator.userAgent);
 
+const DEFAULT_MIN_RATING = 26;
+
 export default {
   name: 'Signals',
   components: {
@@ -87,7 +89,7 @@ export default {
   props: {},
   data: () => ({
     search: '',
-    minRating: 26,
+    minRating: DEFAULT_MIN_RATING,
     direction: '',
     interval: '',
     isPhone: md.phone() != null
@@ -103,7 +105,7 @@ export default {
   },
   async mounted() {
     this.search = this.$route.query.search || '';
-    this.minRating = parseInt(this.$route.query.minRating) || 20;
+    this.minRating = parseInt(this.$route.query.minRating) || DEFAULT_MIN_RATING;
     this.direction = this.$route.query.direction || '';
     this.interval = this.$route.query.interval || '';
 
