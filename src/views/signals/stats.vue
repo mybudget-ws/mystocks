@@ -3,7 +3,8 @@
     <Menu />
     <div class='container container-wide'>
       <PageHeader name='Статистика сигналов' />
-      <div class='row'>
+      <Loader v-if='isLoading' class='loading' />
+      <div v-else class='row'>
         <div class='col s12'>
           <VueApexCharts
             type='line'
@@ -18,14 +19,16 @@
 </template>
 
 <script>
+import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
 import VueApexCharts from 'vue-apexcharts';
-
+import { get } from 'vuex-pathify';
 
 export default {
   name: 'SignalsStats',
   components: {
+    Loader,
     Menu,
     PageHeader,
     VueApexCharts
@@ -59,7 +62,17 @@ export default {
         enabled: false
       }
     }
-  })
+  }),
+  computed: {
+    token: get('user/token'),
+    ...get([
+      'signals/isLoading'
+    ])
+  },
+  async mounted() {
+  },
+  methods: {
+  }
 };
 </script>
 
