@@ -196,6 +196,7 @@ export default {
         takeProfit
         stopLoss
         isTakeProfit
+        isStopLoss
         lastDailyPrice
         dealResultPercent
         symbol {

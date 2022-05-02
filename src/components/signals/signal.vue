@@ -30,11 +30,10 @@
           :class='directionClasses(item, true)'
           :data-badge-caption='directionKind(item)'
         />
-        <span
-          v-if='item.isTakeProfit'
-          class='badge new green'
-          data-badge-caption='✔'
-        />
+        <span v-if='item.isTakeProfit' class='badge new green' data-badge-caption='✔' />
+        <span v-else class='badge new grey lighten-2' data-badge-caption='✔' />
+        <span v-if='item.isStopLoss' class='badge new red' data-badge-caption='✖' />
+        <span v-else class='badge new grey lighten-2' data-badge-caption='✖' />
         <span
           v-if='item.dealResultPercent != null'
           title='Если закрыть сделку по цене на конец дня'
