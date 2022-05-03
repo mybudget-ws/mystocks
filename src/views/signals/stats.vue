@@ -51,7 +51,7 @@ export default {
           categories: this.categories
         },
         stroke: {
-          width: [4, 4],
+          width: [4, 4, 4],
           curve: 'straight'
         },
         dataLabels: { enabled: false }
