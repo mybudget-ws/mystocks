@@ -3,6 +3,7 @@ import api from '../../api';
 const INITIAL_STATE = {
   categories: [],
   series: [],
+  signals: [],
   isLoading: true
 };
 
@@ -23,9 +24,10 @@ export default {
     START_LOADING(state) {
       state.isLoading = true;
     },
-    FINISH_LOADING(state, { categories, series }) {
+    FINISH_LOADING(state, { categories, series, signals }) {
       state.categories = categories;
       state.series = series;
+      state.signals = signals;
       state.isLoading = false;
     }
   }

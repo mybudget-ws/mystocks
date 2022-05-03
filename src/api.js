@@ -222,6 +222,11 @@ export default {
           name
           data
         }
+        signals {
+          id
+          name
+          date
+        }
       }
     }`;
     // const vars = { symbolId, search, minRating, direction, interval, page, perPage };

@@ -13,6 +13,23 @@
             :series='series'
           />
         </div>
+
+        <div class='col s12'>
+          <table>
+            <thead>
+              <tr>
+                <th>Cигнал</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for='item in signals' :key='item.id'>
+                <td>{{ item.name }}</td>
+                <td class='grey-text'>{{ item.date }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -40,7 +57,8 @@ export default {
     ...get([
       'signalsStats/isLoading',
       'signalsStats/categories',
-      'signalsStats/series'
+      'signalsStats/series',
+      'signalsStats/signals'
     ]),
     chartOptions() {
       return {
