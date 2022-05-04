@@ -229,6 +229,7 @@ export default {
           rating
           direction
           dealByDayResultPercent
+          dealBuyByDayResultPercent
           dealByTpResultPercent
           dealByTpSlResultPercent
           dealByTpDaySlResultPercent

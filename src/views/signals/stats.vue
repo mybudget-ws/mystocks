@@ -22,6 +22,7 @@
                 <th>Cигнал</th>
                 <th class='right-align'>Рейтинг</th>
                 <th class='right-align'>Ved, %</th>
+                <th class='right-align'>VBed, %</th>
                 <th class='right-align'>Vtp, %</th>
                 <th class='right-align'>Vtp-sl, %</th>
                 <th class='right-align'>Vtp-ed-sl, %</th>
@@ -35,6 +36,7 @@
                 <td>{{ signals.length }} шт.</td>
                 <td class='right-align'>{{ avgRating.toFixed(2) }}</td>
                 <td class='right-align'>{{ sumByDayResultPercent.toFixed(2) }}</td>
+                <td class='right-align'>{{ sumBuyByDayResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ sumByTpResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ sumByTpSlResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ sumByTpDaySlResultPercent.toFixed(2) }}</td>
@@ -51,6 +53,7 @@
                 </td>
                 <td class='right-align'>{{ item.rating }}</td>
                 <td class='right-align'>{{ item.dealByDayResultPercent.toFixed(2) }}</td>
+                <td class='right-align'>{{ item.dealBuyByDayResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ item.dealByTpResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ item.dealByTpSlResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ item.dealByTpDaySlResultPercent.toFixed(2) }}</td>
@@ -118,6 +121,14 @@ export default {
 
       return this.signals
         .map(v => v.dealByDayResultPercent)
+        .reduce((total, v) => total + v);
+    },
+    sumBuyByDayResultPercent() {
+      if (this.isLoading) { return 0; }
+      if (this.signals.length === 0) { return 0; }
+
+      return this.signals
+        .map(v => v.dealBuyByDayResultPercent)
         .reduce((total, v) => total + v);
     },
     sumByTpResultPercent() {
