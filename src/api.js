@@ -229,6 +229,7 @@ export default {
           rating
           dealByDayResultPercent
           dealByTpResultPercent
+          dealByTpSlResultPercent
         }
       }
     }`;
