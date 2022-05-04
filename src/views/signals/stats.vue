@@ -31,7 +31,7 @@
                   <strong>Итого</strong>
                 </td>
                 <td>{{ signals.length }} шт.</td>
-                <td class='right-align'>{{ avgRating }}</td>
+                <td class='right-align'>{{ avgRating.toFixed(2) }}</td>
                 <td class='right-align'>{{ sumByDayResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ sumByTpResultPercent.toFixed(2) }}</td>
               </tr>
