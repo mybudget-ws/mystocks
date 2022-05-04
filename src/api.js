@@ -226,6 +226,9 @@ export default {
           id
           name
           date
+          rating
+          dealByDayResultPercent
+          dealByTpResultPercent
         }
       }
     }`;

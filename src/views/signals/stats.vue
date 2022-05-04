@@ -18,14 +18,29 @@
           <table>
             <thead>
               <tr>
-                <th>Cигнал</th>
                 <th />
+                <th>Cигнал</th>
+                <th class='right-align'>Рейтинг</th>
+                <th class='right-align'>Ved, %</th>
+                <th class='right-align'>Vtp, %</th>
               </tr>
             </thead>
             <tbody>
+              <tr class='blue-grey lighten-4'>
+                <td>
+                  <strong>Итого</strong>
+                </td>
+                <td>{{ signals.length }} шт.</td>
+                <td class='right-align'>{{ avgRating }}</td>
+                <td class='right-align'>{{ sumByDayResultPercent.toFixed(2) }}</td>
+                <td class='right-align'>{{ sumByTpResultPercent.toFixed(2) }}</td>
+              </tr>
               <tr v-for='item in signals' :key='item.id'>
-                <td>{{ item.name }}</td>
                 <td class='grey-text'>{{ item.date }}</td>
+                <td>{{ item.name }}</td>
+                <td class='right-align'>{{ item.rating }}</td>
+                <td class='right-align'>{{ item.dealByDayResultPercent.toFixed(2) }}</td>
+                <td class='right-align'>{{ item.dealByTpResultPercent.toFixed(2) }}</td>
               </tr>
             </tbody>
           </table>
@@ -74,6 +89,31 @@ export default {
         },
         dataLabels: { enabled: false }
       };
+    },
+    avgRating() {
+      if (this.isLoading) { return 0; }
+      if (this.signals.length === 0) { return 0; }
+
+      const sum = this.signals
+        .map(v => v.rating)
+        .reduce((total, v) => total + v);
+      return sum / this.signals.length;
+    },
+    sumByDayResultPercent() {
+      if (this.isLoading) { return 0; }
+      if (this.signals.length === 0) { return 0; }
+
+      return this.signals
+        .map(v => v.dealByDayResultPercent)
+        .reduce((total, v) => total + v);
+    },
+    sumByTpResultPercent() {
+      if (this.isLoading) { return 0; }
+      if (this.signals.length === 0) { return 0; }
+
+      return this.signals
+        .map(v => v.dealByTpResultPercent)
+        .reduce((total, v) => total + v);
     }
   },
   async mounted() {
