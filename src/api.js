@@ -230,6 +230,7 @@ export default {
           dealByDayResultPercent
           dealByTpResultPercent
           dealByTpSlResultPercent
+          dealByTpDaySlResultPercent
         }
       }
     }`;

@@ -23,7 +23,8 @@
                 <th class='right-align'>Рейтинг</th>
                 <th class='right-align'>Ved, %</th>
                 <th class='right-align'>Vtp, %</th>
-                <th class='right-align'>Vtpsl, %</th>
+                <th class='right-align'>Vtp-sl, %</th>
+                <th class='right-align'>Vtp-ed-sl, %</th>
               </tr>
             </thead>
             <tbody>
@@ -36,6 +37,7 @@
                 <td class='right-align'>{{ sumByDayResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ sumByTpResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ sumByTpSlResultPercent.toFixed(2) }}</td>
+                <td class='right-align'>{{ sumByTpDaySlResultPercent.toFixed(2) }}</td>
               </tr>
               <tr v-for='item in signals' :key='item.id'>
                 <td class='grey-text'>{{ item.date }}</td>
@@ -44,6 +46,7 @@
                 <td class='right-align'>{{ item.dealByDayResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ item.dealByTpResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ item.dealByTpSlResultPercent.toFixed(2) }}</td>
+                <td class='right-align'>{{ item.dealByTpDaySlResultPercent.toFixed(2) }}</td>
               </tr>
             </tbody>
           </table>
@@ -124,6 +127,14 @@ export default {
 
       return this.signals
         .map(v => v.dealByTpSlResultPercent)
+        .reduce((total, v) => total + v);
+    },
+    sumByTpDaySlResultPercent() {
+      if (this.isLoading) { return 0; }
+      if (this.signals.length === 0) { return 0; }
+
+      return this.signals
+        .map(v => v.dealByTpDaySlResultPercent)
         .reduce((total, v) => total + v);
     }
   },
