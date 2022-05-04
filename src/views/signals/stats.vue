@@ -42,7 +42,7 @@
                 <td class='right-align'>{{ sumByTpDaySlResultPercent.toFixed(2) }}</td>
               </tr>
               <tr v-for='item in signals' :key='item.id'>
-                <td class='grey-text'>{{ item.date }}</td>
+                <td class='grey-text'>[{{ item.id }}] {{ item.date }}</td>
                 <td>
                   <span
                     class='direction'
