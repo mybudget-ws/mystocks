@@ -227,6 +227,7 @@ export default {
           name
           date
           rating
+          direction
           dealByDayResultPercent
           dealByTpResultPercent
           dealByTpSlResultPercent

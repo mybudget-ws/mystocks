@@ -41,7 +41,14 @@
               </tr>
               <tr v-for='item in signals' :key='item.id'>
                 <td class='grey-text'>{{ item.date }}</td>
-                <td>{{ item.name }}</td>
+                <td>
+                  <span
+                    class='direction'
+                    :class='directionClasses(item)'
+                    :data-badge-caption='directionText(item)'
+                  />
+                  {{ item.name }}
+                </td>
                 <td class='right-align'>{{ item.rating }}</td>
                 <td class='right-align'>{{ item.dealByDayResultPercent.toFixed(2) }}</td>
                 <td class='right-align'>{{ item.dealByTpResultPercent.toFixed(2) }}</td>
@@ -146,10 +153,30 @@ export default {
   methods: {
     ...call([
       'signalsStats/fetch'
-    ])
+    ]),
+    directionText({ direction }) {
+      if (direction === 'sell') { return '⬇ SELL'; }
+      if (direction === 'buy') { return '⬆ BUY'; }
+      return '?';
+    },
+    directionClasses({ direction, kind }, isKind = false) {
+      if (isKind && kind === 'umbrella_reverse') {
+        return 'badge new grey lighten-2 grey-text text-darken-3';
+      }
+      if (direction === 'buy') {
+        return 'badge new green lighten-4 green-text text-darken-4';
+      }
+      if (direction === 'sell') {
+        return 'badge new red lighten-4 red-text text-darken-3';
+      }
+
+      return 'badge new grey lighten-2 grey-text text-darken-3';
+    }
   }
 };
 </script>
 
 <style scoped lang='sass'>
+.direction
+  margin-right: 2px
 </style>
