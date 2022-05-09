@@ -231,6 +231,7 @@ export default {
           dealByDayResultPercent
           dealBuyByDayResultPercent
           dealByTpResultPercent
+          dealBuyByTpResultPercent
           dealByTpSlResultPercent
         }
       }
