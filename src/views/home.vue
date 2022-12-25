@@ -40,7 +40,7 @@ export default {
     isSignedIn: get('user/isSignedIn'),
     isGuest: get('user/isGuest'),
     email: get('user/email'),
-    token: get('user/token'),
+    token: get('user/token')
   },
   methods: {
   }
