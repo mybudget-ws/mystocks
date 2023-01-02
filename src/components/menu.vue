@@ -6,12 +6,9 @@
           to='/'
           class='brand-logo grey-text text-lighten-2 left col'
         >
-          myStocks v0.1a
+          myStocks v0.2a
         </router-link>
         <div class='right'>
-          <!--router-link to='/currencies' :class='btnClasses'>
-            Курсы валют
-          </router-link-->
           <a href='//2.mybudget.ws/' :class='btnClasses' class='sign-in'>
             Назад в Мой Бюджет
           </a>
@@ -33,25 +30,7 @@
             <a href='//2.mybudget.ws/#/transactions' :class='btnClasses' class='btn-flat waves-effect waves-purple mybudget-link'>
               Назад в Мой Бюджет
             </a>
-            <!--a :class='btnClasses' @click='exit'>
-              <i class='material-icons'>exit_to_app</i>
-            </a-->
           </li>
-          <!--li class='right' title='Настройки'>
-            <router-link to='/settings/profile' :class='btnClasses'>
-              <i class='material-icons'>settings</i>
-            </router-link>
-          </li>
-          <li class='right' title='Курсы валют'>
-            <router-link to='/currencies' :class='btnClasses'>
-              <i class='material-icons'>timeline</i>
-            </router-link>
-          </li>
-          <li v-if='isGuest' class='right' title='Завершить Регистрацию'>
-            <router-link to='/finish-sign-up' class='amber-text text-darken-2'>
-              Завершить Регистрацию
-            </router-link>
-          </li-->
         </ul>
       </div>
     </nav>
@@ -66,18 +45,6 @@
           {{ item.name }}
         </a>
       </li>
-      <!--li class='divider' />
-      <li v-if='isGuest'>
-        <a href='#' class='amber-text text-darken-2' @click='goto("/finish-sign-up")'>
-          Завершить Регистрацию
-        </a>
-      </li-->
-      <!--li>
-        <a href='#' @click='goto("currencies")'>Курсы валют</a>
-      </li>
-      <li>
-        <a href='#' @click='goto("settings/profile")'>Настройки</a>
-      </li-->
       <li class='divider' />
       <li>
         <a @click='exit'>Выход</a>
@@ -93,10 +60,8 @@ export default {
   name: 'Menu',
   data: () => ({
     items: [
-      { path: '/stocks', name: 'Акции' },
-      { path: '/indexes', name: 'Индексы' },
+      { path: '/#/', name: 'Главная' },
       { path: '/news', name: 'Новости' },
-      { path: '/dividends', name: 'Дивиденды' },
       { path: '/signals', name: 'Сигналы' }
     ]
   }),

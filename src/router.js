@@ -62,6 +62,11 @@ export default new Router({
       component: () => import(/* webpackChunkName: "inner" */ '@/views/indexes/index'),
       beforeEnter: updateTitle
     }, {
+      path: '/instruments/:symbol',
+      name: 'stock',
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/instruments/show'),
+      beforeEnter: updateTitle
+    }, {
       path: '/news',
       name: 'articles',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/news/index'),

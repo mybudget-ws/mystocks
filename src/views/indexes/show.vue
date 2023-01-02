@@ -43,7 +43,6 @@ import Loader from '@/components/loader';
 import Menu from '@/components/menu';
 import PageHeader from '@/components/page_header';
 import SymbolShow from '@/mixins/symbol_show';
-//import { get } from 'vuex-pathify';
 
 export default {
   name: 'Index',
