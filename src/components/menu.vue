@@ -4,7 +4,7 @@
       <div class='nav-wrapper container'>
         <router-link
           to='/'
-          class='brand-logo grey-text text-lighten-2 left col'
+          class='brand-logo grey-text text-lighten-2 left'
         >
           myStocks v0.2a
         </router-link>
@@ -62,6 +62,7 @@ export default {
     items: [
       { path: '/#/', name: 'Главная' },
       { path: '/news', name: 'Новости' },
+      { path: '/dividends', name: 'Дивиденды' },
       { path: '/signals', name: 'Сигналы' }
     ]
   }),
@@ -114,6 +115,7 @@ export default {
 .brand-logo
   font-size: 14px
   margin-top: 4px
+  margin-left: 2px
 
 .row-menu
   margin-bottom: 0

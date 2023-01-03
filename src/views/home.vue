@@ -3,7 +3,7 @@
     <Menu />
     <div class='container main'>
       <div class='row'>
-        <div class='col'>
+        <div class='col-12'>
           <h1 class='white-text'>Моя Биржа</h1>
           <h2 class='grey-text text-lighten-3'>Посторонним в!</h2>
         </div>
@@ -13,14 +13,39 @@
     <section class='container'>
       <div
         v-for='item in instruments'
-        :key='item.name'
+        :key='item.symbol'
         class='instrument'
-        @click='gotoInstrument(item.name)'
+        :class='item.displayClass'
+        @click='gotoInstrument(item.symbol)'
       >
         <div class='name'>{{ item.name }}</div>
         <div class='kind'>{{ item.kind }}</div>
       </div>
     </section>
+
+    <div class='container'>
+      <div class='row'>
+        <div class='col-12'>
+          <h3>Время клиринга на ММВБ</h3>
+          <table class='striped'>
+            <thead>
+              <tr>
+                <th>Дневная сессия</th>
+                <th>Вечерняя сессия</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>с 14:00 до 14:05</td>
+                <td>с 18:45 до 19:00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class='blank-content' />
 
     <Footer />
   </div>
@@ -45,8 +70,16 @@ export default {
     isPhone: md.phone() != null,
     instruments: [
       {
+        symbol: 'SIH3',
         name: 'SiH3',
-        kind: 'Фьючерс'
+        kind: 'Фьючерс',
+        displayClass: 'gr-blue'
+      },
+      {
+        symbol: 'USD000UTSTOM',
+        name: 'USD / RUB',
+        kind: 'Курс',
+        displayClass: 'gr-orange'
       }
     ]
   }),
@@ -77,7 +110,6 @@ h2
   font-size: 2.8rem
 
 h3
-  margin: 10px 0
   font-size: 2.2rem
 
 section
@@ -85,13 +117,14 @@ section
   border-radius: 20px
   display: flex
   justify-content: start
-  margin-bottom: 700px
   min-height: 200px
   padding: 10px
 
+.blank-content
+  margin-bottom: 600px
+
 .instrument
   background-repeat: no-repeat
-  background: linear-gradient(137.04deg, rgb(52, 111, 225) 33.4%, rgb(88, 68, 195) 82.8%)
   border-radius: 12px
   color: #fff
   cursor: pointer
@@ -105,6 +138,12 @@ section
 
   &:active
     opacity: 0.9
+
+  &.gr-blue
+    background: linear-gradient(137.04deg, rgb(52, 111, 225) 33.4%, rgb(88, 68, 195) 82.8%)
+
+  &.gr-orange
+    background: linear-gradient(137.04deg, rgb(225, 136, 52) 33.4%, rgb(195, 68, 68) 82.8%)
 
   .name
     font-weight: 600
