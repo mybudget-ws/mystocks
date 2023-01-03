@@ -114,7 +114,7 @@ export default {
       this.chart = am4core.create('chart-new', am4charts.XYChart);
       this.chart.paddingRight = 20;
 
-      this.chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd hh:mm';
+      this.chart.dateFormatter.inputDateFormat = 'yyyy-MM-dd HH:mm';
 
       // https://www.amcharts.com/docs/v4/reference/dateaxis/
       const dateAxis = this.chart.xAxes.push(new am4charts.DateAxis());
