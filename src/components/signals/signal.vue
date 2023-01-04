@@ -51,7 +51,7 @@
         </div>
         <router-link
           v-if='isShowAction'
-          :to='pathStock(item)'
+          :to='pathInstrument(item)'
           target='_blank'
           class='btn-small btn-flat waves-effect waves-light blue-text text-darken-2'
           title='Открыть в новой вкладке'
@@ -61,18 +61,6 @@
         </router-link>
       </div>
     </div>
-    <!--div v-if='isShowAction' class='card-action'>
-      <router-link :to='pathStock(item)' class='blue-text text-darken-2'>Просмотр</router-link>
-      <router-link
-        :to='pathStock(item)'
-        target='_blank'
-        class='right blue-text'
-        style='margin-right: 0'
-        title='Открыть в новой вкладке'
-      >
-        <i class='tiny material-icons'>open_in_new</i>
-      </router-link>
-    </div-->
   </div>
 </template>
 
@@ -109,8 +97,8 @@ export default {
     gotoStock({ symbol }) {
       this.$router.push(`/stocks/${symbol.name}`);
     },
-    pathStock({ symbol }) {
-      return `/stocks/${symbol.name}`;
+    pathInstrument({ symbol }) {
+      return `/instruments/${symbol.name}`;
     },
     directionText({ direction }) {
       if (direction === 'sell') { return '⬇ SELL'; }
