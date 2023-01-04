@@ -14,17 +14,18 @@
       <div
         v-for='(row, index) in instruments'
         :key='index'
-        class='instruments-row'
+        class='row'
       >
         <div
           v-for='item in row'
           :key='item.symbol'
-          class='instrument'
-          :class='item.displayClass'
+          class='col s6'
           @click='gotoInstrument(item.symbol)'
         >
-          <div class='name'>{{ item.name }}</div>
-          <div class='kind'>{{ item.kind }}</div>
+          <div class='instrument' :class='item.displayClass'>
+            <div class='name'>{{ item.name }}</div>
+            <div class='kind'>{{ item.kind }}</div>
+          </div>
         </div>
       </div>
     </section>
@@ -76,7 +77,8 @@ export default {
     isPhone: md.phone() != null,
     instruments: [
       [
-        { symbol: 'SIH3', name: 'SiH3', kind: 'Фьючерс', displayClass: 'gr-blue' }
+        { symbol: 'SIH3', name: 'SiH3', kind: 'Фьючерс', displayClass: 'gr-blue' },
+        { symbol: 'RMH3', name: 'RMH3 / RTSI', kind: 'Фьючерс', displayClass: 'gr-blue' }
       ], [
         { symbol: 'USD000UTSTOM', name: 'USD / RUB', kind: 'Курс', displayClass: 'gr-orange' },
         { symbol: 'CNYRUB_TOM', name: 'CNY / RUB', kind: 'Курс', displayClass: 'gr-orange' }
@@ -115,23 +117,17 @@ h3
 section
   background-color: #fff
   border-radius: 20px
-  padding: 10px
+  padding: 20px 10px
 
 .blank-content
   margin-bottom: 600px
-
-.instruments-row
-  display: flex
-  justify-content: start
 
 .instrument
   background-repeat: no-repeat
   border-radius: 12px
   color: #fff
   cursor: pointer
-  flex-grow: 1
   height: 90px
-  margin: 10px
   padding: 20px
 
   &:hover
