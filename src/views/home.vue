@@ -12,14 +12,20 @@
 
     <section class='container'>
       <div
-        v-for='item in instruments'
-        :key='item.symbol'
-        class='instrument'
-        :class='item.displayClass'
-        @click='gotoInstrument(item.symbol)'
+        v-for='(row, index) in instruments'
+        :key='index'
+        class='instruments-row'
       >
-        <div class='name'>{{ item.name }}</div>
-        <div class='kind'>{{ item.kind }}</div>
+        <div
+          v-for='item in row'
+          :key='item.symbol'
+          class='instrument'
+          :class='item.displayClass'
+          @click='gotoInstrument(item.symbol)'
+        >
+          <div class='name'>{{ item.name }}</div>
+          <div class='kind'>{{ item.kind }}</div>
+        </div>
       </div>
     </section>
 
@@ -69,18 +75,12 @@ export default {
   data: () => ({
     isPhone: md.phone() != null,
     instruments: [
-      {
-        symbol: 'SIH3',
-        name: 'SiH3',
-        kind: 'Фьючерс',
-        displayClass: 'gr-blue'
-      },
-      {
-        symbol: 'USD000UTSTOM',
-        name: 'USD / RUB',
-        kind: 'Курс',
-        displayClass: 'gr-orange'
-      }
+      [
+        { symbol: 'SIH3', name: 'SiH3', kind: 'Фьючерс', displayClass: 'gr-blue' }
+      ], [
+        { symbol: 'USD000UTSTOM', name: 'USD / RUB', kind: 'Курс', displayClass: 'gr-orange' },
+        { symbol: 'CNYRUB_TOM', name: 'CNY / RUB', kind: 'Курс', displayClass: 'gr-orange' }
+      ]
     ]
   }),
   computed: {
@@ -115,13 +115,14 @@ h3
 section
   background-color: #fff
   border-radius: 20px
-  display: flex
-  justify-content: start
-  min-height: 200px
   padding: 10px
 
 .blank-content
   margin-bottom: 600px
+
+.instruments-row
+  display: flex
+  justify-content: start
 
 .instrument
   background-repeat: no-repeat
@@ -143,7 +144,7 @@ section
     background: linear-gradient(137.04deg, rgb(52, 111, 225) 33.4%, rgb(88, 68, 195) 82.8%)
 
   &.gr-orange
-    background: linear-gradient(137.04deg, rgb(225, 136, 52) 33.4%, rgb(195, 68, 68) 82.8%)
+    background: linear-gradient(137.04deg, rgb(225, 136, 52) 33.4%, rgb(238, 110, 50) 82.8%)
 
   .name
     font-weight: 600
