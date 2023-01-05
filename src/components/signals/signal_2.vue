@@ -161,11 +161,11 @@ export default {
 
   .date
     text-align: right
-    color: #424242
+    color: #eeeeee
     font-size: 12px
 
     .createdAt
-      color: #f5f5f5
+      color: #fff
       font-weight: 400
 
 .tags
