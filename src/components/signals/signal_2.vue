@@ -1,9 +1,5 @@
 <template>
-  <div
-    :class='cardClasses(item)'
-    class='signal'
-    :title='item.id'
-  >
+  <div :class='cardClasses(item)' class='signal'>
     <div class='header'>
       <div class='title'>
         <b>{{ item.symbol.name }}</b>
