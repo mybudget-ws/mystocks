@@ -28,6 +28,13 @@
           </div>
         </div>
       </div>
+      <div class='row'>
+        <router-link to='/signals' class='col s12'>
+          <span class='instrument gr-green'>
+            <span class='name'>Сигналы</span>
+          </span>
+        </router-link>
+      </div>
     </section>
 
     <div class='container'>
@@ -123,6 +130,7 @@ section
   margin-bottom: 600px
 
 .instrument
+  display: block
   background-repeat: no-repeat
   border-radius: 12px
   color: #fff
@@ -141,6 +149,9 @@ section
 
   &.gr-orange
     background: linear-gradient(137.04deg, rgb(225, 136, 52) 33.4%, rgb(238, 110, 50) 82.8%)
+
+  &.gr-green
+    background: linear-gradient(137.04deg, #26a359 33.4%, #027f50 82.8%)
 
   .name
     font-weight: 600
