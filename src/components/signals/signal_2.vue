@@ -48,11 +48,8 @@
     </div>
     <div class='prices'>
       <pre>{{ item.point.close.toFixed(2) }}</pre>
-      <pre class='green-text text-lighten-5'>TP {{ item.takeProfit.toFixed(2) }}</pre>
-      <pre class='red-text text-lighten-5'>SL {{ item.stopLoss.toFixed(2) }}</pre>
-      <!--div>
-        <pre v-if='item.lastDailyPrice' class='grey-text text-lighten-4'>{{ item.lastDailyPrice.toFixed(2) }}</pre>
-      </div-->
+      <pre>TP {{ item.takeProfit.toFixed(2) }}</pre>
+      <pre>SL {{ item.stopLoss.toFixed(2) }}</pre>
       <div>
         <router-link
           v-if='isShowAction'
