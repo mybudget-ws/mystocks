@@ -38,7 +38,7 @@
 
 <script>
 import DateFormat from '@/utils/date_format';
-import Signal from '@/components/signals/signal';
+import Signal from '@/components/signals/signal_2';
 
 export default {
   name: 'Collection',
