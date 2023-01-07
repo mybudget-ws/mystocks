@@ -18,10 +18,6 @@
           class='badge new indigo lighten-1 white-text'
           :data-badge-caption="`★ ${item.rating} ┆ ${item.interval.toUpperCase()}`"
         />
-        <!--span
-          class='badge new indigo lighten-3 white-text'
-          :data-badge-caption="`${item.interval.toUpperCase()}`"
-        /-->
         <span
           :class='directionClasses(item)'
           :data-badge-caption='directionText(item)'

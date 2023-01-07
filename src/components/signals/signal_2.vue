@@ -24,10 +24,18 @@
         :class='directionClasses(item, true)'
         :data-badge-caption='directionKind(item)'
       />
-      <span v-if='item.isTakeProfit' class='badge new green' data-badge-caption='✔' />
-      <span v-else :class='directionClasses(item, true)' data-badge-caption='✔' />
-      <span v-if='item.isStopLoss' class='badge new red' data-badge-caption='✖' />
-      <span v-else :class='directionClasses(item, true)' data-badge-caption='✖' />
+      <span v-if='item.isTakeProfit' class='badge new green' data-badge-caption='+1%' />
+      <span v-else :class='directionClasses(item, true)' data-badge-caption='+1%' />
+      <span v-if='item.isStopLoss' class='badge new red' data-badge-caption='-1%' />
+      <span v-else :class='directionClasses(item, true)' data-badge-caption='-1%' />
+    </div>
+    <div class='tags'>
+      <span
+        v-if='item.lastDailyPrice'
+        title='Цена на конец дня'
+        :class='directionClasses(item, true)'
+        :data-badge-caption='item.lastDailyPrice.toFixed(2)'
+      />
       <span
         v-if='item.dealResultPercent != null'
         title='Если закрыть сделку по цене на конец дня'
@@ -35,12 +43,7 @@
         :class="item.dealResultPercent >= 0 ? 'green' : 'red'"
         :data-badge-caption="`${item.dealResultPercent}%`"
       />
-      <span
-        v-if='item.lastDailyPrice'
-        title='Цена на конец дня'
-        :class='directionClasses(item, true)'
-        :data-badge-caption='item.lastDailyPrice.toFixed(2)'
-      />
+      <span class='note'>сейчас / закрытие дня</span>
     </div>
     <div class='prices'>
       <pre>{{ item.point.close.toFixed(2) }}</pre>
@@ -85,22 +88,11 @@ export default {
     itemTimeCreated({ createdAt }) {
       return DateFormat.timeOnly(createdAt);
     },
-    isActual({ dateAt }) {
-      return DateFormat.isActual(dateAt);
-    },
-    backgroundImgStyle({ symbol }) {
-      return `background-image: url(${this.logoUrl(symbol)})`;
-    },
     gotoStock({ symbol }) {
       this.$router.push(`/stocks/${symbol.name}`);
     },
     pathInstrument({ symbol }) {
       return `/instruments/${symbol.name}`;
-    },
-    directionText({ direction }) {
-      if (direction === 'sell') { return '⬇ SELL'; }
-      if (direction === 'buy') { return '⬆ BUY'; }
-      return '?';
     },
     directionKind({ kind }) {
       if (kind === 'umbrella_direct') {
@@ -174,6 +166,12 @@ export default {
     float: none
     display: inline-block
     margin: 0 4px 0 0
+
+  span.note
+    color: #424242
+    font-size: 12px
+    font-weight: 200
+    margin-right: 4px
 
 pre
   margin: 0
