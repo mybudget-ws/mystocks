@@ -2,7 +2,15 @@
   <div :class='cardClasses(item)' class='signal'>
     <div class='header'>
       <div class='title'>
-        <b>{{ item.symbol.name }}</b>
+        <router-link
+          v-if='isShowAction'
+          :to='pathInstrument(item)'
+          target='_blank'
+          title='Открыть в новой вкладке'
+        >
+          <b>{{ item.symbol.name }}</b>
+        </router-link>
+        <b v-else>{{ item.symbol.name }}</b>
         <!--div v-if='item.lastDailyPrice' class='last-price'>
           <span>┆</span>
           <pre>{{ item.lastDailyPrice.toFixed(2) }}</pre>
@@ -43,23 +51,13 @@
         :class="item.dealResultPercent >= 0 ? 'green' : 'red'"
         :data-badge-caption="`${item.dealResultPercent}%`"
       />
-      <span class='note'>сейчас / закрытие дня</span>
+      <span class='note'>сейчас / конец дня</span>
     </div>
     <div class='prices'>
-      <pre>{{ item.point.close.toFixed(2) }}</pre>
+      <!--pre>PR {{ item.point.close.toFixed(2) }} | TP {{ item.takeProfit.toFixed(2) }} | SL {{ item.stopLoss.toFixed(2) }}</pre-->
+      <pre>PR {{ item.point.close.toFixed(2) }}</pre>
       <pre>TP {{ item.takeProfit.toFixed(2) }}</pre>
       <pre>SL {{ item.stopLoss.toFixed(2) }}</pre>
-      <div>
-        <router-link
-          v-if='isShowAction'
-          :to='pathInstrument(item)'
-          target='_blank'
-          title='Открыть в новой вкладке'
-          class='right white-text'
-        >
-          [{{ item.id }}]
-        </router-link>
-      </div>
     </div>
   </div>
 </template>
@@ -140,6 +138,11 @@ export default {
   justify-content: space-between
   align-items: center
   margin-bottom: 8px
+
+  a
+    color: #212121
+    &:hover
+      text-decoration: underline
 
   .title
     display: flex
