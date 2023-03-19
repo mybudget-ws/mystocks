@@ -37,6 +37,26 @@
       </div>
     </section>
 
+    <section class='container'>
+      <div
+        v-for='(row, index) in archive'
+        :key='index'
+        class='row'
+      >
+        <div
+          v-for='item in row'
+          :key='item.symbol'
+          class='col s6'
+          @click='gotoInstrument(item.symbol)'
+        >
+          <div class='instrument' :class='item.displayClass'>
+            <div class='name'>{{ item.name }}</div>
+            <div class='kind'>{{ item.kind }}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <div class='container'>
       <div class='row'>
         <div class='col-12'>
@@ -84,11 +104,17 @@ export default {
     isPhone: md.phone() != null,
     instruments: [
       [
-        { symbol: 'SIH3', name: 'SiH3', kind: 'Фьючерс', displayClass: 'gr-blue' },
-        { symbol: 'RMH3', name: 'RMH3 / RTSI', kind: 'Фьючерс', displayClass: 'gr-blue' }
+        { symbol: 'SIM3', name: 'SiM3', kind: 'Фьючерс', displayClass: 'gr-blue' },
+        { symbol: 'RIM3', name: 'RIM3 / RTSI', kind: 'Фьючерс', displayClass: 'gr-blue' }
       ], [
         { symbol: 'USD000UTSTOM', name: 'USD / RUB', kind: 'Курс', displayClass: 'gr-orange' },
         { symbol: 'CNYRUB_TOM', name: 'CNY / RUB', kind: 'Курс', displayClass: 'gr-orange' }
+      ]
+    ],
+    archive: [
+      [
+        { symbol: 'SIH3', name: 'SiH3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
+        { symbol: 'RMH3', name: 'RMH3 / RTSI', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' }
       ]
     ]
   }),
@@ -152,6 +178,9 @@ section
 
   &.gr-green
     background: linear-gradient(137.04deg, #26a359 33.4%, #027f50 82.8%)
+
+  &.gr-gray
+    background: linear-gradient(137.04deg, rgb(100, 100, 127) 33.4%, rgb(50, 50, 80) 82.8%)
 
   .name
     font-weight: 600
