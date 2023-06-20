@@ -105,7 +105,7 @@ export default {
     instruments: [
       [
         { symbol: 'SIU3', name: 'SiU3', kind: 'Фьючерс', displayClass: 'gr-blue' },
-        { symbol: 'RIU3', name: 'RIU3 / RTSI', kind: 'Фьючерс', displayClass: 'gr-blue' }
+        { symbol: 'RIU3', name: 'RIU3', kind: 'Фьючерс', displayClass: 'gr-blue' }
       ], [
         { symbol: 'USD000UTSTOM', name: 'USD / RUB', kind: 'Курс', displayClass: 'gr-orange' },
         { symbol: 'CNYRUB_TOM', name: 'CNY / RUB', kind: 'Курс', displayClass: 'gr-orange' }
@@ -114,9 +114,9 @@ export default {
     archive: [
       [
         { symbol: 'SIM3', name: 'SiM3', kind: 'Фьючерс', displayClass: 'gr-gray' },
-        { symbol: 'RIM3', name: 'RIM3 / RTSI', kind: 'Фьючерс', displayClass: 'gr-gray' },
+        { symbol: 'RIM3', name: 'RIM3', kind: 'Фьючерс', displayClass: 'gr-gray' },
         { symbol: 'SIH3', name: 'SiH3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
-        { symbol: 'RMH3', name: 'RMH3 / RTSI', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' }
+        { symbol: 'RMH3', name: 'RMH3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' }
       ]
     ]
   }),
