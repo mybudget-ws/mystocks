@@ -113,8 +113,8 @@ export default {
     ],
     archive: [
       [
-        { symbol: 'SIM3', name: 'SiM3', kind: 'Фьючерс', displayClass: 'gr-blue' },
-        { symbol: 'RIM3', name: 'RIM3 / RTSI', kind: 'Фьючерс', displayClass: 'gr-blue' },
+        { symbol: 'SIM3', name: 'SiM3', kind: 'Фьючерс', displayClass: 'gr-gray' },
+        { symbol: 'RIM3', name: 'RIM3 / RTSI', kind: 'Фьючерс', displayClass: 'gr-gray' },
         { symbol: 'SIH3', name: 'SiH3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
         { symbol: 'RMH3', name: 'RMH3 / RTSI', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' }
       ]
@@ -183,6 +183,7 @@ section
 
   &.gr-gray
     background: linear-gradient(137.04deg, rgb(100, 100, 127) 33.4%, rgb(50, 50, 80) 82.8%)
+    margin-bottom: 20px
 
   .name
     font-weight: 600
