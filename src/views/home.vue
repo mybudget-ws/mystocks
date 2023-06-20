@@ -113,8 +113,8 @@ export default {
     ],
     archive: [
       [
-        { symbol: 'SIM3', name: 'SiM3', kind: 'Фьючерс', displayClass: 'gr-gray' },
-        { symbol: 'RIM3', name: 'RIM3', kind: 'Фьючерс', displayClass: 'gr-gray' },
+        { symbol: 'SIM3', name: 'SiM3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
+        { symbol: 'RIM3', name: 'RIM3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
         { symbol: 'SIH3', name: 'SiH3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
         { symbol: 'RMH3', name: 'RMH3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' }
       ]
@@ -163,7 +163,6 @@ section
   border-radius: 12px
   color: #fff
   cursor: pointer
-  height: 90px
   padding: 20px
 
   &:hover
