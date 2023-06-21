@@ -105,7 +105,7 @@ export default {
     instruments: [
       [
         { symbol: 'SIU3', name: 'SiU3', kind: 'Фьючерс', displayClass: 'gr-blue' },
-        { symbol: 'RIU3', name: 'RIU3', kind: 'Фьючерс', displayClass: 'gr-blue' }
+        { symbol: 'RMU3', name: 'RMU3', kind: 'Фьючерс', displayClass: 'gr-blue' }
       ], [
         { symbol: 'USD000UTSTOM', name: 'USD / RUB', kind: 'Курс', displayClass: 'gr-orange' },
         { symbol: 'CNYRUB_TOM', name: 'CNY / RUB', kind: 'Курс', displayClass: 'gr-orange' }
