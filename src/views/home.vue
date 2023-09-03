@@ -113,8 +113,8 @@ export default {
     ],
     archive: [
       [
-        { symbol: 'SIU3', name: 'SiM3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
-        { symbol: 'RMU3', name: 'SiM3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
+        { symbol: 'SIU3', name: 'SiU3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
+        { symbol: 'RMU3', name: 'RMU3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
         { symbol: 'SIM3', name: 'SiM3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
         { symbol: 'RIM3', name: 'RIM3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
         { symbol: 'SIH3', name: 'SiH3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
