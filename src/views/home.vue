@@ -104,7 +104,7 @@ export default {
     isPhone: md.phone() != null,
     instruments: [
       [
-        { symbol: 'SIU3', name: 'SiU3', kind: 'Фьючерс', displayClass: 'gr-blue' },
+        { symbol: 'SIZ3', name: 'SiZ3', kind: 'Фьючерс', displayClass: 'gr-blue' },
         { symbol: 'CRZ3', name: 'CRZ3', kind: 'Фьючерс', displayClass: 'gr-blue' }
       ], [
         { symbol: 'USD000UTSTOM', name: 'USD / RUB', kind: 'Курс', displayClass: 'gr-orange' },
