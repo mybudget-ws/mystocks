@@ -63,7 +63,7 @@ export default new Router({
       beforeEnter: updateTitle
     }, {
       path: '/instruments/:symbol',
-      name: 'stock',
+      name: 'instrument',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/instruments/show'),
       beforeEnter: updateTitle
     }, {
@@ -85,6 +85,11 @@ export default new Router({
       path: '/signals/stats',
       name: 'signals_stats',
       component: () => import(/* webpackChunkName: "inner" */ '@/views/signals/stats'),
+      beforeEnter: updateTitle
+    }, {
+      path: '/deals',
+      name: 'deals',
+      component: () => import(/* webpackChunkName: "inner" */ '@/views/deals/index'),
       beforeEnter: updateTitle
     }, {
       path: '/settings/:tab',

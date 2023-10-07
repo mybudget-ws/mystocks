@@ -63,7 +63,8 @@ export default {
       { path: '/#/', name: 'Главная' },
       { path: '/news', name: 'Новости' },
       { path: '/dividends', name: 'Дивиденды' },
-      { path: '/signals', name: 'Сигналы' }
+      { path: '/signals', name: 'Сигналы' },
+      { path: '/deals', name: 'Сделки' }
     ]
   }),
   computed: {
