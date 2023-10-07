@@ -261,6 +261,10 @@ export default {
       ) {
         id
         direction
+        state
+        startPrice
+        finishPrice
+        profit
         signal {
           symbol {
             id name logoUrl kind

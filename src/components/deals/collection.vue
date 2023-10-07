@@ -21,9 +21,9 @@
             <th />
             <th>Name</th>
             <th>State</th>
-            <th>Price 1</th>
-            <th>Price 2</th>
-            <th>Profit</th>
+            <th class='right-align'>s-Price</th>
+            <th class='right-align'>f-Price</th>
+            <th class='right-align'>Profit</th>
           </tr>
         </thead>
         <tbody>
@@ -38,11 +38,11 @@
             <td :class='directionTextClass(item)' style='width: 1rem;'>
               {{ item.direction == 'buy' ? '⬇ ' : '⬇ ' }}
             </td>
-            <td>TODO</td>
-            <td>TODO</td>
-            <td>TODO</td>
-            <td>TODO</td>
-            <td>TODO</td>
+            <td>{{ item.signal.symbol.name }}</td>
+            <td>{{ item.state }}</td>
+            <td class='right-align'>{{ item.startPrice || '-' }}</td>
+            <td class='right-align'>{{ item.finishPrice || '-' }}</td>
+            <td class='right-align'>{{ item.profit || '-' }}</td>
           </tr>
         </tbody>
       </table>
