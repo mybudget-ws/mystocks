@@ -244,6 +244,41 @@ export default {
   },
 
   // ---------------------------------
+  // S::Deals
+  // ---------------------------------
+  async deals(token, { symbolId, search, minRating, direction }) {
+    const query = `query(
+      $symbolId:Int,
+      $search:String,
+      $minRating:Int,
+      $direction:String
+    ) {
+      items:deals(
+        symbolId:$symbolId,
+        search:$search,
+        minRating:$minRating,
+        direction:$direction
+      ) {
+        id
+        direction
+        signal {
+          symbol {
+            id name logoUrl kind
+            company {
+              id name logoUrl
+            }
+          }
+        }
+      }
+    }`;
+    const vars = { symbolId, search, minRating, direction };
+    const data = await this.client(token).request(query, vars);
+    this.log(query, data);
+
+    return data.items;
+  },
+
+  // ---------------------------------
   // Account
   // ---------------------------------
 

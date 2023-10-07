@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import pathify from 'vuex-pathify';
 
 import articles from './modules/articles';
+import deals from './modules/deals';
 import dividends from './modules/dividends';
 import indexes from './modules/indexes';
 import signals from './modules/signals';
@@ -15,11 +16,12 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {
     articles,
+    deals,
     dividends,
     indexes,
-    stocks,
     signals,
     signalsStats,
+    stocks,
     user
   },
   plugins: [pathify.plugin]

@@ -9,32 +9,28 @@
       <div class='card blue-grey'>
         <div class='card-content white-text'>
           <span class='card-title'>Пусто</span>
-          <p>Тут ничего нет</p>
+          <p>Тут ничего нет :/</p>
         </div>
       </div>
     </div>
     <div>
-      <Signal
+      <div
         v-for='item in items'
         :key='item.id'
         :item='item'
-        :is-show-action='isShowAction'
-      />
+      >
+        {{ item.id }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Signal from '@/components/signals/signal_2';
-
 export default {
   name: 'Collection',
-  components: {
-    Signal
-  },
+  components: {},
   props: {
-    items: { type: Array, required: false, default: () => [] },
-    isShowAction: { type: Boolean, required: false, default: false }
+    items: { type: Array, required: false, default: () => [] }
   },
   computed: {
     isNothingFound() {

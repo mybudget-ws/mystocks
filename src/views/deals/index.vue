@@ -25,7 +25,7 @@ import MobileDetect from 'mobile-detect';
 const md = new MobileDetect(window.navigator.userAgent);
 
 export default {
-  name: 'Signals',
+  name: 'Deals',
   components: {
     Collection,
     Loader,
@@ -39,8 +39,8 @@ export default {
   computed: {
     token: get('user/token'),
     ...get([
-      'signals/items',
-      'signals/isLoading'
+      'deals/items',
+      'deals/isLoading'
     ])
   },
   async mounted() {
@@ -56,7 +56,7 @@ export default {
   },
   methods: {
     ...call([
-      'signals/fetch'
+      'deals/fetch'
     ])
   }
 };
