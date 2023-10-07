@@ -24,6 +24,7 @@
             <th class='right-align'>s-Price</th>
             <th class='right-align'>f-Price</th>
             <th class='right-align'>Diff</th>
+            <th class='right-align'>Profit, Ꝑ</th>
             <th class='right-align'>Date</th>
           </tr>
         </thead>
@@ -44,6 +45,7 @@
             <td class='right-align'>{{ item.startPrice || '-' }}</td>
             <td class='right-align'>{{ item.finishPrice || '-' }}</td>
             <td class='right-align'>{{ item.diff || '-' }}</td>
+            <td class='right-align'>{{ item.profitRub || '-' }}</td>
             <td class='right-align' style='width: 8rem;'>
               <small>{{ dateString(item) }}</small>
             </td>
