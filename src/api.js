@@ -260,6 +260,7 @@ export default {
         direction:$direction
       ) {
         id
+        dateAt
         direction
         state
         startPrice

@@ -23,7 +23,8 @@
             <th>State</th>
             <th class='right-align'>s-Price</th>
             <th class='right-align'>f-Price</th>
-            <th class='right-align'>Profit</th>
+            <th class='right-align'>Diff</th>
+            <th class='right-align'>Date</th>
           </tr>
         </thead>
         <tbody>
@@ -43,6 +44,9 @@
             <td class='right-align'>{{ item.startPrice || '-' }}</td>
             <td class='right-align'>{{ item.finishPrice || '-' }}</td>
             <td class='right-align'>{{ item.profit || '-' }}</td>
+            <td class='right-align' style='width: 8rem;'>
+              <small>{{ dateString(item.dateAt) }}</small>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -51,6 +55,8 @@
 </template>
 
 <script>
+import DateFormat from '@/utils/date_format';
+
 export default {
   name: 'Collection',
   components: {},
@@ -65,6 +71,9 @@ export default {
   methods: {
     directionTextClass({ direction }) {
       return direction == 'buy' ? 'green-text' : 'red-text';
+    },
+    dateString({ dateAt }) {
+      return DateFormat.full(dateAt);
     }
   }
 };
