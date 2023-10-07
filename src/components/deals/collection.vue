@@ -13,14 +13,39 @@
         </div>
       </div>
     </div>
-    <div>
-      <div
-        v-for='item in items'
-        :key='item.id'
-        :item='item'
-      >
-        {{ item.id }}
-      </div>
+    <div v-else>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th />
+            <th>Name</th>
+            <th>State</th>
+            <th>Price 1</th>
+            <th>Price 2</th>
+            <th>Profit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for='item in items'
+            :key='item.id'
+            :item='item'
+          >
+            <td style='width: 1rem;'>
+              <small>{{ item.id }}</small>
+            </td>
+            <td :class='directionTextClass(item)' style='width: 1rem;'>
+              {{ item.direction == 'buy' ? '⬇ ' : '⬇ ' }}
+            </td>
+            <td>TODO</td>
+            <td>TODO</td>
+            <td>TODO</td>
+            <td>TODO</td>
+            <td>TODO</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -37,7 +62,11 @@ export default {
       return this.items.length == 0 && (this.$route.query.search || this.$route.query.minRating);
     }
   },
-  methods: {}
+  methods: {
+    directionTextClass({ direction }) {
+      return direction == 'buy' ? 'green-text' : 'red-text';
+    }
+  }
 };
 </script>
 
