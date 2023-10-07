@@ -45,7 +45,7 @@
             <td class='right-align'>{{ item.startPrice || '-' }}</td>
             <td class='right-align'>{{ item.finishPrice || '-' }}</td>
             <td class='right-align'>{{ item.diff || '-' }}</td>
-            <td class='right-align'>{{ item.profitRub || '-' }}</td>
+            <td class='right-align'>{{ profitRub(item) }}</td>
             <td class='right-align' style='width: 8rem;'>
               <small>{{ dateString(item) }}</small>
             </td>
@@ -76,6 +76,10 @@ export default {
     },
     dateString({ dateAt }) {
       return DateFormat.full(dateAt);
+    },
+    profitRub({ profitRub }) {
+      if (profitRub == null) return '-';
+      return profitRub.toFixed(2);
     }
   }
 };
