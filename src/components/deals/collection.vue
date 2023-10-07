@@ -43,7 +43,7 @@
             <td>{{ item.state }}</td>
             <td class='right-align'>{{ item.startPrice || '-' }}</td>
             <td class='right-align'>{{ item.finishPrice || '-' }}</td>
-            <td class='right-align'>{{ item.profit || '-' }}</td>
+            <td class='right-align'>{{ item.diff || '-' }}</td>
             <td class='right-align' style='width: 8rem;'>
               <small>{{ dateString(item.dateAt) }}</small>
             </td>

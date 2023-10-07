@@ -265,7 +265,7 @@ export default {
         state
         startPrice
         finishPrice
-        profit
+        diff
         signal {
           symbol {
             id name logoUrl kind
