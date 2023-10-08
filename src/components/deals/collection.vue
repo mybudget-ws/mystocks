@@ -39,7 +39,7 @@
               <small>{{ item.id }}</small>
             </td>
             <td :class='directionTextClass(item)' style='width: 1rem;'>
-              {{ item.direction == 'buy' ? '⬇ ' : '⬇ ' }}
+              {{ item.direction == 'buy' ? '⬆ ' : '⬇ ' }}
             </td>
             <td>{{ item.signal.symbol.name }}</td>
             <td>{{ item.state }}</td>
@@ -97,7 +97,7 @@ export default {
       const diffRate = direction === 'buy' ?
         finishPrice / startPrice :
         startPrice / finishPrice;
-      return ((1 - diffRate) * 100.0).toFixed(2);
+      return ((diffRate - 1) * 100.0).toFixed(2);
     }
   }
 };
