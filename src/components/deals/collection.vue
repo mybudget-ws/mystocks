@@ -24,7 +24,8 @@
             <th class='right-align'>s-Price</th>
             <th class='right-align'>f-Price</th>
             <th class='right-align'>Diff</th>
-            <th class='right-align'>Profit, Ꝑ</th>
+            <th class='right-align'>Ꝑ</th>
+            <th class='right-align'>%</th>
             <th class='right-align'>Date</th>
           </tr>
         </thead>
@@ -45,7 +46,12 @@
             <td class='right-align'>{{ item.startPrice || '-' }}</td>
             <td class='right-align'>{{ item.finishPrice || '-' }}</td>
             <td class='right-align'>{{ item.diff || '-' }}</td>
-            <td :class='profitRubTextClass(item)' class='right-align'>{{ profitRub(item) }}</td>
+            <td :class='amountTextClass(item.profitRub)' class='right-align'>
+              {{ amount(item.profitRub) }}
+            </td>
+            <td :class='amountTextClass(item.profitRub)' class='right-align'>
+              {{ percent(item) }}
+            </td>
             <td class='right-align' style='width: 8rem;'>
               <small>{{ dateString(item) }}</small>
             </td>
@@ -67,24 +73,32 @@ export default {
   },
   computed: {
     isNothingFound() {
-      return this.items.length == 0 && (this.$route.query.search || this.$route.query.minRating);
+      return this.items.length === 0 && (this.$route.query.search || this.$route.query.minRating);
     }
   },
   methods: {
     directionTextClass({ direction }) {
-      return direction == 'buy' ? 'green-text' : 'red-text';
+      return direction === 'buy' ? 'green-text' : 'red-text';
     },
     dateString({ dateAt }) {
       return DateFormat.full(dateAt);
     },
-    profitRub({ profitRub }) {
-      if (profitRub == null) return '-';
-      return profitRub.toFixed(2);
+    amount(value, digits = 2) {
+      if (value == null) return '-';
+      return value.toFixed(digits);
     },
-    profitRubTextClass({ profitRub }) {
-      if (profitRub == null) return '';
-      if (profitRub <= 0) return 'red-text';
+    amountTextClass(value) {
+      if (value == null) return '';
+      if (value <= 0) return 'red-text';
       return 'green-text';
+    },
+    percent({ startPrice, finishPrice, direction }) {
+      if (startPrice == null || finishPrice == null) return '-';
+      const diffPrice = direction === 'buy' ?
+        (finishPrice - startPrice) :
+        (startPrice - finishPrice);
+
+      return (diffPrice / 100.0).toFixed(2);
     }
   }
 };
