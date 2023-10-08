@@ -95,8 +95,8 @@ export default {
     percent({ startPrice, finishPrice, direction }) {
       if (startPrice == null || finishPrice == null) return '-';
       const diffRate = direction === 'buy' ?
-        startPrice / finishPrice :
-        finishPrice / startPrice;
+        finishPrice / startPrice :
+        startPrice / finishPrice;
       return ((1 - diffRate) * 100.0).toFixed(2);
     }
   }
