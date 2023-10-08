@@ -43,9 +43,9 @@
             </td>
             <td>{{ item.signal.symbol.name }}</td>
             <td>{{ item.state }}</td>
-            <td class='right-align'>{{ item.startPrice || '-' }}</td>
-            <td class='right-align'>{{ item.finishPrice || '-' }}</td>
-            <td class='right-align'>{{ item.diff || '-' }}</td>
+            <td class='right-align'>{{ amount(item.startPrice) }}</td>
+            <td class='right-align'>{{ amount(item.finishPrice) }}</td>
+            <td class='right-align'>{{ amount(item.diff, 4) }}</td>
             <td :class='amountTextClass(item.profitRub)' class='right-align'>
               {{ amount(item.profitRub) }}
             </td>
