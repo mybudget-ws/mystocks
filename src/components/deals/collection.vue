@@ -92,9 +92,11 @@ export default {
       if (value <= 0) return 'red-text';
       return 'green-text';
     },
-    percent({ startPrice, finishPrice }) {
+    percent({ startPrice, finishPrice, direction }) {
       if (startPrice == null || finishPrice == null) return '-';
-      const diffRate = startPrice / finishPrice;
+      const diffRate = direction === 'buy' ?
+        startPrice / finishPrice :
+        finishPrice / startPrice;
       return ((1 - diffRate) * 100.0).toFixed(2);
     }
   }
