@@ -24,8 +24,8 @@
             <th class='right-align'>s-Price</th>
             <th class='right-align'>f-Price</th>
             <th class='right-align'>Diff</th>
-            <th class='right-align'>Ꝑ</th>
             <th class='right-align'>%</th>
+            <th class='right-align'>Ꝑ</th>
             <th class='right-align'>Date</th>
           </tr>
         </thead>
@@ -47,10 +47,10 @@
             <td class='right-align'>{{ amount(item.finishPrice) }}</td>
             <td class='right-align'>{{ amount(item.diff, 4) }}</td>
             <td :class='amountTextClass(item.profitRub)' class='right-align'>
-              {{ amount(item.profitRub) }}
+              {{ percent(item) }}
             </td>
             <td :class='amountTextClass(item.profitRub)' class='right-align'>
-              {{ percent(item) }}
+              {{ amount(item.profitRub) }}
             </td>
             <td class='right-align' style='width: 8rem;'>
               <small>{{ dateString(item) }}</small>
