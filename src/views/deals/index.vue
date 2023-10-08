@@ -4,6 +4,44 @@
     <div class='container container-wide'>
       <PageHeader name='Сделки' />
 
+      <div v-if='!isLoading' class='row'>
+        <div class='col l3 m6 s12'>
+          <div class='card-panel z-depth-0 indigo lighten-4'>
+            <div class='card-content'>
+              <b class='card-title'>Всего</b>
+              <div>{{ items.length }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class='col l3 m6 s12'>
+          <div class='card-panel z-depth-0 green lighten-4'>
+            <div class='card-content'>
+              <b class='card-title'>Покупка</b>
+              <div>{{ buyCount }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class='col l3 m6 s12'>
+          <div class='card-panel z-depth-0 red lighten-4'>
+            <div class='card-content'>
+              <b class='card-title'>Продажа</b>
+              <div>{{ sellCount }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class='col l3 m6 s12'>
+          <div class='card-panel z-depth-0 amber lighten-4'>
+            <div class='card-content'>
+              <b class='card-title'>Доход</b>
+              <div>{{ totalProfitAmount }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class='row'>
         <div class='col s12'>
           <Loader v-if='isLoading' class='loading' />
@@ -41,7 +79,20 @@ export default {
     ...get([
       'deals/items',
       'deals/isLoading'
-    ])
+    ]),
+    buyCount() {
+      if (this.isLoading) return 0;
+      return this.items.filter(v => v.direction === 'buy').length;
+    },
+    sellCount() {
+      if (this.isLoading) return 0;
+      return this.items.filter(v => v.direction === 'sell').length;
+    },
+    totalProfitAmount() {
+      if (this.isLoading) return 0;
+      const amout = this.items.map(v => v.profitRub).reduce((sum, v) => sum + v, 0);
+      return amout.toFixed(2);
+    }
   },
   async mounted() {
     await this.fetch({
