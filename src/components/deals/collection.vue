@@ -25,7 +25,6 @@
             <th class='right-align'>f-Price</th>
             <th class='right-align'>Diff</th>
             <th class='right-align'>%</th>
-            <th class='right-align'>Ꝑ</th>
             <th class='right-align'>Date</th>
           </tr>
         </thead>
@@ -46,11 +45,8 @@
             <td class='right-align'>{{ amount(item.startPrice) }}</td>
             <td class='right-align'>{{ amount(item.finishPrice) }}</td>
             <td class='right-align'>{{ amount(item.diff, 4) }}</td>
-            <td :class='amountTextClass(item.profitRub)' class='right-align'>
-              {{ percent(item) }}
-            </td>
-            <td :class='amountTextClass(item.profitRub)' class='right-align'>
-              {{ amount(item.profitRub) }}
+            <td :class='amountTextClass(item.diff)' class='right-align'>
+              {{ amount(item.profitPercent) }}
             </td>
             <td class='right-align' style='width: 8rem;'>
               <small>{{ dateString(item) }}</small>
@@ -91,13 +87,6 @@ export default {
       if (value == null) return '';
       if (value <= 0) return 'red-text';
       return 'green-text';
-    },
-    percent({ startPrice, finishPrice, direction }) {
-      if (startPrice == null || finishPrice == null) return '-';
-      const diffRate = direction === 'buy' ?
-        finishPrice / startPrice :
-        startPrice / finishPrice;
-      return ((diffRate - 1) * 100.0).toFixed(2);
     }
   }
 };

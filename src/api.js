@@ -266,7 +266,7 @@ export default {
         startPrice
         finishPrice
         diff
-        profitRub
+        profitPercent
         signal {
           symbol {
             id name logoUrl kind

@@ -36,7 +36,7 @@
           <div class='card-panel z-depth-0 amber lighten-4'>
             <div class='card-content'>
               <b class='card-title'>Доход</b>
-              <div>{{ totalProfitAmount }}</div>
+              <div>{{ totalProfitPercent }}%</div>
             </div>
           </div>
         </div>
@@ -88,9 +88,9 @@ export default {
       if (this.isLoading) return 0;
       return this.items.filter(v => v.direction === 'sell').length;
     },
-    totalProfitAmount() {
+    totalProfitPercent() {
       if (this.isLoading) return 0;
-      const amout = this.items.map(v => v.profitRub).reduce((sum, v) => sum + v, 0);
+      const amout = this.items.map(v => v.profitPercent).reduce((sum, v) => sum + v, 0);
       return amout.toFixed(2);
     }
   },
