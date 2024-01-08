@@ -133,8 +133,8 @@ export default {
       series.dataFields.diff = 'diff';
       series.simplifiedProcessing = true;
       series.tooltipText = '%: {diff}\n' +
-        'MAX: ${highValueY.value}\nOpen: ${openValueY.value}\n' +
-        'Close: ${valueY.value}\nMIN: ${lowValueY.value}';
+        'MAX: {highValueY.value}\nOpen: {openValueY.value}\n' +
+        'Close: {valueY.value}\nMIN: {lowValueY.value}';
 
       this.chart.cursor = new am4charts.XYCursor();
 
