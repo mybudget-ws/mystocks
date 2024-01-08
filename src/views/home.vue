@@ -104,8 +104,8 @@ export default {
     isPhone: md.phone() != null,
     instruments: [
       [
-        { symbol: 'SIZ3', name: 'SiZ3', kind: 'Фьючерс', displayClass: 'gr-blue' },
-        { symbol: 'CRZ3', name: 'CRZ3', kind: 'Фьючерс', displayClass: 'gr-blue' }
+        { symbol: 'SIH4', name: 'SiH4', kind: 'Фьючерс', displayClass: 'gr-blue' },
+        { symbol: 'CRH4', name: 'CRH4', kind: 'Фьючерс', displayClass: 'gr-blue' }
       ], [
         { symbol: 'USD000UTSTOM', name: 'USD / RUB', kind: 'Курс', displayClass: 'gr-orange' },
         { symbol: 'CNYRUB_TOM', name: 'CNY / RUB', kind: 'Курс', displayClass: 'gr-orange' }
@@ -113,6 +113,8 @@ export default {
     ],
     archive: [
       [
+        { symbol: 'CRZ3', name: 'RMZ3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
+        { symbol: 'RMZ3', name: 'RMZ3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
         { symbol: 'SIU3', name: 'SiU3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
         { symbol: 'RMU3', name: 'RMU3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
         { symbol: 'SIM3', name: 'SiM3', kind: 'Фьючерс (архив)', displayClass: 'gr-gray' },
