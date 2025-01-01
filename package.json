@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.15",
-    "@sentry/browser": "^5.17.0",
+    "@sentry/browser": "^7.119.1",
     "@sentry/integrations": "^5.17.0",
     "apexcharts": "^3.35.0",
     "browser-cookies": "^1.2.0",
